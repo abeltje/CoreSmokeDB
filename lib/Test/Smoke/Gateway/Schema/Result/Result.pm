@@ -24,55 +24,86 @@ __PACKAGE__->table("result");
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
+  sequence: 'result_id_seq'
 
 =head2 config_id
 
-  data_type: 'int'
+  data_type: 'integer'
   is_foreign_key: 1
   is_nullable: 0
 
 =head2 io_env
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 0
+  original: {data_type => "varchar"}
 
 =head2 locale
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 1
+  original: {data_type => "varchar"}
 
 =head2 output
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 0
+  original: {data_type => "varchar"}
 
 =head2 summary
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 0
+  original: {data_type => "varchar"}
 
 =head2 statistics
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 1
+  original: {data_type => "varchar"}
 
 =cut
 
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
+  {
+    data_type         => "integer",
+    is_auto_increment => 1,
+    is_nullable       => 0,
+    sequence          => "result_id_seq",
+  },
   "config_id",
-  { data_type => "int", is_foreign_key => 1, is_nullable => 0 },
+  { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "io_env",
-  { data_type => "varchar", is_nullable => 0 },
+  {
+    data_type   => "text",
+    is_nullable => 0,
+    original    => { data_type => "varchar" },
+  },
   "locale",
-  { data_type => "varchar", is_nullable => 1 },
+  {
+    data_type   => "text",
+    is_nullable => 1,
+    original    => { data_type => "varchar" },
+  },
   "output",
-  { data_type => "varchar", is_nullable => 0 },
+  {
+    data_type   => "text",
+    is_nullable => 0,
+    original    => { data_type => "varchar" },
+  },
   "summary",
-  { data_type => "varchar", is_nullable => 0 },
+  {
+    data_type   => "text",
+    is_nullable => 0,
+    original    => { data_type => "varchar" },
+  },
   "statistics",
-  { data_type => "varchar", is_nullable => 1 },
+  {
+    data_type   => "text",
+    is_nullable => 1,
+    original    => { data_type => "varchar" },
+  },
 );
 __PACKAGE__->set_primary_key("id");
 
@@ -94,8 +125,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07002 @ 2011-04-20 14:21:04
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:1RQavxz+0aUnmdr4S5hg5w
+# Created by DBIx::Class::Schema::Loader v0.07002 @ 2011-04-30 22:13:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:tlvZB2Gartxtiqh+kyczNw
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

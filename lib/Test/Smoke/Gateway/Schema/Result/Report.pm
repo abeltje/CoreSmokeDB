@@ -24,21 +24,22 @@ __PACKAGE__->table("report");
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
+  sequence: 'report_id_seq'
 
 =head2 sconfig_id
 
-  data_type: 'int'
+  data_type: 'integer'
   is_foreign_key: 1
   is_nullable: 1
 
 =head2 duration
 
-  data_type: 'int'
+  data_type: 'integer'
   is_nullable: 1
 
 =head2 config_count
 
-  data_type: 'int'
+  data_type: 'integer'
   is_nullable: 1
 
 =head2 smoke_date
@@ -48,83 +49,99 @@ __PACKAGE__->table("report");
 
 =head2 perl_id
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 0
+  original: {data_type => "varchar"}
 
 =head2 git_id
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 0
+  original: {data_type => "varchar"}
 
 =head2 git_describe
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 0
+  original: {data_type => "varchar"}
 
 =head2 applied_patches
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 1
+  original: {data_type => "varchar"}
 
 =head2 hostname
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 0
+  original: {data_type => "varchar"}
 
 =head2 architecture
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 0
+  original: {data_type => "varchar"}
 
 =head2 osname
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 0
+  original: {data_type => "varchar"}
 
 =head2 osversion
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 0
+  original: {data_type => "varchar"}
 
 =head2 cpu_count
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 1
+  original: {data_type => "varchar"}
 
 =head2 cpu_description
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 1
+  original: {data_type => "varchar"}
 
 =head2 cc
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 0
+  original: {data_type => "varchar"}
 
 =head2 ccversion
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 0
+  original: {data_type => "varchar"}
 
 =head2 username
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 1
+  original: {data_type => "varchar"}
 
 =head2 test_jobs
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 1
+  original: {data_type => "varchar"}
 
 =head2 lc_all
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 1
+  original: {data_type => "varchar"}
 
 =head2 lang
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 1
+  original: {data_type => "varchar"}
 
 =head2 manifest_msgs
 
@@ -138,78 +155,162 @@ __PACKAGE__->table("report");
 
 =head2 skipped_tests
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 1
+  original: {data_type => "varchar"}
 
 =head2 harness_only
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 1
+  original: {data_type => "varchar"}
 
 =head2 summary
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 0
+  original: {data_type => "varchar"}
 
 =cut
 
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
+  {
+    data_type         => "integer",
+    is_auto_increment => 1,
+    is_nullable       => 0,
+    sequence          => "report_id_seq",
+  },
   "sconfig_id",
-  { data_type => "int", is_foreign_key => 1, is_nullable => 1 },
+  { data_type => "integer", is_foreign_key => 1, is_nullable => 1 },
   "duration",
-  { data_type => "int", is_nullable => 1 },
+  { data_type => "integer", is_nullable => 1 },
   "config_count",
-  { data_type => "int", is_nullable => 1 },
+  { data_type => "integer", is_nullable => 1 },
   "smoke_date",
   { data_type => "timestamp with time zone", is_nullable => 0 },
   "perl_id",
-  { data_type => "varchar", is_nullable => 0 },
+  {
+    data_type   => "text",
+    is_nullable => 0,
+    original    => { data_type => "varchar" },
+  },
   "git_id",
-  { data_type => "varchar", is_nullable => 0 },
+  {
+    data_type   => "text",
+    is_nullable => 0,
+    original    => { data_type => "varchar" },
+  },
   "git_describe",
-  { data_type => "varchar", is_nullable => 0 },
+  {
+    data_type   => "text",
+    is_nullable => 0,
+    original    => { data_type => "varchar" },
+  },
   "applied_patches",
-  { data_type => "varchar", is_nullable => 1 },
+  {
+    data_type   => "text",
+    is_nullable => 1,
+    original    => { data_type => "varchar" },
+  },
   "hostname",
-  { data_type => "varchar", is_nullable => 0 },
+  {
+    data_type   => "text",
+    is_nullable => 0,
+    original    => { data_type => "varchar" },
+  },
   "architecture",
-  { data_type => "varchar", is_nullable => 0 },
+  {
+    data_type   => "text",
+    is_nullable => 0,
+    original    => { data_type => "varchar" },
+  },
   "osname",
-  { data_type => "varchar", is_nullable => 0 },
+  {
+    data_type   => "text",
+    is_nullable => 0,
+    original    => { data_type => "varchar" },
+  },
   "osversion",
-  { data_type => "varchar", is_nullable => 0 },
+  {
+    data_type   => "text",
+    is_nullable => 0,
+    original    => { data_type => "varchar" },
+  },
   "cpu_count",
-  { data_type => "varchar", is_nullable => 1 },
+  {
+    data_type   => "text",
+    is_nullable => 1,
+    original    => { data_type => "varchar" },
+  },
   "cpu_description",
-  { data_type => "varchar", is_nullable => 1 },
+  {
+    data_type   => "text",
+    is_nullable => 1,
+    original    => { data_type => "varchar" },
+  },
   "cc",
-  { data_type => "varchar", is_nullable => 0 },
+  {
+    data_type   => "text",
+    is_nullable => 0,
+    original    => { data_type => "varchar" },
+  },
   "ccversion",
-  { data_type => "varchar", is_nullable => 0 },
+  {
+    data_type   => "text",
+    is_nullable => 0,
+    original    => { data_type => "varchar" },
+  },
   "username",
-  { data_type => "varchar", is_nullable => 1 },
+  {
+    data_type   => "text",
+    is_nullable => 1,
+    original    => { data_type => "varchar" },
+  },
   "test_jobs",
-  { data_type => "varchar", is_nullable => 1 },
+  {
+    data_type   => "text",
+    is_nullable => 1,
+    original    => { data_type => "varchar" },
+  },
   "lc_all",
-  { data_type => "varchar", is_nullable => 1 },
+  {
+    data_type   => "text",
+    is_nullable => 1,
+    original    => { data_type => "varchar" },
+  },
   "lang",
-  { data_type => "varchar", is_nullable => 1 },
+  {
+    data_type   => "text",
+    is_nullable => 1,
+    original    => { data_type => "varchar" },
+  },
   "manifest_msgs",
   { data_type => "bytea", is_nullable => 1 },
   "compiler_msgs",
   { data_type => "bytea", is_nullable => 1 },
   "skipped_tests",
-  { data_type => "varchar", is_nullable => 1 },
+  {
+    data_type   => "text",
+    is_nullable => 1,
+    original    => { data_type => "varchar" },
+  },
   "harness_only",
-  { data_type => "varchar", is_nullable => 1 },
+  {
+    data_type   => "text",
+    is_nullable => 1,
+    original    => { data_type => "varchar" },
+  },
   "summary",
-  { data_type => "varchar", is_nullable => 0 },
+  {
+    data_type   => "text",
+    is_nullable => 0,
+    original    => { data_type => "varchar" },
+  },
 );
 __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint(
-  "git_id_smoke_date_hostname_architecture_cc_ccversion_unique",
+  "report_git_id_key",
   [
     "git_id",
     "smoke_date",
@@ -221,6 +322,21 @@ __PACKAGE__->add_unique_constraint(
 );
 
 =head1 RELATIONS
+
+=head2 configs
+
+Type: has_many
+
+Related object: L<Test::Smoke::Gateway::Schema::Result::Config>
+
+=cut
+
+__PACKAGE__->has_many(
+  "configs",
+  "Test::Smoke::Gateway::Schema::Result::Config",
+  { "foreign.report_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
 
 =head2 sconfig
 
@@ -242,24 +358,9 @@ __PACKAGE__->belongs_to(
   },
 );
 
-=head2 configs
 
-Type: has_many
-
-Related object: L<Test::Smoke::Gateway::Schema::Result::Config>
-
-=cut
-
-__PACKAGE__->has_many(
-  "configs",
-  "Test::Smoke::Gateway::Schema::Result::Config",
-  { "foreign.report_id" => "self.id" },
-  { cascade_copy => 0, cascade_delete => 0 },
-);
-
-
-# Created by DBIx::Class::Schema::Loader v0.07002 @ 2011-04-20 15:13:05
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:nAvl78xUCY4e8Xcs3sa/5w
+# Created by DBIx::Class::Schema::Loader v0.07002 @ 2011-04-30 22:13:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:W7JFHQ3rxCKFaXSx59r1aQ
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

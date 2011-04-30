@@ -1,7 +1,13 @@
-drop table if exists reports      cascade;
-drop table if exists config       cascade;
-drop table if exists result       cascade;
-drop table if exists smoke_config cascade;
+DROP TABLE IF EXISTS report       CASCADE;
+DROP TABLE IF EXISTS config       CASCADE;
+DROP TABLE IF EXISTS result       CASCADE;
+DROP TABLE IF EXISTS smoke_config CASCADE;
+
+CREATE TABLE smoke_config
+           ( id      serial not null  PRIMARY KEY
+           , md5     varchar UNIQUE
+           , config  varchar
+           ) ;
 
 CREATE TABLE report
            ( id              serial not null PRIMARY KEY
@@ -48,17 +54,10 @@ CREATE TABLE config
 
 CREATE TABLE result
            ( id         serial not null  PRIMARY KEY
-           , config_id  int     not null  REFERENCES config (id)
--- result
+           , config_id  int     not null  REFERENCES config (id)  -- result
            , io_env     varchar not null       -- "perlio"
            , locale     varchar                -- "nl_NL.utf8"
            , output     varchar not null       -- "..."
            , summary    varchar not null       -- "F"
            , statistics varchar                -- "Files=1802, Tests=349808, .."
-           ) ;
-
-CREATE TABLE smoke_config
-           ( id      serial not null  PRIMARY KEY
-           , md5     varchar UNIQUE
-           , config  varchar
            ) ;

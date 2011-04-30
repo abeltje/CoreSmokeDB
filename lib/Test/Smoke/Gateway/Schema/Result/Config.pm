@@ -24,41 +24,62 @@ __PACKAGE__->table("config");
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
+  sequence: 'config_id_seq'
 
 =head2 report_id
 
-  data_type: 'int'
+  data_type: 'integer'
   is_foreign_key: 1
   is_nullable: 0
 
 =head2 arguments
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 0
+  original: {data_type => "varchar"}
 
 =head2 parallel
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 0
+  original: {data_type => "varchar"}
 
 =head2 debugging
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 0
+  original: {data_type => "varchar"}
 
 =cut
 
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
+  {
+    data_type         => "integer",
+    is_auto_increment => 1,
+    is_nullable       => 0,
+    sequence          => "config_id_seq",
+  },
   "report_id",
-  { data_type => "int", is_foreign_key => 1, is_nullable => 0 },
+  { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "arguments",
-  { data_type => "varchar", is_nullable => 0 },
+  {
+    data_type   => "text",
+    is_nullable => 0,
+    original    => { data_type => "varchar" },
+  },
   "parallel",
-  { data_type => "varchar", is_nullable => 0 },
+  {
+    data_type   => "text",
+    is_nullable => 0,
+    original    => { data_type => "varchar" },
+  },
   "debugging",
-  { data_type => "varchar", is_nullable => 0 },
+  {
+    data_type   => "text",
+    is_nullable => 0,
+    original    => { data_type => "varchar" },
+  },
 );
 __PACKAGE__->set_primary_key("id");
 
@@ -95,8 +116,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07002 @ 2011-04-20 15:13:05
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:4MeQts4KcFjrWu34dxo5tA
+# Created by DBIx::Class::Schema::Loader v0.07002 @ 2011-04-30 22:13:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:qMhkfZ4rMi7MVU45Ofn33Q
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

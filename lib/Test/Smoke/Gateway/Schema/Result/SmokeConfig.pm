@@ -24,29 +24,45 @@ __PACKAGE__->table("smoke_config");
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
+  sequence: 'smoke_config_id_seq'
 
 =head2 md5
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 1
+  original: {data_type => "varchar"}
 
 =head2 config
 
-  data_type: 'varchar'
+  data_type: 'text'
   is_nullable: 1
+  original: {data_type => "varchar"}
 
 =cut
 
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
+  {
+    data_type         => "integer",
+    is_auto_increment => 1,
+    is_nullable       => 0,
+    sequence          => "smoke_config_id_seq",
+  },
   "md5",
-  { data_type => "varchar", is_nullable => 1 },
+  {
+    data_type   => "text",
+    is_nullable => 1,
+    original    => { data_type => "varchar" },
+  },
   "config",
-  { data_type => "varchar", is_nullable => 1 },
+  {
+    data_type   => "text",
+    is_nullable => 1,
+    original    => { data_type => "varchar" },
+  },
 );
 __PACKAGE__->set_primary_key("id");
-__PACKAGE__->add_unique_constraint("md5_unique", ["md5"]);
+__PACKAGE__->add_unique_constraint("smoke_config_md5_key", ["md5"]);
 
 =head1 RELATIONS
 
@@ -66,8 +82,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07002 @ 2011-04-30 11:02:58
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:byarsMxVJmDBaOiYUkxK5A
+# Created by DBIx::Class::Schema::Loader v0.07002 @ 2011-04-30 22:13:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:9Qg2W/2Z8Qt7QfOKTSGWCA
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration
