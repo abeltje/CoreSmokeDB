@@ -1,11 +1,35 @@
-Automated smoke report:
-Perl version: [% report.perl_id %]
-Git describe: [% report.git_describe %]
-      Git id: [% report.git_id %]
+Automated smoke report for [% report.perl_id %] patch [% report.git_id %] [% report.git_describe %]
+[% report.hostname %]: [% report.cpu_description %] ([% report.architecture %]/[% report.cpu_count %] cpus)
+    on        [% report.osname %] [% report.osversion %]
+    using     [% report.cc %] version [% report.ccversion %]
+    smoketime [% report.duration %] (average [% report.config_count %] reports)
 
+Summary: [% report.summary %]
+
+O = OK  F = Failure(s), extended report at the bottom
+X = Failure(s) under TEST but not under harness
+? = still running or test results not (yet) available
+Build failures during:       - = unknown or N/A
+c = Configure, m = make, M = make (after miniperl), t = make test-prep
+
+[% report.git_describe %]
+---------------------- ----------------------------------------------------
 [% FOREACH config = report.configs %]
-  [% FOREACH result = config.results -%]
-[% result.summary %]([% result.io_env -%])
+  [%- FOREACH result = config.results -%]
+[% result.summary %]   
   [%- END -%]
   [%- config.arguments %]
+[% END -%]
+|   |   |
+|   |   +-- stdio
+|   +------ perlio
++---------- locale
+
+[% IF report.manifest_msgs -%]
+MANIFEST messages:
+[% report.manifest_msgs %]
+[% END %]
+[% IF report.compiler_msgs -%]
+Compiler messages:
+[% report.compiler_msgs %]
 [% END %]

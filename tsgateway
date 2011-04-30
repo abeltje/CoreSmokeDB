@@ -9,7 +9,9 @@ use Test::Smoke::Gateway::Schema;
 use Test::Smoke::Gateway;
 my $gw = Test::Smoke::Gateway->new(
     schema => Test::Smoke::Gateway::Schema->connect(
-        'dbi:SQLite:dbname=/data/apache/tsmbgw/tsmbgw.db',
+        'dbi:Pg:host=gromit;database=tsgateway',
+        'tsgateway',
+        'TSg4t3w4y'
     ),
 );
 
@@ -24,12 +26,14 @@ post '/report' => sub {
 
     my $new_report = $gw->post_report($data);
 
+    header 'content-type', 'text/plain';
     template 'report' => { report => $new_report };
 };
 
 get '/report' => sub {
     my $report = $gw->get_report(params->{'id'});
 
+    header 'content-type', 'text/plain';
     template 'report' => { report => $report };
 };
 
