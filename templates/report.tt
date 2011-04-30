@@ -15,15 +15,15 @@ c = Configure, m = make, M = make (after miniperl), t = make test-prep
 [% report.git_describe %]
 ---------------------- ----------------------------------------------------
 [% FOREACH config = report.configs %]
-  [%- FOREACH result = config.results -%]
+  [%- FOREACH result = config.results -%][% io_env.push(result.io_env) %]
 [% result.summary %]   
   [%- END -%]
   [%- config.arguments %]
 [% END -%]
 |   |   |
-|   |   +-- stdio
-|   +------ perlio
-+---------- locale
+|   |   +-- stdio  ([% io_env.0 %])
+|   +------ perlio ([% io_env.1 %])
++---------- locale ([% io_env.2 %]) 
 
 [% IF report.manifest_msgs -%]
 MANIFEST messages:
