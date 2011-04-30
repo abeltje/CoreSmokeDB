@@ -1,0 +1,11 @@
+Automated smoke report:
+Perl version: [% report.perl_id %]
+Git describe: [% report.git_describe %]
+      Git id: [% report.git_id %]
+
+[% FOREACH config = report.configs %]
+  [% FOREACH result = config.results -%]
+[% result.summary %]([% result.io_env -%])
+  [%- END -%]
+  [%- config.arguments %]
+[% END %]

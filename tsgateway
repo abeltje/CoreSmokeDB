@@ -1,0 +1,40 @@
+#! /usr/bin/perl
+use warnings;
+use strict;
+use lib 'lib';
+
+use Dancer;
+
+use Test::Smoke::Gateway::Schema;
+use Test::Smoke::Gateway;
+my $gw = Test::Smoke::Gateway->new(
+    schema => Test::Smoke::Gateway::Schema->connect(
+        'dbi:SQLite:dbname=/data/apache/tsmbgw/tsmbgw.db',
+    ),
+);
+
+set log         => 'debug';
+#set logger      => 'console';
+set show_errors => 1;
+set warnings    => 1;
+set views => path(dirname(__FILE__), 'templates');
+
+post '/report' => sub {
+    my $data = from_json(params->{'json'});
+
+    my $new_report = $gw->post_report($data);
+
+    template 'report' => { report => $new_report };
+};
+
+get '/report' => sub {
+    my $report = $gw->get_report(params->{'id'});
+
+    template 'report' => { report => $report };
+};
+
+get '/test' => sub {
+    return "testing...\n";
+};
+
+dance();

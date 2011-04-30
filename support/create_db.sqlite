@@ -1,10 +1,10 @@
-drop table if exists reports      cascade;
-drop table if exists config       cascade;
-drop table if exists result       cascade;
-drop table if exists smoke_config cascade;
+drop table if exists reports; --         cascade;
+drop table if exists config;  --         cascade;
+drop table if exists result;       --         cascade;
+drop table if exists smoke_config; --    cascade;
 
 CREATE TABLE report
-           ( id              serial not null PRIMARY KEY
+           ( id              integer PRIMARY KEY
            , sconfig_id      int REFERENCES smoke_config (id)
 
            , duration        int                      -- 35464
@@ -38,7 +38,7 @@ CREATE TABLE report
            ) ;
 
 CREATE TABLE config
-           ( id        serial not null PRIMARY KEY
+           ( id        integer PRIMARY KEY
            , report_id int    not null REFERENCES report (id)
 --config
            , arguments varchar not null     -- "-Duse64bitall -DDEBUGGING"
@@ -47,7 +47,7 @@ CREATE TABLE config
            ) ;
 
 CREATE TABLE result
-           ( id         serial not null  PRIMARY KEY
+           ( id         integer  PRIMARY KEY
            , config_id  int     not null  REFERENCES config (id)
 -- result
            , io_env     varchar not null       -- "perlio"
@@ -58,7 +58,7 @@ CREATE TABLE result
            ) ;
 
 CREATE TABLE smoke_config
-           ( id      serial not null  PRIMARY KEY
+           ( id      integer  PRIMARY KEY
            , md5     varchar UNIQUE
            , config  varchar
            ) ;
