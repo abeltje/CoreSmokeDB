@@ -12,6 +12,8 @@ make_schema_at(
        overwrite_modifications => 1,
    },
    [
-       'dbi:SQLite:dbname=/data/apache/tsmbgw/tsmbgw.db',
+       'dbi:Pg:host=gromit;database=tsgateway',
+       'tsgateway',
+       'TSg4t3w4y',
    ],
 );
