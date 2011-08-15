@@ -85,7 +85,7 @@ sub post_smoke_config {
     my $md5 = Digest::MD5::md5_hex($all_data);
 
     my $sc_data = $self->schema->resultset('SmokeConfig')->find(
-        $md5
+        $md5,
         { key => 'smoke_config_md5_key' }
     );
 

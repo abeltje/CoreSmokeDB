@@ -61,3 +61,9 @@ CREATE TABLE result
            , summary    varchar not null       -- "F"
            , statistics varchar                -- "Files=1802, Tests=349808, .."
            ) ;
+
+CREATE TABLE smoke_config
+           ( id      serial not null  PRIMARY KEY
+           , md5     varchar not null UNIQUE
+           , config  varchar
+           ) ;
