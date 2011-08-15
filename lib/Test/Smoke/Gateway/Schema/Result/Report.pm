@@ -310,7 +310,7 @@ __PACKAGE__->add_columns(
 );
 __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint(
-  "report_git_id_key",
+  "report_git_id_smoke_date_hostname_architecture_cc_ccversion_key",
   [
     "git_id",
     "smoke_date",
@@ -359,8 +359,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07002 @ 2011-04-30 22:13:44
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:W7JFHQ3rxCKFaXSx59r1aQ
+# Created by DBIx::Class::Schema::Loader v0.07002 @ 2011-08-15 16:40:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:1s+Pj048hmHDhLHBBfF7xA
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

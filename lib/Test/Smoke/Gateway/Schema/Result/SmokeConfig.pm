@@ -29,7 +29,8 @@ __PACKAGE__->table("smoke_config");
 =head2 md5
 
   data_type: 'text'
-  is_nullable: 1
+  is_nullable: 0
+  original: {data_type => "varchar"}
   original: {data_type => "varchar"}
 
 =head2 config
@@ -51,7 +52,7 @@ __PACKAGE__->add_columns(
   "md5",
   {
     data_type   => "text",
-    is_nullable => 1,
+    is_nullable => 0,
     original    => { data_type => "varchar" },
   },
   "config",
@@ -82,8 +83,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07002 @ 2011-04-30 22:13:44
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:9Qg2W/2Z8Qt7QfOKTSGWCA
+# Created by DBIx::Class::Schema::Loader v0.07002 @ 2011-08-15 16:40:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:cT64hOcatFMI3WLe/C7rfw
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration
