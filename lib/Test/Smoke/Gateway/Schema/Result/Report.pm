@@ -42,6 +42,36 @@ __PACKAGE__->table("report");
   data_type: 'integer'
   is_nullable: 1
 
+=head2 reporter
+
+  data_type: 'text'
+  is_nullable: 1
+  original: {data_type => "varchar"}
+
+=head2 smoke_perl
+
+  data_type: 'text'
+  is_nullable: 1
+  original: {data_type => "varchar"}
+
+=head2 smoke_revision
+
+  data_type: 'text'
+  is_nullable: 1
+  original: {data_type => "varchar"}
+
+=head2 smoke_version
+
+  data_type: 'text'
+  is_nullable: 1
+  original: {data_type => "varchar"}
+
+=head2 smokker_version
+
+  data_type: 'text'
+  is_nullable: 1
+  original: {data_type => "varchar"}
+
 =head2 smoke_date
 
   data_type: 'timestamp with time zone'
@@ -187,6 +217,36 @@ __PACKAGE__->add_columns(
   { data_type => "integer", is_nullable => 1 },
   "config_count",
   { data_type => "integer", is_nullable => 1 },
+  "reporter",
+  {
+    data_type   => "text",
+    is_nullable => 1,
+    original    => { data_type => "varchar" },
+  },
+  "smoke_perl",
+  {
+    data_type   => "text",
+    is_nullable => 1,
+    original    => { data_type => "varchar" },
+  },
+  "smoke_revision",
+  {
+    data_type   => "text",
+    is_nullable => 1,
+    original    => { data_type => "varchar" },
+  },
+  "smoke_version",
+  {
+    data_type   => "text",
+    is_nullable => 1,
+    original    => { data_type => "varchar" },
+  },
+  "smokker_version",
+  {
+    data_type   => "text",
+    is_nullable => 1,
+    original    => { data_type => "varchar" },
+  },
   "smoke_date",
   { data_type => "timestamp with time zone", is_nullable => 0 },
   "perl_id",
@@ -359,8 +419,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07002 @ 2011-08-15 16:40:49
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:1s+Pj048hmHDhLHBBfF7xA
+# Created by DBIx::Class::Schema::Loader v0.07002 @ 2011-08-16 13:26:40
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:o3MABhSYBFRq4YOKHLzcaA
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration
