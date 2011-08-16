@@ -66,7 +66,7 @@ __PACKAGE__->table("report");
   is_nullable: 1
   original: {data_type => "varchar"}
 
-=head2 smokker_version
+=head2 smoker_version
 
   data_type: 'text'
   is_nullable: 1
@@ -241,7 +241,7 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     original    => { data_type => "varchar" },
   },
-  "smokker_version",
+  "smoker_version",
   {
     data_type   => "text",
     is_nullable => 1,
@@ -419,8 +419,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07002 @ 2011-08-16 13:26:40
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:o3MABhSYBFRq4YOKHLzcaA
+# Created by DBIx::Class::Schema::Loader v0.07002 @ 2011-08-16 13:38:31
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ipUIWeGceQa9y3u5sgMfmQ
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

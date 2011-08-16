@@ -20,7 +20,7 @@ CREATE TABLE report
            , smoke_perl      varchar                  -- 5.10.1
            , smoke_revision  varchar                  -- 1285
            , smoke_version   varchar                  -- 1.44
-           , smokker_version varchar                  -- 0.045
+           , smoker_version  varchar                  -- 0.045
 -- id
            , smoke_date      timestamp with time zone not null -- 2011-04-14 21:20:43Z
            , perl_id         varchar not null                  -- "5.14.0"
