@@ -33,6 +33,7 @@ sub post_report {
         %{ delete $data->{'id'}    },
         %{ delete $data->{'node'}  },
         %{ delete $data->{'build'} },
+        %{ delete $data->{'report'} },
         sconfig_id => $sconfig->id,
     };
     $report_data->{lc($_)} = delete $report_data->{$_} for keys %$report_data;
@@ -43,9 +44,7 @@ sub post_report {
             for my $config ( @{ $data->{'configs'} } ) {
                 my $reports = delete $config->{'reports'};
                 my $c = $r->create_related('configs', $config);
-                for my $report ( @$reports ) {
-                    my $s = $c->create_related('reports', $report);
-                }
+                $c->create_related('reports', $_) for @$reports;
             }
             return $r;
         }

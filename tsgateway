@@ -9,7 +9,7 @@ use Test::Smoke::Gateway::Schema;
 use Test::Smoke::Gateway;
 my $gw = Test::Smoke::Gateway->new(
     schema => Test::Smoke::Gateway::Schema->connect(
-        'dbi:Pg:host=gromit;database=tsgateway',
+        'dbi:Pg:host=localhost;database=tsgateway',
         'tsgateway',
         'TSg4t3w4y'
     ),
@@ -34,7 +34,10 @@ get '/report' => sub {
     my $report = $gw->get_report(params->{'id'});
 
     header 'content-type', 'text/plain';
-    template 'report' => { report => $report };
+    template 'report' => {
+        report  => $report,
+        version => $Test::Smoke::Gateway::VERSION,
+    };
 };
 
 get '/test' => sub {
