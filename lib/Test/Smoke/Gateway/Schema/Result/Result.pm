@@ -109,6 +109,21 @@ __PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
+=head2 failures
+
+Type: has_many
+
+Related object: L<Test::Smoke::Gateway::Schema::Result::Failure>
+
+=cut
+
+__PACKAGE__->has_many(
+  "failures",
+  "Test::Smoke::Gateway::Schema::Result::Failure",
+  { "foreign.result_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 config
 
 Type: belongs_to
@@ -125,8 +140,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07002 @ 2011-04-30 14:31:20
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:gN0Dzf3m/aOrveYdQVYocQ
+# Created by DBIx::Class::Schema::Loader v0.07002 @ 2012-03-30 18:06:04
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:29+O/J+8zQwnWVZMirO/Zw
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

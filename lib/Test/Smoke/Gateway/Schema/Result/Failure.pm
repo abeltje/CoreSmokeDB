@@ -1,4 +1,4 @@
-package Test::Smoke::Gateway::Schema::Result::Config;
+package Test::Smoke::Gateway::Schema::Result::Failure;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
@@ -11,11 +11,11 @@ use base 'DBIx::Class::Core';
 
 =head1 NAME
 
-Test::Smoke::Gateway::Schema::Result::Config
+Test::Smoke::Gateway::Schema::Result::Failure
 
 =cut
 
-__PACKAGE__->table("config");
+__PACKAGE__->table("failure");
 
 =head1 ACCESSORS
 
@@ -24,39 +24,27 @@ __PACKAGE__->table("config");
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'config_id_seq'
+  sequence: 'failure_id_seq'
 
-=head2 report_id
+=head2 result_id
 
   data_type: 'integer'
   is_foreign_key: 1
   is_nullable: 0
 
-=head2 arguments
+=head2 testname
 
   data_type: 'text'
   is_nullable: 0
   original: {data_type => "varchar"}
 
-=head2 parallel
+=head2 status
 
   data_type: 'text'
   is_nullable: 0
   original: {data_type => "varchar"}
 
-=head2 debugging
-
-  data_type: 'text'
-  is_nullable: 0
-  original: {data_type => "varchar"}
-
-=head2 cc
-
-  data_type: 'text'
-  is_nullable: 1
-  original: {data_type => "varchar"}
-
-=head2 cc_version
+=head2 extra
 
   data_type: 'text'
   is_nullable: 1
@@ -70,35 +58,23 @@ __PACKAGE__->add_columns(
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "config_id_seq",
+    sequence          => "failure_id_seq",
   },
-  "report_id",
+  "result_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
-  "arguments",
+  "testname",
   {
     data_type   => "text",
     is_nullable => 0,
     original    => { data_type => "varchar" },
   },
-  "parallel",
+  "status",
   {
     data_type   => "text",
     is_nullable => 0,
     original    => { data_type => "varchar" },
   },
-  "debugging",
-  {
-    data_type   => "text",
-    is_nullable => 0,
-    original    => { data_type => "varchar" },
-  },
-  "cc",
-  {
-    data_type   => "text",
-    is_nullable => 1,
-    original    => { data_type => "varchar" },
-  },
-  "cc_version",
+  "extra",
   {
     data_type   => "text",
     is_nullable => 1,
@@ -109,39 +85,24 @@ __PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
-=head2 report
+=head2 result
 
 Type: belongs_to
-
-Related object: L<Test::Smoke::Gateway::Schema::Result::Report>
-
-=cut
-
-__PACKAGE__->belongs_to(
-  "report",
-  "Test::Smoke::Gateway::Schema::Result::Report",
-  { id => "report_id" },
-  { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
-);
-
-=head2 results
-
-Type: has_many
 
 Related object: L<Test::Smoke::Gateway::Schema::Result::Result>
 
 =cut
 
-__PACKAGE__->has_many(
-  "results",
+__PACKAGE__->belongs_to(
+  "result",
   "Test::Smoke::Gateway::Schema::Result::Result",
-  { "foreign.config_id" => "self.id" },
-  { cascade_copy => 0, cascade_delete => 0 },
+  { id => "result_id" },
+  { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07002 @ 2012-03-30 18:03:50
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:RlR8T44wuMMe4VvTLx1R1A
+# Created by DBIx::Class::Schema::Loader v0.07002 @ 2012-03-30 18:06:04
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hndTlLhipWIvdJmWKiVjMA
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

@@ -137,18 +137,6 @@ __PACKAGE__->table("report");
   is_nullable: 1
   original: {data_type => "varchar"}
 
-=head2 cc
-
-  data_type: 'text'
-  is_nullable: 0
-  original: {data_type => "varchar"}
-
-=head2 ccversion
-
-  data_type: 'text'
-  is_nullable: 0
-  original: {data_type => "varchar"}
-
 =head2 username
 
   data_type: 'text'
@@ -309,18 +297,6 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     original    => { data_type => "varchar" },
   },
-  "cc",
-  {
-    data_type   => "text",
-    is_nullable => 0,
-    original    => { data_type => "varchar" },
-  },
-  "ccversion",
-  {
-    data_type   => "text",
-    is_nullable => 0,
-    original    => { data_type => "varchar" },
-  },
   "username",
   {
     data_type   => "text",
@@ -369,17 +345,6 @@ __PACKAGE__->add_columns(
   },
 );
 __PACKAGE__->set_primary_key("id");
-__PACKAGE__->add_unique_constraint(
-  "report_git_id_smoke_date_hostname_architecture_cc_ccversion_key",
-  [
-    "git_id",
-    "smoke_date",
-    "hostname",
-    "architecture",
-    "cc",
-    "ccversion",
-  ],
-);
 
 =head1 RELATIONS
 
@@ -419,8 +384,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07002 @ 2011-08-16 13:38:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ipUIWeGceQa9y3u5sgMfmQ
+# Created by DBIx::Class::Schema::Loader v0.07002 @ 2012-03-30 18:03:50
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:P0dGPi0fd9Z55ZCAL1u8LA
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

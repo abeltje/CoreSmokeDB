@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS report       CASCADE;
 DROP TABLE IF EXISTS config       CASCADE;
 DROP TABLE IF EXISTS result       CASCADE;
+DROP TABLE IF EXISTS failure      CASCADE;
 DROP TABLE IF EXISTS smoke_config CASCADE;
 
 CREATE TABLE smoke_config
@@ -34,8 +35,6 @@ CREATE TABLE report
            , osversion       varchar not null         -- "B.11.31/64"
            , cpu_count       varchar                  -- "1 [2 cores]"
            , cpu_description varchar                  -- "Itanium 2 9100/1710"
-           , cc              varchar not null         -- "cc"
-           , ccversion       varchar not null         -- "B3910B"
            , username        varchar                  -- "tux"
 -- build
            , TEST_JOBS       varchar                  -- NULL
@@ -46,7 +45,7 @@ CREATE TABLE report
            , skipped_tests   varchar                  -- "..."
            , harness_only    varchar                  -- "1"
            , summary         varchar not null         -- "FAIL(F)"
-           , UNIQUE(git_id, smoke_date, hostname, architecture, cc, ccversion)
+           , UNIQUE(git_id, smoke_date, duration, hostname, architecture)
            ) ;
 
 CREATE TABLE config
@@ -56,14 +55,24 @@ CREATE TABLE config
            , arguments varchar not null     -- "-Duse64bitall -DDEBUGGING"
            , parallel  varchar not null     -- "1"
            , debugging varchar not null     -- "1"
+           , cc        varchar not null     -- "cc"
+           , ccversion varchar not null     -- "B3910B"
            ) ;
 
 CREATE TABLE result
            ( id         serial not null  PRIMARY KEY
-           , config_id  int     not null  REFERENCES config (id)  -- result
+           , config_id  int     not null REFERENCES config (id)  -- result
            , io_env     varchar not null       -- "perlio"
            , locale     varchar                -- "nl_NL.utf8"
            , output     varchar not null       -- "..."
            , summary    varchar not null       -- "F"
            , statistics varchar                -- "Files=1802, Tests=349808, .."
+           ) ;
+
+CREATE TABLE failure
+           ( id        serial not null PRIMARY KEY
+           , result_id int not null REFERENCES result (id)
+           , testname  varchar not null
+           , status    varchar not null
+           , extra     varchar
            ) ;
