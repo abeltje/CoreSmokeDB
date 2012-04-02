@@ -41,6 +41,7 @@ CREATE TABLE report
            , test_jobs       varchar                  -- NULL
            , lc_all          varchar                  -- "en_US.utf8"
            , lang            varchar                  -- NULL
+           , user_note       varchar                  -- "logs: http://blah.bla/smokelogs/"
            , manifest_msgs   bytea                    -- "..."
            , compiler_msgs   bytea                    -- "..."
            , skipped_tests   varchar                  -- "..."
