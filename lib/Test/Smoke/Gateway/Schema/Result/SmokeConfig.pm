@@ -1,17 +1,21 @@
+use utf8;
 package Test::Smoke::Gateway::Schema::Result::SmokeConfig;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
+
+=head1 NAME
+
+Test::Smoke::Gateway::Schema::Result::SmokeConfig
+
+=cut
 
 use strict;
 use warnings;
 
 use base 'DBIx::Class::Core';
 
-
-=head1 NAME
-
-Test::Smoke::Gateway::Schema::Result::SmokeConfig
+=head1 TABLE: C<smoke_config>
 
 =cut
 
@@ -30,7 +34,6 @@ __PACKAGE__->table("smoke_config");
 
   data_type: 'text'
   is_nullable: 0
-  original: {data_type => "varchar"}
   original: {data_type => "varchar"}
 
 =head2 config
@@ -62,7 +65,31 @@ __PACKAGE__->add_columns(
     original    => { data_type => "varchar" },
   },
 );
+
+=head1 PRIMARY KEY
+
+=over 4
+
+=item * L</id>
+
+=back
+
+=cut
+
 __PACKAGE__->set_primary_key("id");
+
+=head1 UNIQUE CONSTRAINTS
+
+=head2 C<smoke_config_md5_key>
+
+=over 4
+
+=item * L</md5>
+
+=back
+
+=cut
+
 __PACKAGE__->add_unique_constraint("smoke_config_md5_key", ["md5"]);
 
 =head1 RELATIONS
@@ -83,8 +110,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07002 @ 2011-08-15 16:40:49
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:cT64hOcatFMI3WLe/C7rfw
+# Created by DBIx::Class::Schema::Loader v0.07020 @ 2012-04-02 22:16:28
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5gsna/XxaxAuavXSGdlaMw
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

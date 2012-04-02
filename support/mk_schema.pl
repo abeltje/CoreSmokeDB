@@ -12,7 +12,7 @@ make_schema_at(
        overwrite_modifications => 1,
    },
    [
-       'dbi:Pg:host=gromit;database=tsgateway',
+       'dbi:Pg:host=localhost;database=tsgateway',
        'tsgateway',
        'TSg4t3w4y',
    ],

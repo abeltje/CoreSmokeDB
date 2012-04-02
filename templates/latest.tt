@@ -1,0 +1,23 @@
+<h2>Test-Smoke latest</h2>
+<table width="100%" style="border: 2px black ridge;">
+<caption>Latest perlversion [% search.perl_latest %]</caption>
+<tr>
+    <td>Arch</td><td>Host</td><td>OS</td><td>Git-id</td><td>Status</td>
+</tr>
+[% mycount = 1 %][% FOREACH row = search.reports -%]
+[% colorclass = "failtest" -%]
+[% IF row.summary.match('PASS') -%][% colorclass = 'passtest' -%]
+[% ELSIF row.summary.match("FAIL\(X\)") -%][% colorclass = 'failtodo' -%]
+[% ELSIF row.summary.match("[cCmM]") -%][% colorclass = 'failbuild' -%][% END -%]
+<tr style="background-color: [% IF mycount % 2 %]white[% ELSE %]#dedede[% END %];">
+  <td>[% row.architecture %]</td>
+  <td>[% row.hostname %]</td>
+  <td>[% row.osname %] - [% row.osversion %]</td>
+  <td>[% row.git_describe %]</td>
+  <td class="[% colorclass %]">
+    <a href="/report/[% row.id %]" class="[% colorclass %]">[% row.summary %]</a>
+  </td>
+</tr>
+[% mycount = mycount + 1 %][% END -%]
+</table>
+

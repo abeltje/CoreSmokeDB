@@ -1,17 +1,21 @@
+use utf8;
 package Test::Smoke::Gateway::Schema::Result::Config;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
+
+=head1 NAME
+
+Test::Smoke::Gateway::Schema::Result::Config
+
+=cut
 
 use strict;
 use warnings;
 
 use base 'DBIx::Class::Core';
 
-
-=head1 NAME
-
-Test::Smoke::Gateway::Schema::Result::Config
+=head1 TABLE: C<config>
 
 =cut
 
@@ -44,6 +48,16 @@ __PACKAGE__->table("config");
   is_nullable: 0
   original: {data_type => "varchar"}
 
+=head2 started
+
+  data_type: 'timestamp with time zone'
+  is_nullable: 1
+
+=head2 duration
+
+  data_type: 'integer'
+  is_nullable: 1
+
 =head2 cc
 
   data_type: 'text'
@@ -55,16 +69,6 @@ __PACKAGE__->table("config");
   data_type: 'text'
   is_nullable: 1
   original: {data_type => "varchar"}
-
-=head2 duration
-
-  data_type: 'integer'
-  is_nullable: 1
-
-=head2 started
-
-  data_type: 'timestamp with time zone'
-  is_nullable: 1
 
 =cut
 
@@ -90,6 +94,10 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
     original    => { data_type => "varchar" },
   },
+  "started",
+  { data_type => "timestamp with time zone", is_nullable => 1 },
+  "duration",
+  { data_type => "integer", is_nullable => 1 },
   "cc",
   {
     data_type   => "text",
@@ -102,11 +110,18 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     original    => { data_type => "varchar" },
   },
-  "duration",
-  { data_type => "integer", is_nullable => 1 },
-  "started",
-  { data_type => "timestamp with time zone", is_nullable => 1 },
 );
+
+=head1 PRIMARY KEY
+
+=over 4
+
+=item * L</id>
+
+=back
+
+=cut
+
 __PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
@@ -142,8 +157,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07002 @ 2012-03-31 15:04:36
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:2P8aDG78blsf25AnKo7Fvg
+# Created by DBIx::Class::Schema::Loader v0.07020 @ 2012-04-02 22:16:28
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:RjdH1Gb0LE4KNWwV23oUnQ
 
 
 sub c_compiler_key {

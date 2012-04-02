@@ -132,55 +132,151 @@ sub post_smoke_config {
 }
 
 sub search {
-    my ($self, $data) = @_;
-
-}
-
-sub search_blank {
     my $self = shift;
+    my ($data) = @_;
     
+    my $perlversion_list = $self->get_perlversion_list;
+    my $perl_latest = $perlversion_list->[0]{label};
+    my $pv_selected = $data->{perl_version} || $perl_latest;
+    my $aov_selected = $data->{arch_os_ver} // '';
+    my %filter;
+    (
+        $filter{architecture},
+        $filter{osname},
+        $filter{osversion},
+    ) = split /##/, $aov_selected, 3;
+    while (my ($k, $v) = each %filter) {
+        delete $filter{$k} if ! $v;
+    }
+
+    my ($whatnext) = split " ", lc($data->{whatnext} || 'list');
+    my $page = $data->{page_selected} || 1;
+    my $reports;
+    if ($whatnext eq 'list') {
+        $pv_selected = '%' if !$data->{perl_version};
+        $reports = $self->get_reports_by_date($pv_selected, $page);
+    }
+    else {
+        $reports = $self->get_reports_by_perl_version($pv_selected, \%filter);
+    }
 
     return {
-        ososversion => $self->get_osname_osversion,
-        architecture => $self->get_architecture,
+        perl_latest   => $perl_latest,
+        perl_versions => $perlversion_list,
+        pv_selected   => $pv_selected,
+        page_selected => $page,
+        whatnext      => $whatnext,
+        arch_os_ver   => $self->get_architecture_os,
+        aov_selected  => $aov_selected,
+        reports       => $reports,
     };
 }
 
-sub get_osname_osversion {
+sub get_reports_by_perl_version {
     my $self = shift;
-    my $ososversion = $self->schema->resultset('Report')->search(
-        undef,
+    my ($pattern, $filter) = @_;
+    $pattern ||= '%';
+    $pattern=~ s/\*/%/g;
+
+    my $sr = $self->schema->resultset('Report');
+    my $reports = $sr->search(
         {
-            columns  => [qw/osname osversion/],
-            group_by => [qw/osname osversion/],
+            perl_id    => { -like => $pattern },
+            smoke_date => {
+                '=' => $sr->search(
+                    {
+                        architecture => {'=' => \'me.architecture'},
+                        hostname     => {'=' => \'me.hostname'},
+                        osname       => {'=' => \'me.osname'},
+                        osversion    => {'=' => \'me.osversion'},
+                        perl_id      => {'=' => \'me.perl_id'},
+                    },
+                    { alias => 'rr' }
+                )->get_column('smoke_date')->max_rs->as_query
+            },
+            %$filter,
         },
+        {
+            order_by => [qw/architecture hostname osname osversion/],
+        }
     );
-    return [
-        map {
-            my $record = {
-                value => join('##',  $_->osname, $_->osversion),
-                label => join(' - ', $_->osname, $_->osversion),
-            }
-        } $ososversion->all(),
-    ];
+    return [ $reports->all() ];
 }
 
-sub get_architecture {
+sub get_reports_by_date {
+    my $self = shift;
+    my ($pattern, $page) = @_;
+    $pattern ||= '%';
+    $pattern =~ s/\*/%/g;
+    $page ||= 1;
+
+    my $reports = $self->schema->resultset('Report')->search(
+        {
+            perl_id => { -like => $pattern },
+        },
+        {
+            order_by => { -desc => 'smoke_date' },
+            page     => $page,
+            rows     => 25,
+        }
+    );
+
+    return [ $reports->all() ];
+}
+
+sub get_architecture_os {
     my $self = shift;
     my $architecture = $self->schema->resultset('Report')->search(
         undef,
         {
-            columns  => [qw/architecture/],
-            group_by => [qw/architecture/],
+            columns  => [qw/architecture osname osversion/],
+            group_by => [qw/architecture osname osversion/],
+            order_by => [qw/architecture osname osversion/],
         },
     );
     return [
         map {
             my $record = {
-                value => $_->architecture,
-                label => $_->architecture,
+                value => join(
+                    "##",
+                    $_->architecture,
+                    $_->osname,
+                    $_->osversion
+                ),
+                label => join(
+                    " - ",
+                    $_->architecture,
+                    $_->osname,
+                    $_->osversion
+                ),
             }
         } $architecture->all(),
+    ];
+}
+
+sub get_perlversion_list {
+    my $self = shift;
+    my ($pattern) = @_;
+    $pattern ||= '%';
+    $pattern =~ s/\*/%/g;
+    
+    my $pversions = $self->schema->resultset('Report')->search(
+        {
+            perl_id => { -like => $pattern }
+        },
+        {
+            columns  => [qw/perl_id/],
+            group_by => [qw/perl_id/],
+            order_by => {-desc => 'perl_id'},
+        }
+    );
+    return [
+        map {
+            my $record = {
+                value => $_->perl_id,
+                label => $_->perl_id,
+            };
+        } $pversions->all()
     ];
 }
 

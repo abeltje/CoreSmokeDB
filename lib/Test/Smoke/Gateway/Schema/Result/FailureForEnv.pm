@@ -1,17 +1,21 @@
+use utf8;
 package Test::Smoke::Gateway::Schema::Result::FailureForEnv;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
+
+=head1 NAME
+
+Test::Smoke::Gateway::Schema::Result::FailureForEnv
+
+=cut
 
 use strict;
 use warnings;
 
 use base 'DBIx::Class::Core';
 
-
-=head1 NAME
-
-Test::Smoke::Gateway::Schema::Result::FailureForEnv
+=head1 TABLE: C<failures_for_env>
 
 =cut
 
@@ -39,27 +43,24 @@ __PACKAGE__->add_columns(
   "failure_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
 );
-__PACKAGE__->add_unique_constraint(
-  "failures_for_env_result_id_failure_id_key",
-  ["result_id", "failure_id"],
-);
 
-=head1 RELATIONS
+=head1 UNIQUE CONSTRAINTS
 
-=head2 result
+=head2 C<failures_for_env_result_id_key>
 
-Type: belongs_to
+=over 4
 
-Related object: L<Test::Smoke::Gateway::Schema::Result::Result>
+=item * L</result_id>
+
+=item * L</failure_id>
+
+=back
 
 =cut
 
-__PACKAGE__->belongs_to(
-  "result",
-  "Test::Smoke::Gateway::Schema::Result::Result",
-  { id => "result_id" },
-  { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
-);
+__PACKAGE__->add_unique_constraint("failures_for_env_result_id_key", ["result_id", "failure_id"]);
+
+=head1 RELATIONS
 
 =head2 failure
 
@@ -76,9 +77,24 @@ __PACKAGE__->belongs_to(
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
+=head2 result
 
-# Created by DBIx::Class::Schema::Loader v0.07002 @ 2012-03-31 10:35:33
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:8zZFYAKrUtwSXxRS+4AlEA
+Type: belongs_to
+
+Related object: L<Test::Smoke::Gateway::Schema::Result::Result>
+
+=cut
+
+__PACKAGE__->belongs_to(
+  "result",
+  "Test::Smoke::Gateway::Schema::Result::Result",
+  { id => "result_id" },
+  { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
+);
+
+
+# Created by DBIx::Class::Schema::Loader v0.07020 @ 2012-04-02 22:16:28
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:EjxgQQX6sMp6EM0zeQJENA
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

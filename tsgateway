@@ -27,24 +27,37 @@ post '/report' => sub {
     my $new_report = $gw->post_report($data);
 
     header 'content-type', 'text/plain';
-    template 'report' => { report => $new_report };
+    template 'report' => {
+        report => $new_report
+    };
 };
 
 get '/report/:id' => sub {
     my $report = $gw->get_report(params->{'id'});
 
-#    header 'content-type', 'text/plain; charset=utf-8';
     template 'report' => {
-        report  => $report,
-        version => $Test::Smoke::Gateway::VERSION,
+        report   => $report,
+        title    => $report->title,
+        version  => $Test::Smoke::Gateway::VERSION,
+        thisyear => 1900 + (localtime)[5],
+    };
+};
+
+post '/search' => sub {
+    template 'search' => {
+        search   => $gw->search({params}),
+        title    => 'Test::Smoke Database Search',
+        version  => $Test::Smoke::Gateway::VERSION,
+        thisyear => 1900 + (localtime)[5],
     };
 };
 
 get '/search' => sub {
     template 'search' => {
-        search  => $gw->search_blank(),
-        title   => 'TSDbSearch',
-        version => $Test::Smoke::Gateway::VERSION,
+        search   => $gw->search(),
+        title    => 'Test::Smoke Database Search',
+        version  => $Test::Smoke::Gateway::VERSION,
+        thisyear => 1900 + (localtime)[5],
     };
 };
 

@@ -1,17 +1,21 @@
+use utf8;
 package Test::Smoke::Gateway::Schema::Result::Report;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
+
+=head1 NAME
+
+Test::Smoke::Gateway::Schema::Result::Report
+
+=cut
 
 use strict;
 use warnings;
 
 use base 'DBIx::Class::Core';
 
-
-=head1 NAME
-
-Test::Smoke::Gateway::Schema::Result::Report
+=head1 TABLE: C<report>
 
 =cut
 
@@ -43,6 +47,12 @@ __PACKAGE__->table("report");
   is_nullable: 1
 
 =head2 reporter
+
+  data_type: 'text'
+  is_nullable: 1
+  original: {data_type => "varchar"}
+
+=head2 reporter_version
 
   data_type: 'text'
   is_nullable: 1
@@ -161,6 +171,12 @@ __PACKAGE__->table("report");
   is_nullable: 1
   original: {data_type => "varchar"}
 
+=head2 user_note
+
+  data_type: 'text'
+  is_nullable: 1
+  original: {data_type => "varchar"}
+
 =head2 manifest_msgs
 
   data_type: 'bytea'
@@ -177,25 +193,17 @@ __PACKAGE__->table("report");
   is_nullable: 1
   original: {data_type => "varchar"}
 
+=head2 log_file
+
+  data_type: 'bytea'
+  is_nullable: 1
+
+=head2 out_file
+
+  data_type: 'bytea'
+  is_nullable: 1
+
 =head2 harness_only
-
-  data_type: 'text'
-  is_nullable: 1
-  original: {data_type => "varchar"}
-
-=head2 summary
-
-  data_type: 'text'
-  is_nullable: 0
-  original: {data_type => "varchar"}
-
-=head2 reporter_version
-
-  data_type: 'text'
-  is_nullable: 1
-  original: {data_type => "varchar"}
-
-=head2 user_note
 
   data_type: 'text'
   is_nullable: 1
@@ -207,15 +215,11 @@ __PACKAGE__->table("report");
   is_nullable: 1
   original: {data_type => "varchar"}
 
-=head2 log_file
+=head2 summary
 
-  data_type: 'bytea'
-  is_nullable: 1
-
-=head2 out_file
-
-  data_type: 'bytea'
-  is_nullable: 1
+  data_type: 'text'
+  is_nullable: 0
+  original: {data_type => "varchar"}
 
 =cut
 
@@ -234,6 +238,12 @@ __PACKAGE__->add_columns(
   "config_count",
   { data_type => "integer", is_nullable => 1 },
   "reporter",
+  {
+    data_type   => "text",
+    is_nullable => 1,
+    original    => { data_type => "varchar" },
+  },
+  "reporter_version",
   {
     data_type   => "text",
     is_nullable => 1,
@@ -349,6 +359,12 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     original    => { data_type => "varchar" },
   },
+  "user_note",
+  {
+    data_type   => "text",
+    is_nullable => 1,
+    original    => { data_type => "varchar" },
+  },
   "manifest_msgs",
   { data_type => "bytea", is_nullable => 1 },
   "compiler_msgs",
@@ -359,25 +375,11 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     original    => { data_type => "varchar" },
   },
+  "log_file",
+  { data_type => "bytea", is_nullable => 1 },
+  "out_file",
+  { data_type => "bytea", is_nullable => 1 },
   "harness_only",
-  {
-    data_type   => "text",
-    is_nullable => 1,
-    original    => { data_type => "varchar" },
-  },
-  "summary",
-  {
-    data_type   => "text",
-    is_nullable => 0,
-    original    => { data_type => "varchar" },
-  },
-  "reporter_version",
-  {
-    data_type   => "text",
-    is_nullable => 1,
-    original    => { data_type => "varchar" },
-  },
-  "user_note",
   {
     data_type   => "text",
     is_nullable => 1,
@@ -389,12 +391,50 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     original    => { data_type => "varchar" },
   },
-  "log_file",
-  { data_type => "bytea", is_nullable => 1 },
-  "out_file",
-  { data_type => "bytea", is_nullable => 1 },
+  "summary",
+  {
+    data_type   => "text",
+    is_nullable => 0,
+    original    => { data_type => "varchar" },
+  },
 );
+
+=head1 PRIMARY KEY
+
+=over 4
+
+=item * L</id>
+
+=back
+
+=cut
+
 __PACKAGE__->set_primary_key("id");
+
+=head1 UNIQUE CONSTRAINTS
+
+=head2 C<report_git_id_key>
+
+=over 4
+
+=item * L</git_id>
+
+=item * L</smoke_date>
+
+=item * L</duration>
+
+=item * L</hostname>
+
+=item * L</architecture>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint(
+  "report_git_id_key",
+  ["git_id", "smoke_date", "duration", "hostname", "architecture"],
+);
 
 =head1 RELATIONS
 
@@ -434,8 +474,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07002 @ 2012-04-01 16:00:13
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:/ErcrQOhu7wF6bHbYZzxHg
+# Created by DBIx::Class::Schema::Loader v0.07020 @ 2012-04-02 22:16:28
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:MtWsbOFXbtxNhLe+dT1lsA
 
 my %io_env_order_map = (
     minitest => 1,
@@ -444,6 +484,34 @@ my %io_env_order_map = (
     locale   => 4,
 );
 my $max_io_envs = scalar(keys %io_env_order_map);
+
+sub title {
+    my $self = shift;
+
+    return join(
+        " ",
+        "Smoke",
+        $self->git_describe,
+        $self->summary,
+        $self->osname,
+        $self->osversion,
+        $self->cpu_description,
+        $self->cpu_count
+    );
+}
+
+sub list_title {
+    my $self = shift;
+
+    return join(
+        " ",
+        $self->git_describe,
+        $self->osname,
+        $self->osversion,
+        $self->cpu_description,
+        $self->cpu_count
+    );
+}
 
 sub c_compilers {
     my $self = shift;

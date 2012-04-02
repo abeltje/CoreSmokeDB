@@ -1,17 +1,21 @@
+use utf8;
 package Test::Smoke::Gateway::Schema::Result::Result;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
+
+=head1 NAME
+
+Test::Smoke::Gateway::Schema::Result::Result
+
+=cut
 
 use strict;
 use warnings;
 
 use base 'DBIx::Class::Core';
 
-
-=head1 NAME
-
-Test::Smoke::Gateway::Schema::Result::Result
+=head1 TABLE: C<result>
 
 =cut
 
@@ -107,24 +111,20 @@ __PACKAGE__->add_columns(
   "stat_tests",
   { data_type => "integer", is_nullable => 1 },
 );
-__PACKAGE__->set_primary_key("id");
 
-=head1 RELATIONS
+=head1 PRIMARY KEY
 
-=head2 failures_for_env
+=over 4
 
-Type: has_many
+=item * L</id>
 
-Related object: L<Test::Smoke::Gateway::Schema::Result::FailureForEnv>
+=back
 
 =cut
 
-__PACKAGE__->has_many(
-  "failures_for_env",
-  "Test::Smoke::Gateway::Schema::Result::FailureForEnv",
-  { "foreign.result_id" => "self.id" },
-  { cascade_copy => 0, cascade_delete => 0 },
-);
+__PACKAGE__->set_primary_key("id");
+
+=head1 RELATIONS
 
 =head2 config
 
@@ -141,9 +141,24 @@ __PACKAGE__->belongs_to(
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
+=head2 failures_for_env
 
-# Created by DBIx::Class::Schema::Loader v0.07002 @ 2012-03-31 15:42:34
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:4/nbsBC1sjm2VkheQ5sB5w
+Type: has_many
+
+Related object: L<Test::Smoke::Gateway::Schema::Result::FailureForEnv>
+
+=cut
+
+__PACKAGE__->has_many(
+  "failures_for_env",
+  "Test::Smoke::Gateway::Schema::Result::FailureForEnv",
+  { "foreign.result_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+
+# Created by DBIx::Class::Schema::Loader v0.07020 @ 2012-04-02 22:16:28
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:4ZAyeaB2Hv8yncvo13seig
 
 sub test_env {
     my $self = shift;

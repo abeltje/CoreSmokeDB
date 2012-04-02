@@ -22,7 +22,7 @@ my $ua = LWP::UserAgent->new();
 my $result;
 
 if ( defined $opt{'get'} ) {
-    $result = $ua->get(URL() . "?id=$opt{'get'}")
+    $result = $ua->get(URL() . "/$opt{'get'}")
 }
 else {
     use autodie;

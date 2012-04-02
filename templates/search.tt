@@ -1,21 +1,40 @@
 <h1>Test-Smoke database search</h1>
 <form method=post action="/search">
   <h3>Filters</h3>
-  <div>Operating System and version: <select name=ososversion>
+  <div>Architecture - operating system - version: <select name=arch_os_ver>
     <option value="">-- all --</option>
-    [% FOREACH osversion = search.ososversion -%]
-    <option value="[% osversion.value %]">[% osversion.label %]</option>
+    [% FOREACH archosversion = search.arch_os_ver -%]
+    <option value="[% archosversion.value %]"
+            [% IF archosversion.value == search.aov_selected -%]
+            selected[% END %]>[% archosversion.label %]</option>
     [% END -%]
   </select>
   </div>
-  <div>Architecture: <select name=ososversion>
-    <option value="">-- all --</option>
-    [% FOREACH architecture = search.architecture -%]
-    <option value="[% architecture.value %]">[% architecture.label %]</option>
+  <div>Perl version: <select name=perl_version>
+    <option value="*">-- all --</option>
+    [% FOREACH perl_version = search.perl_versions -%]
+    <option value="[% perl_version.value %]"
+            [% IF perl_version.value == search.pv_selected -%]
+            selected[% END %]>[% perl_version.label %]</option>
     [% END -%]
   </select>
   </div>
+  <div style="text-align: right;">
+    <input type=submit name=whatnext value="Latest only">
+  </div>
+  <input type=submit name=whatnext value="List page">
+  <select name=page>
+  [% IF search.page_selected > 1 -%]
+  <option value=[% search.page_selected - 1 %]>[% search.page_selected - 1 %]</option>
+  [% END -%]
+  <option value=[% search.page_selected %]>[% search.page_selected %]</option>
+  <option value=[% search.page_selected + 1 %]>[% search.page_selected + 1 %]</option>
+  </select>
   <hr>
 </form>
-</div><div id=widecontent><hr>
-<p>version is passed: [% version %]</p>
+</div><div id=widecontent>
+[% IF search.whatnext == "list" -%]
+[% INCLUDE 'list.tt' %]
+[% ELSE -%]
+[% INCLUDE 'latest.tt' %]
+[% END -%]

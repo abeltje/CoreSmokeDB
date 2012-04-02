@@ -1,3 +1,4 @@
+use utf8;
 package Test::Smoke::Gateway::Schema;
 
 # Created by DBIx::Class::Schema::Loader
@@ -11,8 +12,8 @@ use base 'DBIx::Class::Schema';
 __PACKAGE__->load_namespaces;
 
 
-# Created by DBIx::Class::Schema::Loader v0.07002 @ 2011-04-30 22:13:44
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Pr5D2emxcTgDEJOT8yiOzg
+# Created by DBIx::Class::Schema::Loader v0.07020 @ 2012-04-02 22:16:28
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:pch59BgrYy7frtW0MFWhew
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

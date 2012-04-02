@@ -1,17 +1,21 @@
+use utf8;
 package Test::Smoke::Gateway::Schema::Result::Failure;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
+
+=head1 NAME
+
+Test::Smoke::Gateway::Schema::Result::Failure
+
+=cut
 
 use strict;
 use warnings;
 
 use base 'DBIx::Class::Core';
 
-
-=head1 NAME
-
-Test::Smoke::Gateway::Schema::Result::Failure
+=head1 TABLE: C<failure>
 
 =cut
 
@@ -73,8 +77,36 @@ __PACKAGE__->add_columns(
     original    => { data_type => "varchar" },
   },
 );
+
+=head1 PRIMARY KEY
+
+=over 4
+
+=item * L</id>
+
+=back
+
+=cut
+
 __PACKAGE__->set_primary_key("id");
-__PACKAGE__->add_unique_constraint("failure_test_status_extra_key", ["test", "status", "extra"]);
+
+=head1 UNIQUE CONSTRAINTS
+
+=head2 C<failure_test_key>
+
+=over 4
+
+=item * L</test>
+
+=item * L</status>
+
+=item * L</extra>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint("failure_test_key", ["test", "status", "extra"]);
 
 =head1 RELATIONS
 
@@ -94,8 +126,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07002 @ 2012-03-31 10:35:33
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:UPdNUkmpkL5VyfVlifHrfA
+# Created by DBIx::Class::Schema::Loader v0.07020 @ 2012-04-02 22:16:28
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:O4O9u0DnA4jl0a9DXlhLEQ
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

@@ -8,7 +8,7 @@
     <div id="frame">
 
       <div id="header">
-        &copy; 2003-2012 Test-Smoke.org &lt;abeltje&#64;cpan.org&gt;
+        &copy; 2003-[% thisyear %] Test-Smoke.org &lt;abeltje&#64;cpan.org&gt;
       </div>
 
       <div id="logo">
@@ -20,12 +20,19 @@
           <ul>
             <li><a title="Home" href="/">Home</a></li>
           </ul>
-        </div>
-      </div>
+        </div><!-- id=menu -->
+      </div><!-- id=logo -->
 
       <div id="content">
 [% content %]
+      </div><!-- id=(wide)content -->
+
+      <div id="footer">
+        <span style="font-size: smaller">Test::Smoke::Gateway v[% version %]</span>
+        courtesy of Perl QA Hacakthon 2010 Vienna +  2011 Amsterdam + 2012 Paris
       </div>
-    </div>
+  
+
+    </div><!-- id=frame -->
   </body>
 </html>
