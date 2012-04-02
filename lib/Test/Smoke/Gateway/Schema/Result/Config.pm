@@ -38,12 +38,6 @@ __PACKAGE__->table("config");
   is_nullable: 0
   original: {data_type => "varchar"}
 
-=head2 parallel
-
-  data_type: 'text'
-  is_nullable: 0
-  original: {data_type => "varchar"}
-
 =head2 debugging
 
   data_type: 'text'
@@ -56,11 +50,21 @@ __PACKAGE__->table("config");
   is_nullable: 1
   original: {data_type => "varchar"}
 
-=head2 cc_version
+=head2 ccversion
 
   data_type: 'text'
   is_nullable: 1
   original: {data_type => "varchar"}
+
+=head2 duration
+
+  data_type: 'integer'
+  is_nullable: 1
+
+=head2 started
+
+  data_type: 'timestamp with time zone'
+  is_nullable: 1
 
 =cut
 
@@ -80,12 +84,6 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
     original    => { data_type => "varchar" },
   },
-  "parallel",
-  {
-    data_type   => "text",
-    is_nullable => 0,
-    original    => { data_type => "varchar" },
-  },
   "debugging",
   {
     data_type   => "text",
@@ -98,12 +96,16 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     original    => { data_type => "varchar" },
   },
-  "cc_version",
+  "ccversion",
   {
     data_type   => "text",
     is_nullable => 1,
     original    => { data_type => "varchar" },
   },
+  "duration",
+  { data_type => "integer", is_nullable => 1 },
+  "started",
+  { data_type => "timestamp with time zone", is_nullable => 1 },
 );
 __PACKAGE__->set_primary_key("id");
 
@@ -140,9 +142,20 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07002 @ 2012-03-30 18:03:50
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:RlR8T44wuMMe4VvTLx1R1A
+# Created by DBIx::Class::Schema::Loader v0.07002 @ 2012-03-31 15:04:36
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:2P8aDG78blsf25AnKo7Fvg
 
 
-# You can replace this text with custom content, and it will be preserved on regeneration
+sub c_compiler_key {
+    my $self = shift;
+    return join("##", $self->cc, $self->ccversion);
+}
+
+sub full_arguments {
+    my $self = shift;
+    return $self->debugging eq 'D'
+        ? join(" ", $self->arguments, 'DEBUGGING')
+        : $self->arguments;
+}
+
 1;

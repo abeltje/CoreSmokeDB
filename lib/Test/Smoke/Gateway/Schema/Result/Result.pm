@@ -44,12 +44,6 @@ __PACKAGE__->table("result");
   is_nullable: 1
   original: {data_type => "varchar"}
 
-=head2 output
-
-  data_type: 'text'
-  is_nullable: 0
-  original: {data_type => "varchar"}
-
 =head2 summary
 
   data_type: 'text'
@@ -61,6 +55,16 @@ __PACKAGE__->table("result");
   data_type: 'text'
   is_nullable: 1
   original: {data_type => "varchar"}
+
+=head2 stat_cpu_time
+
+  data_type: 'double precision'
+  is_nullable: 1
+
+=head2 stat_tests
+
+  data_type: 'integer'
+  is_nullable: 1
 
 =cut
 
@@ -86,12 +90,6 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     original    => { data_type => "varchar" },
   },
-  "output",
-  {
-    data_type   => "text",
-    is_nullable => 0,
-    original    => { data_type => "varchar" },
-  },
   "summary",
   {
     data_type   => "text",
@@ -104,22 +102,26 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     original    => { data_type => "varchar" },
   },
+  "stat_cpu_time",
+  { data_type => "double precision", is_nullable => 1 },
+  "stat_tests",
+  { data_type => "integer", is_nullable => 1 },
 );
 __PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
-=head2 failures
+=head2 failures_for_env
 
 Type: has_many
 
-Related object: L<Test::Smoke::Gateway::Schema::Result::Failure>
+Related object: L<Test::Smoke::Gateway::Schema::Result::FailureForEnv>
 
 =cut
 
 __PACKAGE__->has_many(
-  "failures",
-  "Test::Smoke::Gateway::Schema::Result::Failure",
+  "failures_for_env",
+  "Test::Smoke::Gateway::Schema::Result::FailureForEnv",
   { "foreign.result_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
@@ -140,9 +142,14 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07002 @ 2012-03-30 18:06:04
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:29+O/J+8zQwnWVZMirO/Zw
+# Created by DBIx::Class::Schema::Loader v0.07002 @ 2012-03-31 15:42:34
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:4/nbsBC1sjm2VkheQ5sB5w
 
+sub test_env {
+    my $self = shift;
+    return $self->locale
+        ? join(":", $self->io_env, $self->locale)
+        : $self->io_env;
+}
 
-# You can replace this text with custom content, and it will be preserved on regeneration
 1;

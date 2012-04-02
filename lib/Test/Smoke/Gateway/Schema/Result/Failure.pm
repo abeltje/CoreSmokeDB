@@ -26,13 +26,7 @@ __PACKAGE__->table("failure");
   is_nullable: 0
   sequence: 'failure_id_seq'
 
-=head2 result_id
-
-  data_type: 'integer'
-  is_foreign_key: 1
-  is_nullable: 0
-
-=head2 testname
+=head2 test
 
   data_type: 'text'
   is_nullable: 0
@@ -60,9 +54,7 @@ __PACKAGE__->add_columns(
     is_nullable       => 0,
     sequence          => "failure_id_seq",
   },
-  "result_id",
-  { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
-  "testname",
+  "test",
   {
     data_type   => "text",
     is_nullable => 0,
@@ -82,27 +74,28 @@ __PACKAGE__->add_columns(
   },
 );
 __PACKAGE__->set_primary_key("id");
+__PACKAGE__->add_unique_constraint("failure_test_status_extra_key", ["test", "status", "extra"]);
 
 =head1 RELATIONS
 
-=head2 result
+=head2 failures_for_env
 
-Type: belongs_to
+Type: has_many
 
-Related object: L<Test::Smoke::Gateway::Schema::Result::Result>
+Related object: L<Test::Smoke::Gateway::Schema::Result::FailureForEnv>
 
 =cut
 
-__PACKAGE__->belongs_to(
-  "result",
-  "Test::Smoke::Gateway::Schema::Result::Result",
-  { id => "result_id" },
-  { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
+__PACKAGE__->has_many(
+  "failures_for_env",
+  "Test::Smoke::Gateway::Schema::Result::FailureForEnv",
+  { "foreign.failure_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07002 @ 2012-03-30 18:06:04
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hndTlLhipWIvdJmWKiVjMA
+# Created by DBIx::Class::Schema::Loader v0.07002 @ 2012-03-31 10:35:33
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:UPdNUkmpkL5VyfVlifHrfA
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

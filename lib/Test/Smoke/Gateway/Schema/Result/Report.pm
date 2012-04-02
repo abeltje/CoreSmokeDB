@@ -189,6 +189,34 @@ __PACKAGE__->table("report");
   is_nullable: 0
   original: {data_type => "varchar"}
 
+=head2 reporter_version
+
+  data_type: 'text'
+  is_nullable: 1
+  original: {data_type => "varchar"}
+
+=head2 user_note
+
+  data_type: 'text'
+  is_nullable: 1
+  original: {data_type => "varchar"}
+
+=head2 harness3opts
+
+  data_type: 'text'
+  is_nullable: 1
+  original: {data_type => "varchar"}
+
+=head2 log_file
+
+  data_type: 'bytea'
+  is_nullable: 1
+
+=head2 out_file
+
+  data_type: 'bytea'
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -343,6 +371,28 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
     original    => { data_type => "varchar" },
   },
+  "reporter_version",
+  {
+    data_type   => "text",
+    is_nullable => 1,
+    original    => { data_type => "varchar" },
+  },
+  "user_note",
+  {
+    data_type   => "text",
+    is_nullable => 1,
+    original    => { data_type => "varchar" },
+  },
+  "harness3opts",
+  {
+    data_type   => "text",
+    is_nullable => 1,
+    original    => { data_type => "varchar" },
+  },
+  "log_file",
+  { data_type => "bytea", is_nullable => 1 },
+  "out_file",
+  { data_type => "bytea", is_nullable => 1 },
 );
 __PACKAGE__->set_primary_key("id");
 
@@ -384,9 +434,201 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07002 @ 2012-03-30 18:03:50
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:P0dGPi0fd9Z55ZCAL1u8LA
+# Created by DBIx::Class::Schema::Loader v0.07002 @ 2012-04-01 16:00:13
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:/ErcrQOhu7wF6bHbYZzxHg
 
+my %io_env_order_map = (
+    minitest => 1,
+    stdio    => 2,
+    perlio   => 3,
+    locale   => 4,
+);
+my $max_io_envs = scalar(keys %io_env_order_map);
 
-# You can replace this text with custom content, and it will be preserved on regeneration
+sub c_compilers {
+    my $self = shift;
+
+    my %c_compiler_seen;
+    my $i = 1;
+    for my $config ($self->configs) {
+        $c_compiler_seen{$config->c_compiler_key} //= {
+            index     => $i++,
+            key       => $config->c_compiler_key,
+            cc        => $config->cc,
+            ccversion => $config->ccversion,
+        };
+    }
+    return [
+        sort {
+            $a->{index} <=> $b->{index}
+        } values %c_compiler_seen
+    ];
+}
+
+sub matrix {
+    my $self = shift;
+
+    my %c_compilers = map {
+        $_->{key} => $_
+    } @{$self->c_compilers};
+
+    my (%matrix, %cfg_order, %io_env_seen);
+    my $o = 0;
+    for my $config ($self->configs) {
+        for my $result ($config->results) {
+            my $cc_index = $c_compilers{$config->c_compiler_key}{index};
+
+            $matrix{$cc_index}{$config->debugging}{$config->arguments}{$result->io_env} =
+                $result->summary;
+            $io_env_seen{$result->io_env} = $result->locale;
+        }
+        $cfg_order{$config->arguments} //= $o++;
+    }
+
+    my @io_env_in_order = sort {
+        $io_env_order_map{$a} <=> $io_env_order_map{$b}
+    } keys %io_env_seen;
+
+    my @cfg_in_order = sort {
+        $cfg_order{$a} <=> $cfg_order{$b}
+    } keys %cfg_order;
+
+    my @matrix;
+    for my $cc (sort { $a->{index} <=> $b->{index} } values %c_compilers) {
+        my $cc_index = $cc->{index};
+        for my $cfg (@cfg_in_order) {
+            my @line;
+            for my $debugging (qw/ N D /) {
+                for my $io_env (@io_env_in_order) {
+                    push(
+                        @line,
+                        $matrix{$cc_index}{$debugging}{$cfg}{$io_env} || '-'
+                    );
+                }
+            }
+            while (@line < 8) { push @line, " " }
+            my $mline = join("  ", @line);
+            push @matrix, "$mline  $cfg (\*$cc_index)";
+        }
+    }
+    my @legend = $self->matrix_legend(
+        [
+            map { $io_env_seen{$_} ? "$_:$io_env_seen{$_}" : $_ }
+                @io_env_in_order
+        ]
+    );
+    return @matrix, @legend;
+}
+
+sub matrix_legend {
+    my $self = shift;
+    my ($io_envs) = @_;
+
+    my @legend = (
+        (map "$_ DEBUGGING", reverse @$io_envs),
+        (reverse @$io_envs)
+    );
+    my $first_line = join("  ", ("|") x @legend);
+
+    my $length = (3 * 2 * $max_io_envs) - 2;
+    for my $i (0 .. $#legend) {
+        my $bar_count = scalar(@legend) - $i;
+        my $prefix = join("  ", ("|") x $bar_count);
+        $prefix =~ s/(.*)\|$/$1+/;
+        my $dash_count = $length - length($prefix);
+        $prefix .= "-" x $dash_count;
+        $legend[$i] = "$prefix  $legend[$i]"
+    }
+    unshift @legend, $first_line;
+    return @legend;
+}
+
+sub test_failures {
+    my $self = shift;
+    return $self->group_tests_by_status('FAILED');
+}
+
+sub test_todo_passed {
+    my $self = shift;
+    return $self->group_tests_by_status('PASSED');
+}
+
+sub group_tests_by_status {
+    my $self = shift;
+    my ($group_status) = @_;
+
+    use Data::Dumper; $Data::Dumper::Indent = 1; $Data::Dumper::SortKeys = 1;
+
+    my %c_compilers = map {
+        $_->{key} => $_
+    } @{$self->c_compilers};
+
+    my (%tests);
+    my $max_name_length = 0;
+    for my $config ($self->configs) {
+        for my $result ($config->results) {
+            for my $io_env ($result->failures_for_env) {
+                for my $test ($io_env->failure) {
+                    next if $test->status ne $group_status;
+
+                    $max_name_length = length($test->test)
+                        if length($test->test) > $max_name_length;
+
+                    my $key = $test->test . $test->extra;
+                    push(
+                        @{$tests{$key}{$config->full_arguments}{test}}, {
+                            test_env => $result->test_env,
+                            test     => $test,
+                        }
+                    );
+                }
+            }
+        }
+    }
+    my @grouped_tests;
+    for my $group (values %tests) {
+        push @grouped_tests, {test => undef, configs => [ ]};
+        for my $cfg (keys %$group) {
+            push @{ $grouped_tests[-1]->{configs} }, {
+                arguments => $cfg,
+                io_envs   => join("/", map $_->{test_env}, @{ $group->{$cfg}{test} })
+            };
+            $grouped_tests[-1]{test} //= $group->{$cfg}{test}[0]{test};
+        }
+    }
+    return \@grouped_tests; 
+}
+
+sub duration_in_hhmm {
+    my $self = shift;
+    return time_in_hhmm($self->duration);
+}
+
+sub average_in_hhmm {
+    my $self = shift;
+    return time_in_hhmm($self->duration/$self->config_count);
+}
+
+sub time_in_hhmm {
+    my $diff = shift;
+
+    # Only show decimal point for diffs < 5 minutes
+    my $digits = $diff =~ /\./ ? $diff < 5*60 ? 3 : 0 : 0;
+    my $days = int( $diff / (24*60*60) );
+    $diff -= 24*60*60 * $days;
+    my $hour = int( $diff / (60*60) );
+    $diff -= 60*60 * $hour;
+    my $mins = int( $diff / 60 );
+    $diff -=  60 * $mins;
+    $diff = sprintf "%.${digits}f", $diff;
+
+    my @parts;
+    $days and push @parts, sprintf "%d day%s",   $days, $days == 1 ? "" : 's';
+    $hour and push @parts, sprintf "%d hour%s",  $hour, $hour == 1 ? "" : 's';
+    $mins and push @parts, sprintf "%d minute%s",$mins, $mins == 1 ? "" : 's';
+    $diff && !$days && !$hour and push @parts, "$diff seconds";
+
+    return join " ", @parts;
+}
+
 1;
