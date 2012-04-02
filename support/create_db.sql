@@ -70,7 +70,6 @@ CREATE TABLE result
            , config_id     int     not null REFERENCES config (id)  -- result
            , io_env        varchar not null       -- "perlio"
            , locale        varchar                -- "nl_NL.utf8"
-           , output        varchar not null       -- "..."
            , summary       varchar not null       -- "F"
            , statistics    varchar                -- "Files=1802, Tests=349808, .."
            , stat_cpu_time float                  -- 1187.68
