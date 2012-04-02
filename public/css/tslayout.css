@@ -1,0 +1,270 @@
+/* 
+ *                                                       *
+ * The stylesheet defines the two blocks in the design:  *
+ *                                                       */
+
+body {
+    text-align:       center;
+    margin:           0px;
+    border:           0px;
+    padding:          0px;
+    background-color: #EEE;
+    color:            red;
+}
+
+h1 { text-shadow: black 5px 5px 0.25em; }
+h2 { text-shadow: black 3px 3px 0.25em; }
+
+.pod {
+    text-align: left;
+}
+
+#header {
+    position:         fixed;
+    top:              0;
+    width:            593px;
+    height:           19px;
+    padding-left:     205px;
+    border-top:       1px solid white;
+    border-left:      0;
+    border-bottom:    0;
+    border-right:     0;
+    margin:           0;
+    font-family:      "Trebuchet MS", Helvetica, sans-serif;
+    background-color: red;
+    color:            white;
+}
+
+#footer {
+    clear:            both;
+    width:            593px;
+    height:           20px;
+    padding-left:     205px;
+    border:           0;
+    margin:           0;
+    font-family:      "Trebuchet MS", Helvetica, sans-serif;
+    background-color: red;
+    color:            white;
+}
+
+#perlad {
+    clear:            both;
+    width:            788px;
+    height:           20px;
+    padding-left:     10px;
+    border:           0;
+    margin:           0;
+    font-family:      "Trebuchet MS", Helvetica, sans-serif;
+    background-color: #BBB;
+    color:            white;
+}
+
+#perlad a {
+    background-color: #BBB;
+    color:            white;
+}
+
+#frame {
+    width:            798px;
+    padding-top:      19px;
+    margin-left:      auto;
+    margin-right:     auto;
+    margin-top:       0;
+    margin-bottom:    0;
+    border-top:       0;
+    border-left:      1px solid white;
+    border-bottom:    1px solid black;
+    border-right:     1px solid black;
+    text-align:       left;
+    background-color: #DFDFDF; /* black; */
+    color:            red;
+}
+
+/* logo width: 200 px => 180 + 2*10 */
+#logo {
+    float:            left;
+    width:            179px;
+    margin:           0;
+    padding:          10px;
+
+    text-align:       left;
+    vertical-align:   top;
+    font-family:      "Trebuchet MS", Helvetica, sans-serif;
+    background-color: black;
+    color:            white;
+}
+
+/*
+#logo a         { color: red;   text-decoration: none; }
+#logo a:visited { color: red;   text-decoration: none; }
+#logo a:hover   { color: white; text-decoration: underline; }
+*/
+
+#logo img {
+    float:          left;
+    padding-right:  10px;
+    padding-bottom: 10px;
+    vertical-align: top;
+}
+
+#menu {
+    width:            177px; /* 139px; */
+    border-right:     1px solid white;
+    padding:          0 0 0em 0;
+    margin-bottom:    1em;
+    margin-top:       1em;
+    font-family:      "Trebuchet MS", Helvetica, sans-serif;
+    background-color: #EFEFEF;
+    color:            #333;
+}
+
+#menu ul {
+    list-style: none;
+    margin:     0;
+    padding:    0;
+    border:     none;
+}
+
+#menu li {
+    border-bottom: 1px solid #eFeFeF;
+    margin:        0;
+}
+
+#menu li a {
+    display:          block;
+    padding:          5px 5px 5px 0.5em;
+    border-left:      10px solid #666;
+    border-right:     10px solid #DFDFDF;
+    background-color: #BBB;
+    color:            white;
+    text-decoration:  none;
+    width:            139px;
+}
+
+#menu li a:hover {
+    border-left:      10px solid #F00;
+    border-right:     10px solid #FBB;
+    background-color: #F66;
+    color:            white;
+    font-weight:      bold;
+}
+
+html>body #menu li a { width: auto; }
+
+#widecontent {
+    clear:            both;
+    width:            778px;
+    padding:          10px;
+    border-top:       0;
+    border-bottom:    0;
+    border-left:      0;
+    border-right:     1px black solid;
+    margin:           0;
+
+    text-align:       left;
+    font-family:      "Trebuchet MS", Helvetica, sans-serif;
+    background-color: #DFDFDF;
+    color:            red;
+}
+
+#content {
+    float:            right;
+    width:            589px;
+    padding:          5px;
+    border:           0;
+    margin:           0;
+
+    text-align:       left;
+    font-family:      "Trebuchet MS", Helvetica, sans-serif;
+    background-color: #DFDFDF;
+    color:            red;
+}
+
+#content code { padding-left: 1.5em; font-size: 65%; }
+#content pre  {
+    font-size:        65%;
+    margin:           0.5em 1.5em 0.5em 0em;
+    border:           3px black ridge;
+    padding:          0.5em 1em 0.5em 1em;
+    background-color: #F66;
+    color:            white;
+}
+
+#content a {
+    background-color: #DFDFDF;
+    color:            black;
+}
+
+#content a:visited {
+    background-color: #DFDFDF;
+    color:            black;
+}
+
+#content a:hover {
+    background-color: #DFDFDF;
+    color:            black;
+    text-decoration:  overline;
+}
+
+#content pre#status  {
+    font-size:        65%;
+    margin:           0.5em 0.5em 0.5em 0em;
+    border:           3px black ridge;
+    padding:          0.5em 1em 0.5em 1em;
+    background-color: #DFDFDF;
+    color:            #666;
+}
+
+#content pre#big  {
+    font-size:        100%;
+    margin:           0.5em 0.5em 0.5em 0em;
+    border:           3px black ridge;
+    padding:          0.5em 1em 0.5em 1em;
+    background-color: #DFDFDF;
+    color:            black;
+}
+
+#content div#big  {
+    font-size:        100%;
+    margin:           0.5em 0.5em 0.5em 0em;
+    border:           3px black ridge;
+    padding:          0.5em 1em 0.5em 1em;
+    background-color: #DFDFDF;
+    color:            black;
+}
+
+#content #big .plain {
+    font-size:        100%;
+    margin:           0;
+    border:           0;
+    padding:          0;
+    background-color: #DFDFDF;
+    color:            black;
+}
+
+#footer a {
+    background-color: red;
+    color:            white;
+}
+
+#footer a:visited {
+    background-color: red;
+    color:            white;
+}
+
+#footer a:hover {
+    background-color: red;
+    color:            white;
+    text-decoration:  overline;
+}
+
+.rptodd  {
+    background-color: #DEDEDE;
+    color:            red;
+    font-size:        80%;
+}
+.rpteven {
+    background-color: white;
+    color:            red;
+    font-size: 80%;
+}

@@ -1,0 +1,21 @@
+<h1>Test-Smoke database search</h1>
+<form method=post action="/search">
+  <h3>Filters</h3>
+  <div>Operating System and version: <select name=ososversion>
+    <option value="">-- all --</option>
+    [% FOREACH osversion = search.ososversion -%]
+    <option value="[% osversion.value %]">[% osversion.label %]</option>
+    [% END -%]
+  </select>
+  </div>
+  <div>Architecture: <select name=ososversion>
+    <option value="">-- all --</option>
+    [% FOREACH architecture = search.architecture -%]
+    <option value="[% architecture.value %]">[% architecture.label %]</option>
+    [% END -%]
+  </select>
+  </div>
+  <hr>
+</form>
+</div><div id=widecontent><hr>
+<p>version is passed: [% version %]</p>

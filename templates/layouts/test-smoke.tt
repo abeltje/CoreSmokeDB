@@ -1,0 +1,31 @@
+<!doctype html>
+<html language=en>
+  <head>
+    <title>[% title || 'Test-Smoke.org' %]</title>
+    <link rel=stylesheet type="text/css" href="/css/tslayout.css">
+  </head>
+  <body>
+    <div id="frame">
+
+      <div id="header">
+        &copy; 2003-2012 Test-Smoke.org &lt;abeltje&#64;cpan.org&gt;
+      </div>
+
+      <div id="logo">
+        <img alt="[Test-Smoke]" src="/images/ts-logo.gif">
+        Test-Smoke.org home of Test::Smoke<br>
+        <br>
+
+        <div id="menu">
+          <ul>
+            <li><a title="Home" href="/">Home</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="content">
+[% content %]
+      </div>
+    </div>
+  </body>
+</html>

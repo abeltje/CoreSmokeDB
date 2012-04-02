@@ -30,18 +30,26 @@ post '/report' => sub {
     template 'report' => { report => $new_report };
 };
 
-get '/report' => sub {
+get '/report/:id' => sub {
     my $report = $gw->get_report(params->{'id'});
 
-    header 'content-type', 'text/plain';
+#    header 'content-type', 'text/plain; charset=utf-8';
     template 'report' => {
         report  => $report,
         version => $Test::Smoke::Gateway::VERSION,
     };
 };
 
-get '/test' => sub {
-    return "testing...\n";
+get '/search' => sub {
+    template 'search' => {
+        search  => $gw->search_blank(),
+        title   => 'TSDbSearch',
+        version => $Test::Smoke::Gateway::VERSION,
+    };
+};
+
+get '/' => sub {
+    forward '/search';
 };
 
 dance();
