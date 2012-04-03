@@ -47,6 +47,9 @@ sub post_report {
             my $r = $self->schema->resultset('Report')->create($report_data);
             for my $config (@$configs) {
                 my $results = delete $config->{'results'};
+                for my $field (qw/cc ccversion/) {
+                    $config->{$field} ||= '?';
+                }
 
                 my $conf = $r->create_related('configs', $config);
 
@@ -60,7 +63,7 @@ sub post_report {
                             'Failure'
                         )->find_or_create(
                             $failure,
-                            {key => 'failure_test_status_extra_key'}
+                            {key => 'failure_test_key'}
                         );
                         $self->schema->resultset('FailureForEnv')->create(
                             {
