@@ -9,7 +9,7 @@ use Test::Smoke::Gateway::Schema;
 use Test::Smoke::Gateway;
 my $gw = Test::Smoke::Gateway->new(
     schema => Test::Smoke::Gateway::Schema->connect(
-        'dbi:Pg:host=localhost;database=tsgateway',
+        'dbi:Pg:host=gromit;database=tsgateway',
         'tsgateway',
         'TSg4t3w4y'
     ),
@@ -58,6 +58,28 @@ get '/search' => sub {
         title    => 'Test::Smoke Database Search',
         version  => $Test::Smoke::Gateway::VERSION,
         thisyear => 1900 + (localtime)[5],
+    };
+};
+
+get '/api/reports_from_date/:epoch' => sub {
+    header 'content-type', 'application/json';
+
+    template 'rawjson' => {
+        json => $gw->api_get_reports_from_date(params->{epoch}),
+    },
+    {
+        layout => undef,
+    };
+};
+
+get '/api/report_data/:id' => sub {
+    header 'content-type', 'application/json';
+
+    template 'rawjson' => {
+        json => $gw->api_get_report_data(params->{id}),
+    },
+    {
+        layout => undef,
     };
 };
 

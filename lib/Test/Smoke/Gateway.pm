@@ -1,8 +1,10 @@
 package Test::Smoke::Gateway;
 use Moose;
 
-require Digest::MD5;
-require JSON::PP;
+use Digest::MD5;
+use JSON;
+use Params::Validate ':all';
+use POSIX qw/strftime/;
 
 has schema => (is => 'ro');
 
@@ -15,6 +17,63 @@ Test::Smoke::Gateway - The basic gateway between smoker and The Core Smoke Datab
 =head1 SYNOPSIS
 
 =head1 DESCRIPTION
+
+=head2 $gw->api_get_reports_from_date($epoch)
+
+Returns a list of report-id's that have a smoke_date after C<$epoch>.
+
+=cut
+
+sub api_get_reports_from_date {
+    my $self = shift;
+    my ($epoch) = validate_pos(@_, {regex => qr/^[1-9][0-9]*$/, optional => 0});
+
+    my $reports = $self->schema->resultset('Report')->search(
+        {
+            smoke_date => { '>=' => strftime("%F %T %Z", gmtime($epoch)) }
+        },
+        {
+            order_by => { -asc => ['smoke_date', 'id'] }
+        }
+    );
+    return to_json([map $_->id, $reports->all()]);
+}
+
+=head2 $gw->api_get_report_data($id)
+
+Returns the data-structure from the database.
+
+=cut
+
+sub api_get_report_data {
+    my $self = shift;
+    my ($id) = validate_pos(@_, {regex => qr/^[1-9][0-9]*$/, optional => 0});
+
+    my $report = $self->schema->resultset('Report')->find($id);
+
+    my %data = $report->get_inflated_columns;
+    $data{configs} = [ ];
+    for my $config ($report->configs) {
+        push @{$data{configs}}, {$config->get_inflated_columns};
+        $data{configs}[-1]{results} = [ ];
+        for my $result ($config->results) {
+            push(
+                @{$data{configs}[-1]{results}},
+                {$result->get_inflated_columns}
+            );
+            $data{configs}[-1]{results}[-1]{failures} = [ ];
+            for my $failure ($result->failures_for_env) {
+                push(
+                    @{$data{configs}[-1]{results}[-1]{failures}},
+                    {$failure->failure->get_inflated_columns}
+                );
+            }
+        }
+    }
+
+    my $json = JSON->new->utf8(1)->pretty(1)->encode(\%data);
+    return $json;
+}
 
 =head2 post_report($data)
 
@@ -121,7 +180,7 @@ sub post_smoke_config {
     if ( ! $sc_data ) {
         $sc_data = $self->schema->txn_do(
             sub {
-                my $json = JSON::PP->new()->utf8(1)->encode($sconfig);
+                my $json = JSON->new()->utf8(1)->encode($sconfig);
                 return $self->schema->resultset('SmokeConfig')->create(
                     {
                         md5    => $md5,
