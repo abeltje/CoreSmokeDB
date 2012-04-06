@@ -1,6 +1,7 @@
 package Test::Smoke::Gateway;
 use Moose;
 
+use Date::Parse;
 use Digest::MD5;
 use JSON;
 use Params::Validate ':all';
@@ -26,7 +27,21 @@ Returns a list of report-id's that have a smoke_date after C<$epoch>.
 
 sub api_get_reports_from_date {
     my $self = shift;
-    my ($epoch) = validate_pos(@_, {regex => qr/^[1-9][0-9]*$/, optional => 0});
+    my ($epoch) = validate_pos(
+        @_,
+        {
+            callbacks => {
+                'date_parse' => sub {
+                    my $value = shift;
+                    return 1 if $value =~ /^[1-9][0-9]*$/;
+                    my $epoch = str2time($value);
+                    $_[0][0] = $epoch if $epoch;
+                    return $epoch;
+                },
+            },
+            optional => 0
+        }
+    );
 
     my $reports = $self->schema->resultset('Report')->search(
         {
