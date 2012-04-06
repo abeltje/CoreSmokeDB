@@ -231,7 +231,7 @@ sub search {
     my $reports;
     if ($whatnext eq 'list') {
         $pv_selected = '%' if !$data->{perl_version};
-        $reports = $self->get_reports_by_date($pv_selected, $page);
+        $reports = $self->get_reports_by_date($pv_selected, $page, \%filter);
     }
     else {
         $reports = $self->get_reports_by_perl_version($pv_selected, \%filter);
@@ -282,7 +282,7 @@ sub get_reports_by_perl_version {
 
 sub get_reports_by_date {
     my $self = shift;
-    my ($pattern, $page) = @_;
+    my ($pattern, $page, $filter) = @_;
     $pattern ||= '%';
     $pattern =~ s/\*/%/g;
     $page ||= 1;
@@ -290,6 +290,7 @@ sub get_reports_by_date {
     my $reports = $self->schema->resultset('Report')->search(
         {
             perl_id => { -like => $pattern },
+            %$filter,
         },
         {
             order_by => { -desc => 'smoke_date' },

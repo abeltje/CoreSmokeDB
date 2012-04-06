@@ -2,7 +2,7 @@
 <table width="100%" style="border: 2px black ridge;">
 <caption>List of reports page [% search.page %]</caption>
 <tr>
-    <td>Date</td><td>Subject</td><td>Status</td>
+    <td>Date</td><td>git_id</td><td>OS/ver</td><td>Arch</td><td>host</td><td>Status</td>
 </tr>
 [% mycount = 1 %][% FOREACH row = search.reports -%]
 [% colorclass = "failtest" -%]
@@ -11,7 +11,10 @@
 [% ELSIF row.summary.match("[cCmM]") -%][% colorclass = 'failbuild' -%][% END -%]
 <tr style="background-color: [% IF mycount % 2 %]white[% ELSE %]#dedede[% END %];">
   <td>[% row.smoke_date %]</td>
-  <td>[% row.list_title %]</td>
+  <td>[% row.git_describe %]</td>
+  <td>[% row.osname %] [% row.osversion %]</td>
+  <td>[% row.architecture %]</td>
+  <td>[% row.hostname %]</td>
   <td class="[% colorclass %]">
     <a href="/report/[% row.id %]" class="[% colorclass %]">[% row.summary %]</a>
   </td>
