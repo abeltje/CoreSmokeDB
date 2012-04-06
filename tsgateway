@@ -43,6 +43,17 @@ get '/report/:id' => sub {
     };
 };
 
+get '/logfile/:id' => sub {
+    my $report = $gw->get_report(params->{'id'});
+
+    template 'logfile' => {
+        report   => $report,
+        title    => $report->title,
+        version  => $Test::Smoke::Gateway::VERSION,
+        thisyear => 1900 + (localtime)[5],
+    };
+};
+
 post '/search' => sub {
     template 'search' => {
         search   => $gw->search({params}),

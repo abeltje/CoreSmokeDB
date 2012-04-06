@@ -1,0 +1,5 @@
+<a href="/report/[% report.id %]">Show report</a>
+</div><div id=widecontent>
+<pre style="color: black;">
+[% INCLUDE 'rawlogfile.tt' %]
+</pre>
