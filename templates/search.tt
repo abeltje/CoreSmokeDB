@@ -13,7 +13,7 @@
   <div>Perl version: <select name=perl_version>
     <option value="*">-- all --</option>
     [% FOREACH perl_version = search.perl_versions -%]
-    <option value="[% perl_version.value %]"
+    <option value='[% perl_version.value | html %]'
             [% IF perl_version.value == search.pv_selected -%]
             selected[% END %]>[% perl_version.label %]</option>
     [% END -%]

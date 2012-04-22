@@ -1,9 +1,14 @@
 #! /usr/bin/perl
+use 5.01000;
 use warnings;
 use strict;
-use lib 'lib';
 
+use lib 'lib';
+use lib '../lib';
+
+use Cwd qw/abs_path/;
 use Dancer;
+use Try::Tiny;
 
 use Test::Smoke::Gateway::Schema;
 use Test::Smoke::Gateway;
@@ -15,21 +20,28 @@ my $gw = Test::Smoke::Gateway->new(
     ),
 );
 
-set log         => 'debug';
-#set logger      => 'console';
-set show_errors => 1;
-set warnings    => 1;
-set views => path(dirname(__FILE__), 'templates');
+set views => path(abs_path(dirname(__FILE__)), 'templates');
 
 post '/report' => sub {
     my $data = from_json(params->{'json'});
 
-    my $new_report = $gw->post_report($data);
+    header 'content-type' => 'application/json';
 
-    header 'content-type', 'text/plain';
-    template 'report' => {
-        report => $new_report
-    };
+    my $report;
+    try {
+        $report = $gw->post_report($data);
+    }
+    catch {
+        when (/duplicate key/) {
+            return to_json({error => 'Report already posted.'});
+        }
+        when ($_) {
+            return to_json({error => $_});
+        }
+        default {
+            return to_json({id => $report->id});
+        }
+    }
 };
 
 get '/report/:id' => sub {
@@ -75,23 +87,13 @@ get '/search' => sub {
 get '/api/reports_from_date/:epoch' => sub {
     header 'content-type', 'application/json';
 
-    template 'rawjson' => {
-        json => $gw->api_get_reports_from_date(params->{epoch}),
-    },
-    {
-        layout => undef,
-    };
+    return to_json($gw->api_get_reports_from_date(params->{epoch}));
 };
 
 get '/api/report_data/:id' => sub {
     header 'content-type', 'application/json';
 
-    template 'rawjson' => {
-        json => $gw->api_get_report_data(params->{id}),
-    },
-    {
-        layout => undef,
-    };
+    return to_json($gw->api_get_report_data(params->{id}));
 };
 
 get '/' => sub {

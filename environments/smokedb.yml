@@ -1,0 +1,9 @@
+---
+
+layout: 'smokedb'
+
+logger: 'file'
+log: 'core'
+startup_info: 1
+show_errors: 1
+

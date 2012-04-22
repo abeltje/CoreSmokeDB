@@ -1,7 +1,6 @@
 ---
-layout: test-smoke
-
 charset: "UTF-8"
+default_content_type: "text/plain"
 
 template: template_toolkit
 

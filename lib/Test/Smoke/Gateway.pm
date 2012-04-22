@@ -51,7 +51,7 @@ sub api_get_reports_from_date {
             order_by => { -asc => ['smoke_date', 'id'] }
         }
     );
-    return to_json([map $_->id, $reports->all()]);
+    return [map $_->id, $reports->all()];
 }
 
 =head2 $gw->api_get_report_data($id)
@@ -86,8 +86,7 @@ sub api_get_report_data {
         }
     }
 
-    my $json = JSON->new->utf8(1)->pretty(1)->encode(\%data);
-    return $json;
+    return \%data;
 }
 
 =head2 post_report($data)

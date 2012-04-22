@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     <title>[% title || 'SmokeDB'%]</title>
+     <link rel=stylesheet type="text/css" href="/css/smokedb.css">
+  </head>
+  <body>
+    <div class="body-center">
+      <div class="header">
+        <div class="header-logo">
+          <h1>SmokeDB</h1>
+          <p>Perl5 core testing</p>
+        </div>
+        <div class="header-menu">
+        [% INCLUDE "menu.tt" %]
+        </div>
+      </div>
+      <div id="content">
+      [% content %]
+      </div>
+      <div class="footer">
+      <span style="font-size: smaller;"
+           >SmokeDB: Test::Smoke::Gateway v[% version %]</span>;
+           courtesy of Perl QA Hackathon:
+              2010 Vienna
+           +  2011 Amsterdam
+           + 2012 Paris
+    </div>
+  </body>
+</html>

@@ -1,5 +1,5 @@
-<!doctype html>
-<html language=en>
+<!DOCTYPE html>
+<html>
   <head>
     <title>[% title || 'Test-Smoke.org' %]</title>
     <link rel=stylesheet type="text/css" href="/css/tslayout.css">
@@ -17,9 +17,7 @@
         <br>
 
         <div id="menu">
-          <ul>
-            <li><a title="Home" href="/">Home</a></li>
-          </ul>
+        [% INCLUDE "menu.tt" %]
         </div><!-- id=menu -->
       </div><!-- id=logo -->
 
