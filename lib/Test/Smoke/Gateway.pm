@@ -212,7 +212,7 @@ sub search {
     my ($data) = @_;
     
     my $perlversion_list = $self->get_perlversion_list;
-    my $perl_latest = $perlversion_list->[0]{label};
+    my $perl_latest = $perlversion_list->[0]{value};
     my $pv_selected = $data->{perl_version} || $perl_latest;
     my $aov_selected = $data->{arch_os_ver} // '';
     my %filter;
@@ -226,7 +226,7 @@ sub search {
     }
 
     my ($whatnext) = split " ", lc($data->{whatnext} || 'list');
-    my $page = $data->{page_selected} || 1;
+    my $page = $data->{page} || 1;
     my $reports;
     if ($whatnext eq 'list') {
         $pv_selected = '%' if !$data->{perl_version};

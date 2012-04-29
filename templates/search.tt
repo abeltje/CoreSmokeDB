@@ -23,12 +23,16 @@
     <input type=submit name=whatnext value="Latest only">
   </div>
   <input type=submit name=whatnext value="List page">
+  <!-- list -->
   <select name=page>
   [% IF search.page_selected > 1 -%]
-  <option value=[% search.page_selected - 1 %]>[% search.page_selected - 1 %]</option>
+  <option value=[% search.page_selected - 1 %]
+         >[% search.page_selected - 1 %]</option>
   [% END -%]
-  <option value=[% search.page_selected %]>[% search.page_selected %]</option>
-  <option value=[% search.page_selected + 1 %]>[% search.page_selected + 1 %]</option>
+  <option value=[% search.page_selected %] selected
+         >[% search.page_selected %]</option>
+  <option value=[% search.page_selected + 1 %]
+         >[% search.page_selected + 1 %]</option>
   </select>
   <hr>
 </form>
