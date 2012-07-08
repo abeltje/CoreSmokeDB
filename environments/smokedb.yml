@@ -1,9 +1,16 @@
 ---
 
+port: 5000
+content_type: application/json
+
 layout: 'smokedb'
 
 logger: 'file'
-log: 'core'
+log: 'debug'
 startup_info: 1
 show_errors: 1
 
+auto_reload: 1
+
+db_dsn: "dbi:Pg:database=tsgateway"
+db_usr: "abeltje"

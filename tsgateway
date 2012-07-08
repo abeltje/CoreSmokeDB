@@ -7,97 +7,22 @@ use lib 'lib';
 use lib '../lib';
 
 use Cwd qw/abs_path/;
+use Dancer::Config;
 use Dancer;
-use Try::Tiny;
-
+use Test::Smoke::Gateway::Dancer;
 use Test::Smoke::Gateway::Schema;
 use Test::Smoke::Gateway;
+use Try::Tiny;
+
 my $gw = Test::Smoke::Gateway->new(
     schema => Test::Smoke::Gateway::Schema->connect(
-        'dbi:Pg:host=gromit;database=tsgateway',
-        'tsgateway',
-        'TSg4t3w4y'
+        config->{db_dsn},
+        config->{db_usr},
+        config->{db_pwd},
     ),
-);
+) or die "No gateway: $@";
 
 set views => path(abs_path(dirname(__FILE__)), 'templates');
 
-post '/report' => sub {
-    my $data = from_json(params->{'json'});
-
-    header 'content-type' => 'application/json';
-
-    my $report;
-    try {
-        $report = $gw->post_report($data);
-    }
-    catch {
-        when (/duplicate key/) {
-            return to_json({error => 'Report already posted.'});
-        }
-        when ($_) {
-            return to_json({error => $_});
-        }
-        default {
-            return to_json({id => $report->id});
-        }
-    }
-};
-
-get '/report/:id' => sub {
-    my $report = $gw->get_report(params->{'id'});
-
-    template 'report' => {
-        report   => $report,
-        title    => $report->title,
-        version  => $Test::Smoke::Gateway::VERSION,
-        thisyear => 1900 + (localtime)[5],
-    };
-};
-
-get '/logfile/:id' => sub {
-    my $report = $gw->get_report(params->{'id'});
-
-    template 'logfile' => {
-        report   => $report,
-        title    => $report->title,
-        version  => $Test::Smoke::Gateway::VERSION,
-        thisyear => 1900 + (localtime)[5],
-    };
-};
-
-post '/search' => sub {
-    template 'search' => {
-        search   => $gw->search({params}),
-        title    => 'Test::Smoke Database Search',
-        version  => $Test::Smoke::Gateway::VERSION,
-        thisyear => 1900 + (localtime)[5],
-    };
-};
-
-get '/search' => sub {
-    template 'search' => {
-        search   => $gw->search(),
-        title    => 'Test::Smoke Database Search',
-        version  => $Test::Smoke::Gateway::VERSION,
-        thisyear => 1900 + (localtime)[5],
-    };
-};
-
-get '/api/reports_from_date/:epoch' => sub {
-    header 'content-type', 'application/json';
-
-    return to_json($gw->api_get_reports_from_date(params->{epoch}));
-};
-
-get '/api/report_data/:id' => sub {
-    header 'content-type', 'application/json';
-
-    return to_json($gw->api_get_report_data(params->{id}));
-};
-
-get '/' => sub {
-    forward '/search';
-};
-
+pass_gateway($gw);
 dance();
