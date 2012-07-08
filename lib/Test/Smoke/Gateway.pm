@@ -9,7 +9,7 @@ use POSIX qw/strftime/;
 
 has schema => (is => 'ro');
 
-our $VERSION = 0.03;
+our $VERSION = 0.04;
 
 =head1 NAME
 
