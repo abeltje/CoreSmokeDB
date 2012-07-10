@@ -282,3 +282,5 @@ html>body #menu li a { width: auto; }
     background-color: #393;
     color:            #EEE;
 }
+
+table { font-size: 90%; }

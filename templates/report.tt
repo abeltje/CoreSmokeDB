@@ -1,6 +1,9 @@
 [% IF report.log_file.size -%]
 <a href="/logfile/[% report.id %]">Show logfile</a>
 [% END -%]
+[% IF report.out_file.size -%]
+<a href="/outfile/[% report.id %]">Show outfile</a>
+[% END -%]
 </div><div id=widecontent><pre style="color: black;">
 [% INCLUDE 'rawreport.tt' %]
 </pre>

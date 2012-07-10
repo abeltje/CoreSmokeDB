@@ -9,7 +9,13 @@ use POSIX qw/strftime/;
 
 has schema => (is => 'ro');
 
-our $VERSION = 0.04;
+has reports_per_page => (
+    is      => 'ro',
+    isa     => 'Int',
+    default => 25
+);
+
+our $VERSION = 0.05;
 
 =head1 NAME
 
@@ -227,14 +233,16 @@ sub search {
 
     my ($whatnext) = split " ", lc($data->{whatnext} || 'list');
     my $page = $data->{page} || 1;
+    $pv_selected = '%'
+        if exists $data->{perl_version} && ! $data->{perl_version};
     my $reports;
     if ($whatnext eq 'list') {
-        $pv_selected = '%' if !$data->{perl_version};
         $reports = $self->get_reports_by_date($pv_selected, $page, \%filter);
     }
     else {
         $reports = $self->get_reports_by_perl_version($pv_selected, \%filter);
     }
+    my $count = $self->get_reports_by_date_count($pv_selected, \%filter);
 
     return {
         perl_latest   => $perl_latest,
@@ -245,6 +253,7 @@ sub search {
         arch_os_ver   => $self->get_architecture_os,
         aov_selected  => $aov_selected,
         reports       => $reports,
+        page_count    => $count,
     };
 }
 
@@ -279,6 +288,21 @@ sub get_reports_by_perl_version {
     return [ $reports->all() ];
 }
 
+sub get_reports_by_date_count {
+    my $self = shift;
+    my ($pattern, $filter) = @_;
+    $pattern ||= '%';
+    $pattern =~ s/\*/%/g;
+
+    my $count = $self->schema->resultset('Report')->search(
+        {
+            perl_id => { -like => $pattern },
+            %$filter,
+        },
+    )->count();
+    return int(($count + $self->reports_per_page - 1)/$self->reports_per_page);
+}
+
 sub get_reports_by_date {
     my $self = shift;
     my ($pattern, $page, $filter) = @_;
@@ -294,7 +318,7 @@ sub get_reports_by_date {
         {
             order_by => { -desc => 'smoke_date' },
             page     => $page,
-            rows     => 25,
+            rows     => $self->reports_per_page,
         }
     );
 

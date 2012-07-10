@@ -17,25 +17,31 @@
             [% IF perl_version.value == search.pv_selected -%]
             selected[% END %]>[% perl_version.label %]</option>
     [% END -%]
-  </select>
-  </div>
-  <div style="text-align: right;">
+    </select>
     <input type=submit name=whatnext value="Latest only">
   </div>
-  <input type=submit name=whatnext value="List page">
-  <!-- list -->
-  <select name=page>
-  [% IF search.page_selected > 1 -%]
-  <option value=[% search.page_selected - 1 %]
-         >[% search.page_selected - 1 %]</option>
-  [% END -%]
-  <option value=[% search.page_selected %] selected
-         >[% search.page_selected %]</option>
-  <option value=[% search.page_selected + 1 %]
-         >[% search.page_selected + 1 %]</option>
-  </select>
-  <hr>
+  <div style="padding-top: 1em;">
+    ([% search.page_selected %]/[% search.page_count %])&nbsp;
+    [% IF search.page_selected != 1 %]
+    <input type="submit" name="page" value="1">
+    [% IF search.page_selected != 2 %]
+    <input type="submit" name="page" value="[% search.page_selected - 1 %]">
+    [% END -%]
+    [% ELSE %]
+    <input type="submit" name="page" value="1" disabled>
+    [% END %]
+    [% IF search.page_selected != search.page_count %]
+    [% IF search.page_selected + 1 != search.page_count %]
+    <input type="submit" name="page" value="[% search.page_selected + 1 %]">
+    [% END -%]
+    <input type="submit" name="page" value="[% search.page_count %]">
+    [% ELSE %]
+    <input type="submit" name="page" value="[% search.page_count %]" disabled>
+    [% END %]
+    <input type=submit name=whatnext value="List reports">
+  </div>
 </form>
+  <hr>
 </div><div id=widecontent>
 [% IF search.whatnext == "list" -%]
 [% INCLUDE 'list.tt' %]
