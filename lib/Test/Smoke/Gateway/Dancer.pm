@@ -5,6 +5,8 @@ use Dancer ':syntax';
 use Exporter 'import';
 our @EXPORT = qw/pass_gateway/;
 
+use Try::Tiny;
+
 my $gw;
 sub pass_gateway { $gw = shift }
 

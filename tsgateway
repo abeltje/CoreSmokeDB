@@ -12,7 +12,6 @@ use Dancer;
 use Test::Smoke::Gateway::Dancer;
 use Test::Smoke::Gateway::Schema;
 use Test::Smoke::Gateway;
-use Try::Tiny;
 
 my $gw = Test::Smoke::Gateway->new(
     schema => Test::Smoke::Gateway::Schema->connect(
