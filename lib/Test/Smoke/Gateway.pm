@@ -368,7 +368,7 @@ sub get_perlversion_list {
         {
             columns  => [qw/perl_id/],
             group_by => [qw/perl_id/],
-            order_by => {-desc => 'perl_id'},
+            order_by => {-desc => 'perlversion_float(perl_id)'},
         }
     );
     return [
