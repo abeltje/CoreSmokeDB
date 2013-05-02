@@ -25,6 +25,7 @@ use Exception::Class (
     },
 );
 
+
 sub connection {
     my $self = shift;
     $self->next::method(@_);
