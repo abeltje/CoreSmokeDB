@@ -1,4 +1,4 @@
-Automated smoke report for [% report.perl_id %] patch [% report.git_id %] [% report.git_describe %]
+Automated smoke report for branch [% report.smoke_branch %] [% report.perl_id %] patch [% report.git_id %] [% report.git_describe %]
 [% report.hostname %]: [% report.cpu_description %] ([% report.architecture %]/[% report.cpu_count %] cpus)
     on        [% report.osname %] [% report.osversion %]
 [% FOREACH c_compiler = report.c_compilers -%]

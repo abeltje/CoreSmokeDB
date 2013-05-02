@@ -221,6 +221,13 @@ __PACKAGE__->table("report");
   is_nullable: 0
   original: {data_type => "varchar"}
 
+=head2 smoke_branch
+
+  data_type: 'text'
+  default_value: 'blead'
+  is_nullable: 1
+  original: {data_type => "varchar"}
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -397,6 +404,13 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
     original    => { data_type => "varchar" },
   },
+  "smoke_branch",
+  {
+    data_type     => "text",
+    default_value => "blead",
+    is_nullable   => 1,
+    original      => { data_type => "varchar" },
+  },
 );
 
 =head1 PRIMARY KEY
@@ -474,8 +488,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07020 @ 2012-04-02 22:16:28
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:MtWsbOFXbtxNhLe+dT1lsA
+# Created by DBIx::Class::Schema::Loader v0.07020 @ 2013-05-01 16:58:18
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:2LOAy6Oh3RCztrbKISauTA
 
 my %io_env_order_map = (
     minitest => 1,

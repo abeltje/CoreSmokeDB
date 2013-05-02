@@ -9,7 +9,7 @@ make_schema_at(
    {
        debug                   => 1,
        dump_directory          => './lib',
-       overwrite_modifications => 1,
+       overwrite_modifications => 0,
    },
    [
        'dbi:Pg:host=localhost;database=tsgateway',
