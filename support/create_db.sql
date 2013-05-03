@@ -67,7 +67,7 @@ CREATE TABLE config
 
 CREATE TABLE result
            ( id            serial  not null PRIMARY KEY
-           , config_id     int     not null REFERENCES config (id)  -- result
+           , config_id     int     not null REFERENCES config (id)
            , io_env        varchar not null       -- "perlio"
            , locale        varchar                -- "nl_NL.utf8"
            , summary       varchar not null       -- "F"
