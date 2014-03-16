@@ -12,7 +12,7 @@ sub pass_gateway { $gw = shift }
 
 post '/report' => sub {
     try {
-        my $data = from_json(params->{'json'});
+        my $data = from_json(params->{'json'}, {utf8 => 1});
         my $report = $gw->post_report($data);
         return to_json({id => $report->id});
     }
