@@ -25,11 +25,16 @@
 [% content %]
       </div><!-- id=(wide)content -->
 
-      <div id="footer">
-        <span style="font-size: smaller">Test::Smoke::Gateway v[% version %]</span>
-        courtesy of Perl QA Hacakthon 2010 Vienna +  2011 Amsterdam + 2012 Paris
-      </div>
-  
+    <div id="footer">
+      <span style="font-size: smaller;"
+           >SmokeDB: Test::Smoke::Gateway v[% version %]</span>;
+           courtesy of Perl QA Hackathon:
+             2010 Vienna
+           + 2011 Amsterdam
+           + 2012 Paris
+           + 2013 Lancaster
+           + 2014 Lyon
+    </div>
 
     </div><!-- id=frame -->
   </body>
