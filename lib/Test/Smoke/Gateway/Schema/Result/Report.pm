@@ -480,16 +480,16 @@ __PACKAGE__->belongs_to(
   "Test::Smoke::Gateway::Schema::Result::SmokeConfig",
   { id => "sconfig_id" },
   {
-    is_deferrable => 1,
+    is_deferrable => 0,
     join_type     => "LEFT",
-    on_delete     => "CASCADE",
-    on_update     => "CASCADE",
+    on_delete     => "NO ACTION",
+    on_update     => "NO ACTION",
   },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07020 @ 2013-05-01 16:58:18
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:2LOAy6Oh3RCztrbKISauTA
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2013-09-15 16:23:47
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5y3FYUTYbezd/SQESTOJPQ
 
 my %io_env_order_map = (
     minitest => 1,

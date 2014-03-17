@@ -74,7 +74,7 @@ __PACKAGE__->belongs_to(
   "failure",
   "Test::Smoke::Gateway::Schema::Result::Failure",
   { id => "failure_id" },
-  { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
+  { is_deferrable => 0, on_delete => "NO ACTION", on_update => "NO ACTION" },
 );
 
 =head2 result
@@ -89,12 +89,12 @@ __PACKAGE__->belongs_to(
   "result",
   "Test::Smoke::Gateway::Schema::Result::Result",
   { id => "result_id" },
-  { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
+  { is_deferrable => 0, on_delete => "NO ACTION", on_update => "NO ACTION" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07020 @ 2012-04-02 22:16:28
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:EjxgQQX6sMp6EM0zeQJENA
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2013-09-15 16:23:46
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5DM+brzUQOM/wx+sCDtMVw
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

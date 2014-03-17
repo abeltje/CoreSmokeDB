@@ -138,7 +138,7 @@ __PACKAGE__->belongs_to(
   "report",
   "Test::Smoke::Gateway::Schema::Result::Report",
   { id => "report_id" },
-  { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
+  { is_deferrable => 0, on_delete => "NO ACTION", on_update => "NO ACTION" },
 );
 
 =head2 results
@@ -157,8 +157,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07020 @ 2012-04-02 22:16:28
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:RjdH1Gb0LE4KNWwV23oUnQ
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2013-09-15 16:23:46
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hvt6Df/nibkpzVnPK4HLOw
 
 
 sub c_compiler_key {

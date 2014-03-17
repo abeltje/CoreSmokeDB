@@ -14,6 +14,13 @@ show_errors: 1
 
 auto_reload: 1
 
-db_dsn: "dbi:Pg:database=tsgateway;host=localhost"
-db_usr: "tsgateway"
-db_pwd: "TSg4t3w4y"
+plugins:
+    DBIC:
+        default:
+            schema_class: Test::Smoke::Gateway::Schema
+            dsn: 'dbi:Pg:dbname=tsgateway;host=fidodbmaster'
+            user: 'tsgateway'
+            pass: 'TSg4t3w4y'
+            options:
+                RaiseError: 1
+                PrintError: 1

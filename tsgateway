@@ -10,18 +10,6 @@ use Cwd qw/abs_path/;
 use Dancer::Config;
 use Dancer;
 use Test::Smoke::Gateway::Dancer;
-use Test::Smoke::Gateway::Schema;
-use Test::Smoke::Gateway;
-
-my $gw = Test::Smoke::Gateway->new(
-    schema => Test::Smoke::Gateway::Schema->connect(
-        config->{db_dsn},
-        config->{db_usr},
-        config->{db_pwd},
-    ),
-) or die "No gateway: $@";
 
 set views => path(abs_path(dirname(__FILE__)), 'templates');
-
-pass_gateway($gw);
 dance();

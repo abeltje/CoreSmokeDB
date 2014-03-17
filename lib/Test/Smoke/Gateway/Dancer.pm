@@ -2,13 +2,11 @@ package Test::Smoke::Gateway::Dancer;
 use v5.10;
 use Dancer ':syntax';
 
-use Exporter 'import';
-our @EXPORT = qw/pass_gateway/;
-
+use Dancer::Plugin::DBIC;
+use Test::Smoke::Gateway;
 use Try::Tiny;
 
-my $gw;
-sub pass_gateway { $gw = shift }
+my $gw = Test::Smoke::Gateway->new(schema => schema());
 
 post '/report' => sub {
     try {

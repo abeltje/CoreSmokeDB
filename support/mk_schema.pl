@@ -12,7 +12,7 @@ make_schema_at(
        overwrite_modifications => 0,
    },
    [
-       'dbi:Pg:host=localhost;database=tsgateway',
+       'dbi:Pg:host=fidodbmaster;database=tsgateway',
        'tsgateway',
        'TSg4t3w4y',
    ],

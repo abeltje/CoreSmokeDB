@@ -216,7 +216,7 @@ sub post_smoke_config {
 sub search {
     my $self = shift;
     my ($data) = @_;
-    
+
     my $perlversion_list = $self->get_perlversion_list;
     my $perl_latest = $perlversion_list->[0]{value};
     my $pv_selected = $data->{perl_version} || $perl_latest;
@@ -360,7 +360,7 @@ sub get_perlversion_list {
     my ($pattern) = @_;
     $pattern ||= '%';
     $pattern =~ s/\*/%/g;
-    
+
     my $pversions = $self->schema->resultset('Report')->search(
         {
             perl_id => { -like => $pattern }
