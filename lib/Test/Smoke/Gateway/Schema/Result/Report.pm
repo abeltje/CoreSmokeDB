@@ -228,6 +228,11 @@ __PACKAGE__->table("report");
   is_nullable: 1
   original: {data_type => "varchar"}
 
+=head2 nonfatal_msgs
+
+  data_type: 'bytea'
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -411,6 +416,8 @@ __PACKAGE__->add_columns(
     is_nullable   => 1,
     original      => { data_type => "varchar" },
   },
+  "nonfatal_msgs",
+  { data_type => "bytea", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -488,8 +495,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2013-09-15 16:23:47
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5y3FYUTYbezd/SQESTOJPQ
+# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-08-23 19:21:15
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Thw8Cig5H/5VPYgkuGNroA
 
 my %io_env_order_map = (
     minitest => 1,

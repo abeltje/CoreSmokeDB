@@ -15,7 +15,7 @@ has reports_per_page => (
     default => 25
 );
 
-our $VERSION = 0.05;
+our $VERSION = 0.06;
 
 =head1 NAME
 
@@ -114,7 +114,10 @@ sub post_report {
     };
     $report_data->{lc($_)} = delete $report_data->{$_} for keys %$report_data;
 
-    my @to_unarray = qw/skipped_tests applied_patches compiler_msgs manifest_msgs/;
+    my @to_unarray = qw/
+        skipped_tests applied_patches
+        compiler_msgs manifest_msgs nonfatal_msgs
+    /;
     $report_data->{$_} = join("\n", @{delete($data->{$_}) || []}) for @to_unarray;
 
     my @other_data = qw/harness_only harness3opts summary log_file out_file/;

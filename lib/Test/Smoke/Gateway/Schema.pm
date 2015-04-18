@@ -15,7 +15,7 @@ __PACKAGE__->load_namespaces;
 # Created by DBIx::Class::Schema::Loader v0.07020 @ 2012-04-02 22:16:28
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:pch59BgrYy7frtW0MFWhew
 
-our $APIVERSION = 1;
+our $APIVERSION = 2;
 
 use Exception::Class (
     'Test::Smoke::Gateway::Exception' =>
@@ -44,7 +44,7 @@ sub _check_version {
         {name => 'dbversion'}
     )->value;
 
-    if ($APIVERSION != $dbversion) {
+    if ($APIVERSION > $dbversion) {
         throw_version_mismatch(
             sprintf(
                 "APIVersion %d does not match DBVersion %d",
