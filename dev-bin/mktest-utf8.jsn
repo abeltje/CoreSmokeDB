@@ -1,0 +1,237 @@
+{
+   "locale" : "nl_NL.utf8",
+   "un_file" : "/home/abeltje/Test-Smoke/etc/blead.usernote",
+   "rptfile" : "mktest.rpt",
+   "outfile" : "mktest.out",
+   "harness_only" : "0",
+   "applied_patches" : [
+      "SMOKEba7f043cd8beaaa711b275c2a15eb10e1f9ab7f8"
+   ],
+   "v" : 1,
+   "cfg" : "/home/abeltje/Test-Smoke/etc/perlcurrent.cfg",
+   "showcfg" : 0,
+   "lfile" : "/home/abeltje/Test-Smoke/etc/blead.log",
+   "sysinfo" : {
+      "smoker_version" : "0.046",
+      "git_describe" : "v5.21.10-91-gba7f043",
+      "hostname" : "frank",
+      "reporter_version" : "0.053",
+      "reporter" : null,
+      "architecture" : "x86_64",
+      "test_jobs" : null,
+      "osversion" : "3.2.0-70-generic [Ubuntu 12.04.5 LTS (precise)]",
+      "cpu_count" : "1",
+      "osname" : "linux",
+      "lc_all" : null,
+      "config_count" : 2,
+      "git_id" : "ba7f043cd8beaaa711b275c2a15eb10e1f9ab7f8",
+      "smoke_perl" : "5.14.2",
+      "smoke_date" : "2015-04-19 12:27:15 +0200",
+      "user_note" : "",
+      "lang" : "en_US.UTF-8",
+      "cpu_description" : "Intel(R) Core(TM) i7-3770 CPU @ 3.40GHz (GenuineIntel 3411MHz)",
+      "smoke_branch" : "blead",
+      "duration" : 3728,
+      "username" : "abeltje",
+      "smoke_revision" : "1.61_03",
+      "smoke_version" : "1.61_03",
+      "perl_id" : "5.21.11"
+   },
+   "summary" : "FAIL(F)",
+   "defaultenv" : 0,
+   "compiler_msgs" : [
+      "Zlib.c: In function ‘XS_Compress__Raw__Zlib_constant’:",
+      "./constants.xs:38:11: warning: ‘iv’ may be used uninitialized in this function [-Wuninitialized]",
+      "./constants.xs:11:6: note: ‘iv’ was declared here",
+      "RealPPPort.xs: In function ‘XS_Devel__PPPort_check_HeUTF8’:",
+      "RealPPPort.xs:1626:17: warning: value computed is not used [-Wunused-value]",
+      "MD5.xs:171:1: warning: ‘static’ is not at beginning of declaration [-Wold-style-declaration]",
+      "Unicode.xs: In function ‘XS_Encode__Unicode_decode_xs’:",
+      "Unicode.xs:174:6: warning: the address of ‘PL_sv_undef’ will always evaluate as ‘true’ [-Waddress]",
+      "Unicode.xs:175:6: warning: value computed is not used [-Wunused-value]",
+      "Unicode.xs:193:10: warning: the address of ‘PL_sv_undef’ will always evaluate as ‘true’ [-Waddress]",
+      "Unicode.xs: In function ‘XS_Encode__Unicode_encode_xs’:",
+      "Unicode.xs:339:6: warning: the address of ‘PL_sv_undef’ will always evaluate as ‘true’ [-Waddress]",
+      "Unicode.xs:340:6: warning: value computed is not used [-Wunused-value]",
+      "Unicode.xs:355:14: warning: the address of ‘PL_sv_undef’ will always evaluate as ‘true’ [-Waddress]",
+      "SysV.c: In function ‘XS_IPC__SysV__constant’:",
+      "./const-xs.inc:38:11: warning: ‘iv’ may be used uninitialized in this function [-Wuninitialized]",
+      "./const-xs.inc:11:6: note: ‘iv’ was declared here",
+      "ListUtil.xs: In function ‘XS_List__Util_reduce’:",
+      "ListUtil.xs:327:9: warning: variable ‘newsp’ set but not used [-Wunused-but-set-variable]",
+      "ListUtil.xs: In function ‘XS_List__Util_first’:",
+      "ListUtil.xs:381:9: warning: variable ‘newsp’ set but not used [-Wunused-but-set-variable]",
+      "ListUtil.xs: In function ‘XS_List__Util_any’:",
+      "ListUtil.xs:447:9: warning: variable ‘newsp’ set but not used [-Wunused-but-set-variable]",
+      "ListUtil.xs: In function ‘XS_List__Util_pairfirst’:",
+      "ListUtil.xs:509:9: warning: variable ‘newsp’ set but not used [-Wunused-but-set-variable]",
+      "ListUtil.xs: In function ‘XS_List__Util_pairgrep’:",
+      "ListUtil.xs:593:9: warning: variable ‘newsp’ set but not used [-Wunused-but-set-variable]",
+      "ListUtil.xs: In function ‘XS_List__Util_pairmap’:",
+      "ListUtil.xs:689:17: warning: unused variable ‘b’ [-Wunused-variable]",
+      "ListUtil.xs:688:17: warning: unused variable ‘a’ [-Wunused-variable]",
+      "ListUtil.xs:683:9: warning: variable ‘newsp’ set but not used [-Wunused-but-set-variable]",
+      "ListUtil.xs:731:17: warning: unused variable ‘b’ [-Wunused-variable]",
+      "ListUtil.xs:730:17: warning: unused variable ‘a’ [-Wunused-variable]",
+      "ListUtil.c: In function ‘XS_List__Util_min’:",
+      "ListUtil.xs:129:20: warning: ‘retval’ may be used uninitialized in this function [-Wuninitialized]",
+      "ListUtil.xs:99:8: note: ‘retval’ was declared here",
+      "HiRes.xs: In function ‘XS_Time__HiRes_setitimer’:",
+      "HiRes.xs:1112:2: warning: enum conversion when passing argument 1 of ‘setitimer’ is invalid in C++ [-Wc++-compat]",
+      "/usr/include/x86_64-linux-gnu/sys/time.h:133:12: note: expected ‘__itimer_which_t’ but argument is of type ‘int’",
+      "HiRes.xs: In function ‘XS_Time__HiRes_getitimer’:",
+      "HiRes.xs:1127:2: warning: enum conversion when passing argument 1 of ‘getitimer’ is invalid in C++ [-Wc++-compat]",
+      "/usr/include/x86_64-linux-gnu/sys/time.h:127:12: note: expected ‘__itimer_which_t’ but argument is of type ‘int’",
+      "HiRes.c: In function ‘XS_Time__HiRes_constant’:",
+      "Piece.xs: In function ‘_strptime’:",
+      "Piece.xs:688:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]",
+      "Piece.xs:782:18: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]",
+      "Piece.xs: In function ‘XS_Time__Piece__strftime’:",
+      "Piece.xs:1059:29: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]",
+      "Piece.xs:350:13: warning: ‘copyright’ defined but not used [-Wunused-variable]",
+      "Piece.xs:352:13: warning: ‘sccsid’ defined but not used [-Wunused-variable]",
+      "ExtTest.c: In function ‘XS_ExtTest_constant’:",
+      "ExtTest.xs:465:11: warning: ‘pv’ may be used uninitialized in this function [-Wuninitialized]",
+      "ExtTest.xs:420:14: note: ‘pv’ was declared here",
+      "ExtTest.xs:418:6: warning: ‘iv’ may be used uninitialized in this function [-Wuninitialized]",
+      "ExtTest.xs:236:11: warning: ‘iv’ may be used uninitialized in this function [-Wuninitialized]",
+      "ExtTest.xs:209:6: note: ‘iv’ was declared here",
+      "ExtTest.xs:217:11: warning: ‘iv’ may be used uninitialized in this function [-Wuninitialized]",
+      "ExtTest.xs:190:6: note: ‘iv’ was declared here"
+   ],
+   "manifest_msgs" : [],
+   "un_position" : "bottom",
+   "out_file" : null,
+   "harness3opts" : null,
+   "jsnfile" : "mktest.jsn",
+   "log_file" : null,
+   "is56x" : 0,
+   "skip_tests" : "",
+   "ddir" : "/home/abeltje/Test-Smoke/perl-current",
+   "skipped_tests" : [],
+   "configs" : [
+      {
+         "ccversion" : "4.6.3",
+         "cc" : "cc",
+         "duration" : 1750,
+         "started" : "2015-04-19 12:27:15 +0200",
+         "debugging" : "N",
+         "arguments" : "",
+         "results" : [
+            {
+               "failures" : [
+                  {
+                     "test" : "../t/porting/pending-author.t",
+                     "status" : "FAILED",
+                     "extra" : [
+                        "1"
+                     ]
+                  }
+               ],
+               "stat_cpu_time" : 275.03,
+               "summary" : "F",
+               "stat_tests" : "709481",
+               "statistics" : "u=4.76  s=0.86  cu=257.56  cs=11.85  scripts=2223  tests=709481",
+               "locale" : null,
+               "io_env" : "stdio"
+            },
+            {
+               "failures" : [
+                  {
+                     "test" : "../t/porting/pending-author.t",
+                     "status" : "FAILED",
+                     "extra" : [
+                        "1"
+                     ]
+                  }
+               ],
+               "stat_cpu_time" : 257.28,
+               "summary" : "F",
+               "stat_tests" : "709465",
+               "statistics" : "u=4.29  s=0.88  cu=240.93  cs=11.18  scripts=2225  tests=709465",
+               "locale" : null,
+               "io_env" : "perlio"
+            },
+            {
+               "failures" : [
+                  {
+                     "test" : "../t/porting/pending-author.t",
+                     "status" : "FAILED",
+                     "extra" : [
+                        "1"
+                     ]
+                  }
+               ],
+               "stat_cpu_time" : 258.85,
+               "summary" : "F",
+               "stat_tests" : "709421",
+               "statistics" : "u=4.31  s=0.92  cu=242.49  cs=11.13  scripts=2223  tests=709421",
+               "locale" : "nl_NL.utf8",
+               "io_env" : "locale"
+            }
+         ]
+      },
+      {
+         "ccversion" : "4.6.3",
+         "cc" : "cc",
+         "duration" : 1978,
+         "started" : "2015-04-19 12:56:25 +0200",
+         "debugging" : "D",
+         "arguments" : "",
+         "results" : [
+            {
+               "failures" : [
+                  {
+                     "test" : "../t/porting/pending-author.t",
+                     "status" : "FAILED",
+                     "extra" : [
+                        "1"
+                     ]
+                  }
+               ],
+               "stat_cpu_time" : 331.24,
+               "summary" : "F",
+               "stat_tests" : "709478",
+               "statistics" : "u=5.78  s=0.98  cu=311.58  cs=12.90  scripts=2223  tests=709478",
+               "locale" : null,
+               "io_env" : "stdio"
+            },
+            {
+               "failures" : [
+                  {
+                     "test" : "../t/porting/pending-author.t",
+                     "status" : "FAILED",
+                     "extra" : [
+                        "1"
+                     ]
+                  }
+               ],
+               "stat_cpu_time" : 313.99,
+               "summary" : "F",
+               "stat_tests" : "709433",
+               "statistics" : "u=5.40  s=0.97  cu=295.69  cs=11.93  scripts=2225  tests=709433",
+               "locale" : null,
+               "io_env" : "perlio"
+            },
+            {
+               "failures" : [
+                  {
+                     "test" : "../t/porting/pending-author.t",
+                     "status" : "FAILED",
+                     "extra" : [
+                        "1"
+                     ]
+                  }
+               ],
+               "stat_cpu_time" : 318.18,
+               "summary" : "F",
+               "stat_tests" : "709417",
+               "statistics" : "u=5.44  s=0.94  cu=299.76  cs=12.04  scripts=2223  tests=709417",
+               "locale" : "nl_NL.utf8",
+               "io_env" : "locale"
+            }
+         ]
+      }
+   ],
+   "nonfatal_msgs" : []
+}
