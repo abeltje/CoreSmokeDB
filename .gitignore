@@ -1,1 +1,3 @@
 *.swp
+logs/
+nohup.out

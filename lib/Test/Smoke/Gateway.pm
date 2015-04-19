@@ -7,7 +7,7 @@ use JSON;
 use Params::Validate ':all';
 use POSIX qw/strftime/;
 
-has schema => (is => 'ro');
+has schema => (is => 'ro', required => 1);
 
 has reports_per_page => (
     is      => 'ro',

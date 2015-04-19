@@ -3,6 +3,7 @@ use v5.10;
 use Dancer ':syntax';
 
 use Dancer::Plugin::DBIC;
+use Encode 'encode';
 use Test::Smoke::Gateway;
 use Try::Tiny;
 
@@ -10,12 +11,15 @@ my $gw = Test::Smoke::Gateway->new(schema => schema());
 
 post '/report' => sub {
     try {
-        my $data = from_json(params->{'json'}, {utf8 => 1});
+        my $json = encode('utf-8', params->{json});
+        my $data = from_json($json);
         my $report = $gw->post_report($data);
+        debug("Report was posted, returning id = ", $report->id);
         return to_json({id => $report->id});
     }
     catch {
         when (/duplicate key/) {
+            debug("Report is a duplicate: $_");
             return to_json(
                 {
                     error    => 'Report already posted.',
@@ -24,6 +28,7 @@ post '/report' => sub {
             );
         }
         default {
+            debug("Report could not be stored in the database: $_");
             return to_json(
                 {
                     error    => 'Unexpected error.',
