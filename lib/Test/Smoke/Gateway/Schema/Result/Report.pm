@@ -661,7 +661,7 @@ sub group_tests_by_status {
     my $self = shift;
     my ($group_status) = @_;
 
-    use Data::Dumper; $Data::Dumper::Indent = 1; $Data::Dumper::SortKeys = 1;
+    use Data::Dumper; $Data::Dumper::Indent = 1; $Data::Dumper::Sortkeys = 1;
 
     my %c_compilers = map {
         $_->{key} => $_

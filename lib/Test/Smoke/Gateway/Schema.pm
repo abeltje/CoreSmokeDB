@@ -56,4 +56,22 @@ sub _check_version {
     return $self;
 }
 
+=head2 deploy()
+
+    after deploy => sub { };
+
+Populate the tsgateway_config-table with data.
+
+=cut
+
+sub deploy {
+    my $self = shift;
+    $self->next::method(@_);
+    $self->resultset('TsgatewayConfig')->populate(
+        [
+            {name => 'dbversion', value => $APIVERSION},
+        ]
+    );
+}
+
 1;
