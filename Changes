@@ -5,13 +5,14 @@ Changes on 2015-05-05 for repository at:
 Enjoy!
 
 ________________________________________________________________________________
-[88e1e7b] by Abe Timmerman on Tue, 5 May 2015 15:03:42 +0200
+[d56ce55] by Abe Timmerman on Tue, 5 May 2015 15:03:42 +0200
 
      Make distribution-ish
 
         Create a working testsuite with xt/ tests, MANIFEST etc
 
 
+A	Changes
 A	MANIFEST
 M	Makefile.PL
 M	lib/Test/Smoke/Gateway/Schema.pm
