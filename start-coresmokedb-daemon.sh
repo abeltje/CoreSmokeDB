@@ -14,7 +14,7 @@ fi
 cd $csdb_home
 
 if [ $INPROD  == "1" ] ; then
-    git pull --all
+#    git pull --all
     PERL5LIB=../perl5/lib/perl5/
 fi
 

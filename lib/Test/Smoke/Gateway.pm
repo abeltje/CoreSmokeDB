@@ -300,7 +300,6 @@ sub get_reports_by_perl_version {
         },
         {
             order_by => [qw/architecture hostname osname osversion/],
-            join     => 'configs',
         }
     );
     return [ $reports->all() ];
