@@ -498,6 +498,21 @@ __PACKAGE__->belongs_to(
 # Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-08-23 19:21:15
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Thw8Cig5H/5VPYgkuGNroA
 
+sub arch_os_version_key {
+    my $self = shift;
+    return join( "##", $self->architecture, $self->osname, $self->osversion);
+}
+
+sub arch_os_version_label {
+    my $self = shift;
+    return join( " - ", $self->architecture, $self->osname, $self->osversion);
+}
+
+sub arch_os_version_pair {
+    my $self = shift;
+    return {value => $self->arch_os_version_key, label => $self->arch_os_version_label};
+}
+
 my %io_env_order_map = (
     minitest => 1,
     stdio    => 2,

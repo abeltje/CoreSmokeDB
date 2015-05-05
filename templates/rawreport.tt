@@ -63,8 +63,10 @@ Compiler messages:
 [% END -%]
 
 About this smoke:
-  smoking-perl: [% report.smoke_perl %]
+    smoking-perl: [% report.smoke_perl %]
   smoker-version: [% report.smoke_version %]/[% report.smoker_version %]
+       timestamp: [% report.smoke_date %]
+          tester: [% report.username %]
 
 [% IF report.user_note %][% report.user_note %][% END -%]
 -- 

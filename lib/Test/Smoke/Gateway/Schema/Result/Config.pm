@@ -166,6 +166,16 @@ sub c_compiler_key {
     return join("##", $self->cc, $self->ccversion);
 }
 
+sub c_compiler_label {
+    my $self = shift;
+    return join(" - ", $self->cc, $self->ccversion);
+}
+
+sub c_compiler_pair {
+    my $self = shift;
+    return {value => $self->c_compiler_key, label => $self->c_compiler_label};
+}
+
 sub full_arguments {
     my $self = shift;
     return $self->debugging eq 'D'
