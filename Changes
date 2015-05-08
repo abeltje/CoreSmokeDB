@@ -1,9 +1,37 @@
-Changes on 2015-05-05 for repository at:
+Changes on 2015-05-08 for repository at:
   Fetch URL: ssh://git@github.com/abeltje/CoreSmokeDB
   Push  URL: ssh://git@github.com/abeltje/CoreSmokeDB
 
 Enjoy!
 
+________________________________________________________________________________
+[c3c4330] by abeltje on Fri, 8 May 2015 13:42:59 +0200
+
+     Fix: get_reports_by_filter
+
+        One report has_many()-configs, so if we join, we need to add
+        distinct.
+
+
+M	lib/Test/Smoke/Gateway.pm
+________________________________________________________________________________
+[9d859d2] by Abe Timmerman on Tue, 5 May 2015 16:14:37 +0200
+
+     BUGFIX: the "Latest only" button didn't work
+
+        At least not correctley :)
+
+
+M	lib/Test/Smoke/Gateway.pm
+M	start-coresmokedb-daemon.sh
+________________________________________________________________________________
+[4920e72] by Abe Timmerman on Tue, 5 May 2015 15:09:38 +0200
+
+     Autocommit for distribution Test::Smoke::Gateway 0.07 (minor)
+
+
+M	Changes
+M	lib/Test/Smoke/Gateway.pm
 ________________________________________________________________________________
 [d56ce55] by Abe Timmerman on Tue, 5 May 2015 15:03:42 +0200
 
