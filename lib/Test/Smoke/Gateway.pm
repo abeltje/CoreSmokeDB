@@ -324,7 +324,11 @@ sub get_reports_by_filter_count {
             %report_filter,
             %config_filter,
         },
-        { join => 'configs' }
+        {
+            join => 'configs',
+            columns  => [qw/id/],
+            distinct => 1,
+        }
     )->count();
     return int(($count + $self->reports_per_page - 1)/$self->reports_per_page);
 }
@@ -352,6 +356,9 @@ sub get_reports_by_filter {
         },
         {
             join     => 'configs',
+            columns  => [qw/id architecture osname osversion smoke_date
+                            hostname git_describe summary/],
+            distinct => 1,
             order_by => { -desc => 'smoke_date' },
             page     => $page,
             rows     => $self->reports_per_page,
