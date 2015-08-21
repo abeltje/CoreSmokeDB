@@ -99,6 +99,12 @@ get '/api/reports_from_date/:epoch' => sub {
     return to_json($gw->api_get_reports_from_date(params->{epoch}));
 };
 
+get '/api/reports_from_id/:id' => sub {
+    my @args = (params->{id});
+    push @args, params->{limit} // 100;
+    return to_json($gw->api_get_reports_from_id(@args));
+};
+
 get '/api/report_data/:id' => sub {
     return to_json($gw->api_get_report_data(params->{id}));
 };

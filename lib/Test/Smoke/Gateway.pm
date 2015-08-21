@@ -60,6 +60,29 @@ sub api_get_reports_from_date {
     return [map $_->id, $reports->all()];
 }
 
+=head2 $gw->api_get_reports_from_id($id, $limit)
+
+Returns a list of report-id's that have an id greater than or equal to C<$id>.
+
+=cut
+
+sub api_get_reports_from_id {
+    my $self = shift;
+    my ($id, $limit) = validate_pos(
+        @_,
+        { regex => qr/^[1-9][0-9]*$/, optional => 0 },
+        { regex => qr/^[1-9][0-9]*$/, optional => 1 },
+    );
+    my $reports = $self->schema->resultset('Report')->search(
+        { id => { '>=' => $id } },
+        {
+            order => { -asc => 'id' },
+            rows  => $limit,
+        }
+    );
+    return [map $_->id, $reports->all()];
+}
+
 =head2 $gw->api_get_report_data($id)
 
 Returns the data-structure from the database.
