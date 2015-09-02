@@ -7,6 +7,8 @@ use Encode 'encode';
 use Test::Smoke::Gateway;
 use Try::Tiny;
 
+no if $] >= 5.018, warnings => 'experimental::smartmatch';
+
 my $gw = Test::Smoke::Gateway->new(schema => schema());
 
 post '/report' => sub {
