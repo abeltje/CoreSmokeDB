@@ -1,5 +1,7 @@
 package Test::Smoke::Gateway::Dancer;
 use v5.10;
+no if $] >= 5.018, warnings => 'experimental::smartmatch';
+
 use Dancer ':syntax';
 
 use Dancer::Plugin::DBIC;
