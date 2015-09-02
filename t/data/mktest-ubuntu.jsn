@@ -1,0 +1,436 @@
+{
+   "cfg" : "/home/abeltje/Test-Smoke/etc/perlcurrent.cfg",
+   "jsnfile" : "mktest.jsn",
+   "harness3opts" : null,
+   "log_file" : null,
+   "manifest_msgs" : [],
+   "harness_only" : "0",
+   "showcfg" : 0,
+   "un_file" : "/home/abeltje/Test-Smoke/etc/blead.usernote",
+   "applied_patches" : [
+      "SMOKEe4105e89df44935f2a4363ac725ff11e07de35d8"
+   ],
+   "outfile" : "mktest.out",
+   "skipped_tests" : [
+      "    t/porting/pending-author.t"
+   ],
+   "is56x" : 0,
+   "rptfile" : "mktest.rpt",
+   "compiler_msgs" : [
+      "Zlib.c: In function ‘XS_Compress__Raw__Zlib_constant’:",
+      "./constants.xs:38:34: warning: ‘iv’ may be used uninitialized in this function [-Wmaybe-uninitialized]",
+      "./constants.xs:11:5: note: ‘iv’ was declared here",
+      "MD5.xs:171:1: warning: ‘static’ is not at beginning of declaration [-Wold-style-declaration]",
+      "SysV.c: In function ‘XS_IPC__SysV__constant’:",
+      "./const-xs.inc:38:34: warning: ‘iv’ may be used uninitialized in this function [-Wmaybe-uninitialized]",
+      "./const-xs.inc:11:5: note: ‘iv’ was declared here",
+      "ListUtil.xs: In function ‘XS_List__Util_reduce’:",
+      "ListUtil.xs:327:14: warning: variable ‘newsp’ set but not used [-Wunused-but-set-variable]",
+      "ListUtil.xs: In function ‘XS_List__Util_first’:",
+      "ListUtil.xs:381:14: warning: variable ‘newsp’ set but not used [-Wunused-but-set-variable]",
+      "ListUtil.xs: In function ‘XS_List__Util_any’:",
+      "ListUtil.xs:447:14: warning: variable ‘newsp’ set but not used [-Wunused-but-set-variable]",
+      "ListUtil.xs: In function ‘XS_List__Util_pairfirst’:",
+      "ListUtil.xs:628:14: warning: variable ‘newsp’ set but not used [-Wunused-but-set-variable]",
+      "ListUtil.xs: In function ‘XS_List__Util_pairgrep’:",
+      "ListUtil.xs:712:14: warning: variable ‘newsp’ set but not used [-Wunused-but-set-variable]",
+      "ListUtil.xs: In function ‘XS_List__Util_pairmap’:",
+      "ListUtil.xs:808:17: warning: unused variable ‘b’ [-Wunused-variable]",
+      "ListUtil.xs:807:17: warning: unused variable ‘a’ [-Wunused-variable]",
+      "ListUtil.xs:802:14: warning: variable ‘newsp’ set but not used [-Wunused-but-set-variable]",
+      "ListUtil.xs:850:17: warning: unused variable ‘b’ [-Wunused-variable]",
+      "ListUtil.xs:849:17: warning: unused variable ‘a’ [-Wunused-variable]",
+      "ListUtil.c: In function ‘XS_List__Util_min’:",
+      "ListUtil.xs:129:16: warning: ‘retval’ may be used uninitialized in this function [-Wmaybe-uninitialized]",
+      "ListUtil.xs:99:8: note: ‘retval’ was declared here",
+      "POSIX.o: In function `XS_POSIX_tmpnam':",
+      "HiRes.xs: In function ‘XS_Time__HiRes_setitimer’:",
+      "HiRes.xs:1112:2: warning: enum conversion when passing argument 1 of ‘setitimer’ is invalid in C++ [-Wc++-compat]",
+      "/usr/include/x86_64-linux-gnu/sys/time.h:131:12: note: expected ‘__itimer_which_t’ but argument is of type ‘int’",
+      "HiRes.xs: In function ‘XS_Time__HiRes_getitimer’:",
+      "HiRes.xs:1127:2: warning: enum conversion when passing argument 1 of ‘getitimer’ is invalid in C++ [-Wc++-compat]",
+      "/usr/include/x86_64-linux-gnu/sys/time.h:125:12: note: expected ‘__itimer_which_t’ but argument is of type ‘int’",
+      "HiRes.c: In function ‘XS_Time__HiRes_constant’:",
+      "Piece.xs: In function ‘XS_Time__Piece__strftime’:",
+      "Piece.xs:1037:29: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]",
+      "ExtTest.c: In function ‘XS_ExtTest_constant’:",
+      "ExtTest.xs:465:35: warning: ‘pv’ may be used uninitialized in this function [-Wmaybe-uninitialized]",
+      "ExtTest.xs:420:14: note: ‘pv’ was declared here",
+      "ExtTest.xs:465:35: warning: ‘iv’ may be used uninitialized in this function [-Wmaybe-uninitialized]",
+      "ExtTest.xs:418:5: note: ‘iv’ was declared here",
+      "ExtTest.xs:237:35: warning: ‘pv’ may be used uninitialized in this function [-Wmaybe-uninitialized]",
+      "ExtTest.xs:194:14: note: ‘pv’ was declared here",
+      "ExtTest.xs:193:34: warning: ‘iv’ may be used uninitialized in this function [-Wmaybe-uninitialized]",
+      "ExtTest.xs:166:5: note: ‘iv’ was declared here",
+      "/home/abeltje/Test-Smoke/perl-current/ext/POSIX/POSIX.xs:3341: warning: the use of `tmpnam' is dangerous, better use `mkstemp'",
+      "MD5.xs:159:1: warning: ‘static’ is not at beginning of declaration [-Wold-style-declaration]",
+      "Opcode.xs: In function ‘opmask_addlocal’:",
+      "Opcode.xs:230:15: warning: unused variable ‘my_cxtp’ [-Wunused-variable]"
+   ],
+   "un_position" : "bottom",
+   "locale" : "nl_NL.utf8",
+   "sysinfo" : {
+      "reporter_version" : "0.053",
+      "smoke_branch" : "blead",
+      "test_jobs" : null,
+      "duration" : 8486,
+      "smoke_revision" : "1.61_08",
+      "perl_id" : "5.23.3",
+      "smoke_perl" : "5.18.2",
+      "cpu_description" : "Intel(R) Core(TM) i7-3770 CPU @ 3.40GHz (GenuineIntel 3411MHz)",
+      "config_count" : 4,
+      "smoke_version" : "1.61_08",
+      "cpu_count" : "1[1 cores]",
+      "smoke_date" : "2015-08-31 23:15:50 +0200",
+      "user_note" : "",
+      "git_describe" : "v5.23.2-67-ge4105e8",
+      "lang" : "en_US.UTF-8",
+      "username" : "abeltje",
+      "hostname" : "frank",
+      "osname" : "linux",
+      "lc_all" : null,
+      "osversion" : "3.13.0-52-generic [Ubuntu 14.04.2 LTS (trusty)]",
+      "smoker_version" : "0.046",
+      "reporter" : null,
+      "git_id" : "e4105e89df44935f2a4363ac725ff11e07de35d8",
+      "architecture" : "x86_64"
+   },
+   "skip_tests" : "/home/abeltje/Test-Smoke/etc/blead.skiptests",
+   "defaultenv" : 0,
+   "summary" : "FAIL(F)",
+   "lfile" : "/home/abeltje/Test-Smoke/etc/blead.log",
+   "nonfatal_msgs" : [],
+   "configs" : [
+      {
+         "ccversion" : "4.8.2",
+         "results" : [
+            {
+               "summary" : "F",
+               "stat_cpu_time" : 322.21,
+               "io_env" : "stdio",
+               "stat_tests" : "715841",
+               "statistics" : "u=6.26  s=2.30  cu=275.08  cs=38.57  scripts=2229  tests=715841",
+               "failures" : [
+                  {
+                     "extra" : [
+                        "9486"
+                     ],
+                     "test" : "../t/porting/manifest.t",
+                     "status" : "FAILED"
+                  },
+                  {
+                     "status" : "FAILED",
+                     "test" : "../t/porting/test_bootstrap.t",
+                     "extra" : [
+                        "Non-zero exit status: 2"
+                     ]
+                  }
+               ],
+               "locale" : null
+            },
+            {
+               "locale" : null,
+               "failures" : [
+                  {
+                     "status" : "FAILED",
+                     "extra" : [
+                        "9486"
+                     ],
+                     "test" : "../t/porting/manifest.t"
+                  },
+                  {
+                     "extra" : [
+                        "Non-zero exit status: 2"
+                     ],
+                     "test" : "../t/porting/test_bootstrap.t",
+                     "status" : "FAILED"
+                  }
+               ],
+               "statistics" : "u=4.87  s=1.52  cu=253.06  cs=29.57  scripts=2231  tests=715918",
+               "stat_cpu_time" : 289.02,
+               "stat_tests" : "715918",
+               "io_env" : "perlio",
+               "summary" : "F"
+            },
+            {
+               "stat_cpu_time" : 293.09,
+               "io_env" : "locale",
+               "stat_tests" : "715846",
+               "summary" : "F",
+               "failures" : [
+                  {
+                     "status" : "FAILED",
+                     "test" : "../t/porting/manifest.t",
+                     "extra" : [
+                        "9486"
+                     ]
+                  },
+                  {
+                     "extra" : [
+                        "Non-zero exit status: 2"
+                     ],
+                     "test" : "../t/porting/test_bootstrap.t",
+                     "status" : "FAILED"
+                  }
+               ],
+               "locale" : "nl_NL.utf8",
+               "statistics" : "u=5.05  s=1.24  cu=256.72  cs=30.08  scripts=2229  tests=715846"
+            }
+         ],
+         "duration" : 1846,
+         "debugging" : "N",
+         "arguments" : "-Dcc='ccache gcc'",
+         "started" : "2015-08-31 23:15:51 +0200",
+         "cc" : "ccache gcc"
+      },
+      {
+         "results" : [
+            {
+               "locale" : null,
+               "failures" : [
+                  {
+                     "status" : "FAILED",
+                     "test" : "../t/porting/manifest.t",
+                     "extra" : [
+                        "9486"
+                     ]
+                  },
+                  {
+                     "status" : "FAILED",
+                     "extra" : [
+                        "Non-zero exit status: 2"
+                     ],
+                     "test" : "../t/porting/test_bootstrap.t"
+                  }
+               ],
+               "statistics" : "u=6.54  s=1.38  cu=326.66  cs=31.00  scripts=2229  tests=715902",
+               "stat_cpu_time" : 365.58,
+               "io_env" : "stdio",
+               "stat_tests" : "715902",
+               "summary" : "F"
+            },
+            {
+               "stat_cpu_time" : 348.63,
+               "io_env" : "perlio",
+               "stat_tests" : "715790",
+               "summary" : "F",
+               "locale" : null,
+               "failures" : [
+                  {
+                     "status" : "FAILED",
+                     "extra" : [
+                        "9486"
+                     ],
+                     "test" : "../t/porting/manifest.t"
+                  },
+                  {
+                     "status" : "FAILED",
+                     "test" : "../t/porting/test_bootstrap.t",
+                     "extra" : [
+                        "Non-zero exit status: 2"
+                     ]
+                  }
+               ],
+               "statistics" : "u=6.21  s=1.39  cu=311.39  cs=29.64  scripts=2231  tests=715790"
+            },
+            {
+               "summary" : "F",
+               "stat_cpu_time" : 350.55,
+               "io_env" : "locale",
+               "stat_tests" : "715812",
+               "statistics" : "u=6.18  s=1.35  cu=313.81  cs=29.21  scripts=2229  tests=715812",
+               "locale" : "nl_NL.utf8",
+               "failures" : [
+                  {
+                     "status" : "FAILED",
+                     "extra" : [
+                        "9486"
+                     ],
+                     "test" : "../t/porting/manifest.t"
+                  },
+                  {
+                     "extra" : [
+                        "Non-zero exit status: 2"
+                     ],
+                     "test" : "../t/porting/test_bootstrap.t",
+                     "status" : "FAILED"
+                  }
+               ]
+            }
+         ],
+         "duration" : 1985,
+         "debugging" : "D",
+         "ccversion" : "4.8.2",
+         "arguments" : "-Dcc='ccache gcc'",
+         "started" : "2015-08-31 23:46:37 +0200",
+         "cc" : "ccache gcc"
+      },
+      {
+         "cc" : "ccache gcc",
+         "started" : "2015-09-01 00:19:42 +0200",
+         "arguments" : "-Dcc='ccache gcc' -Duseithreads",
+         "ccversion" : "4.8.2",
+         "debugging" : "N",
+         "duration" : 2080,
+         "results" : [
+            {
+               "failures" : [
+                  {
+                     "extra" : [
+                        "9486"
+                     ],
+                     "test" : "../t/porting/manifest.t",
+                     "status" : "FAILED"
+                  },
+                  {
+                     "test" : "../t/porting/test_bootstrap.t",
+                     "extra" : [
+                        "Non-zero exit status: 2"
+                     ],
+                     "status" : "FAILED"
+                  }
+               ],
+               "locale" : null,
+               "statistics" : "u=5.80  s=1.25  cu=315.42  cs=32.33  scripts=2303  tests=726687",
+               "io_env" : "stdio",
+               "stat_cpu_time" : 354.8,
+               "stat_tests" : "726687",
+               "summary" : "F"
+            },
+            {
+               "stat_cpu_time" : 334.76,
+               "stat_tests" : "726668",
+               "io_env" : "perlio",
+               "summary" : "F",
+               "failures" : [
+                  {
+                     "status" : "FAILED",
+                     "extra" : [
+                        "9486"
+                     ],
+                     "test" : "../t/porting/manifest.t"
+                  },
+                  {
+                     "extra" : [
+                        "Non-zero exit status: 2"
+                     ],
+                     "test" : "../t/porting/test_bootstrap.t",
+                     "status" : "FAILED"
+                  }
+               ],
+               "locale" : null,
+               "statistics" : "u=5.25  s=1.31  cu=299.37  cs=28.83  scripts=2305  tests=726668"
+            },
+            {
+               "summary" : "F",
+               "io_env" : "locale",
+               "stat_cpu_time" : 333.97,
+               "stat_tests" : "726686",
+               "statistics" : "u=5.30  s=1.27  cu=299.35  cs=28.05  scripts=2303  tests=726686",
+               "locale" : "nl_NL.utf8",
+               "failures" : [
+                  {
+                     "status" : "FAILED",
+                     "test" : "../t/porting/manifest.t",
+                     "extra" : [
+                        "9486"
+                     ]
+                  },
+                  {
+                     "status" : "FAILED",
+                     "test" : "../t/porting/test_bootstrap.t",
+                     "extra" : [
+                        "Non-zero exit status: 2"
+                     ]
+                  }
+               ]
+            }
+         ]
+      },
+      {
+         "arguments" : "-Dcc='ccache gcc' -Duseithreads",
+         "cc" : "ccache gcc",
+         "started" : "2015-09-01 00:54:22 +0200",
+         "ccversion" : "4.8.2",
+         "results" : [
+            {
+               "failures" : [
+                  {
+                     "status" : "FAILED",
+                     "test" : "../t/porting/manifest.t",
+                     "extra" : [
+                        "9486"
+                     ]
+                  },
+                  {
+                     "status" : "FAILED",
+                     "test" : "../t/porting/test_bootstrap.t",
+                     "extra" : [
+                        "Non-zero exit status: 2"
+                     ]
+                  }
+               ],
+               "locale" : null,
+               "statistics" : "u=7.10  s=1.35  cu=410.04  cs=43.98  scripts=2303  tests=726660",
+               "stat_cpu_time" : 462.47,
+               "stat_tests" : "726660",
+               "io_env" : "stdio",
+               "summary" : "F"
+            },
+            {
+               "summary" : "F",
+               "stat_cpu_time" : 425.03,
+               "stat_tests" : "726619",
+               "io_env" : "perlio",
+               "statistics" : "u=6.51  s=1.38  cu=387.68  cs=29.46  scripts=2305  tests=726619",
+               "failures" : [
+                  {
+                     "status" : "FAILED",
+                     "extra" : [
+                        "9486"
+                     ],
+                     "test" : "../t/porting/manifest.t"
+                  },
+                  {
+                     "status" : "FAILED",
+                     "test" : "../t/porting/test_bootstrap.t",
+                     "extra" : [
+                        "Non-zero exit status: 2"
+                     ]
+                  }
+               ],
+               "locale" : null
+            },
+            {
+               "statistics" : "u=6.57  s=1.40  cu=383.18  cs=29.67  scripts=2303  tests=726686",
+               "failures" : [
+                  {
+                     "test" : "../t/porting/manifest.t",
+                     "extra" : [
+                        "9486"
+                     ],
+                     "status" : "FAILED"
+                  },
+                  {
+                     "test" : "../t/porting/test_bootstrap.t",
+                     "extra" : [
+                        "Non-zero exit status: 2"
+                     ],
+                     "status" : "FAILED"
+                  }
+               ],
+               "locale" : "nl_NL.utf8",
+               "summary" : "F",
+               "stat_cpu_time" : 420.82,
+               "io_env" : "locale",
+               "stat_tests" : "726686"
+            }
+         ],
+         "debugging" : "D",
+         "duration" : 2574
+      }
+   ],
+   "ddir" : "/home/abeltje/Test-Smoke/perl-current",
+   "v" : 1,
+   "out_file" : null
+}
