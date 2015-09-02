@@ -76,8 +76,8 @@ sub api_get_reports_from_id {
     my $reports = $self->schema->resultset('Report')->search(
         { id => { '>=' => $id } },
         {
-            order => { -asc => 'id' },
-            rows  => $limit,
+            order_by => { -asc => 'id' },
+            rows     => $limit,
         }
     );
     return [map $_->id, $reports->all()];
