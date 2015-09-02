@@ -38,7 +38,7 @@ sub _check_version {
     my ($args) = @_;
     $args ||= { };
 
-    return 1 if $args->{no_version_check};
+    return 1 if $args->{ignore_version};
 
     my $dbversion = $self->resultset('TsgatewayConfig')->find(
         {name => 'dbversion'}
