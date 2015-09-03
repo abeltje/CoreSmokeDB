@@ -425,25 +425,37 @@ sub get_perlversion_list {
     my ($pattern) = @_;
     ($pattern ||= '%') =~ s/\*/%/g;
 
-    my $pversions = $self->schema->resultset('Report')->search(
-        {
-            perl_id => { -like => $pattern }
-        },
-        {
-            columns  => [qw/perl_id/],
-            group_by => [qw/perl_id/],
-            order_by => {-desc => 'perlversion_float(perl_id)'},
-        }
-    );
+    my $pversions = [
+        sort {
+            _pversion($b->perl_id) <=> _pversion($a->perl_id)
+        } $self->schema->resultset('Report')->search(
+            {
+                perl_id => { -like => $pattern }
+            },
+            {
+                columns  => [qw/perl_id/],
+                group_by => [qw/perl_id/],
+#                order_by => {-desc => 'perlversion_float(perl_id)'},
+            }
+        )
+    ];
     return [
         map {
             my $record = {
                 value => $_->perl_id,
                 label => $_->perl_id,
             };
-        } $pversions->all()
+        } @$pversions
     ];
 }
+
+# make a float representation of a perl-version.
+sub _pversion {
+    my ($perl_id) = @_;
+    use version;
+    return version->parse($perl_id)->numify;
+}
+
 
 no Moose;
 __PACKAGE__->meta->make_immutable;
