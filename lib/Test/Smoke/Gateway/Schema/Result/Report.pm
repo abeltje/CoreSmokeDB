@@ -500,12 +500,12 @@ __PACKAGE__->belongs_to(
 
 sub arch_os_version_key {
     my $self = shift;
-    return join( "##", $self->architecture, $self->osname, $self->osversion);
+    return join( "##", $self->architecture, $self->osname, $self->osversion, $self->hostname);
 }
 
 sub arch_os_version_label {
     my $self = shift;
-    return join( " - ", $self->architecture, $self->osname, $self->osversion);
+    return join( " - ", $self->architecture, $self->osname, $self->osversion, $self->hostname);
 }
 
 sub arch_os_version_pair {

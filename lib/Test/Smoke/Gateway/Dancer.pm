@@ -99,6 +99,15 @@ get '/search' => sub {
     };
 };
 
+get '/test' => sub {
+    header 'content-type' => 'text/html';
+    template 'test' => {
+        title    => 'Test::Smoke Database TEST Page',
+        version  => $Test::Smoke::Gateway::VERSION,
+        thisyear => 1900 + (localtime)[5],
+    };
+};
+
 get '/api/reports_from_date/:epoch' => sub {
     return to_json($gw->api_get_reports_from_date(params->{epoch}));
 };

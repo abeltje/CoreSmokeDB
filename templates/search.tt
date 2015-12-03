@@ -1,59 +1,360 @@
 <h1>Test-Smoke database search</h1>
-<form method=post action="/search">
-  <h3>Filters</h3>
-  <div>Architecture - operating system - version: <select name=arch_os_ver>
-    <option value="">-- all --</option>
-    [% FOREACH archosversion = search.arch_os_ver -%]
-    <option value="[% archosversion.value %]"
-            [% IF archosversion.value == search.aov_selected -%]
-            selected[% END %]>[% archosversion.label %]</option>
-    [% END -%]
-  </select>
-  </div>
-  <div>Compiler - version: <select name=compiler_version>
-    <option value="">-- all --</option>
-    [% FOREACH cmpv = search.compiler_versions -%]
-    <option value="[% cmpv.value %]"
-            [% IF cmpv.value == search.compiler_version -%]
-            selected[%END%]>[% cmpv.label %]</option>
-    [% END -%]
-  </select>
-  </div>
-  <div>Perl version: <select name=perl_version>
-    <option value="*">-- all --</option>
-    [% FOREACH perl_version = search.perl_versions -%]
-    <option value='[% perl_version.value | html %]'
-            [% IF perl_version.value == search.pv_selected -%]
-            selected[% END %]>[% perl_version.label %]</option>
-    [% END -%]
-    </select>
-    <input type=submit name=whatnext value="Latest only">
-  </div>
-  <div style="padding-top: 1em;">
-    ([% search.page_selected %]/[% search.page_count %])&nbsp;
-    [% IF search.page_selected != 1 %]
-    <input type="submit" name="page" value="1">
-    [% IF search.page_selected != 2 %]
-    <input type="submit" name="page" value="[% search.page_selected - 1 %]">
-    [% END -%]
-    [% ELSE %]
-    <input type="submit" name="page" value="1" disabled>
-    [% END %]
-    [% IF search.page_selected != search.page_count %]
-    [% IF search.page_selected + 1 != search.page_count %]
-    <input type="submit" name="page" value="[% search.page_selected + 1 %]">
-    [% END -%]
-    <input type="submit" name="page" value="[% search.page_count %]">
-    [% ELSE %]
-    <input type="submit" name="page" value="[% search.page_count %]" disabled>
-    [% END %]
-    <input type=submit name=whatnext value="List reports">
-  </div>
+
+<form name="smoke" method="post" action="/search">
+    <table border="0">
+        <tr>
+            <td><h3>Filter by:</h3></td>
+            <td align="center"><input type="button" onClick="clear_filters()" value="Clear filters"/></td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                <input name="andnot_arch" type="radio" value="0"
+                    [% IF search.filters.report_architecture_andnot != '1' %]
+                        checked="checked"
+                    [% END %]>And<input name="andnot_arch" type="radio" value="1"
+                    [% IF search.filters.report_architecture_andnot == '1' %]
+                        checked="checked"
+                    [% END %]>Not
+                <input name="selected_arch"  type="hidden" value="[% search.filters.report_architecture %]"/>
+                <input name="andnotsel_arch" type="hidden" value="[% IF search.filters.report_architecture_andnot %]1[% ELSE %]0[% END %]"/>
+                <select name="report_arch" onChange="update_report(0,this.options[this.selectedIndex].value)">
+                    <option value="">-- Select Architecture --</option>
+                </select>
+            </td>
+            <td>&nbsp;</td>
+            <td>
+                <input name="andnot_osnm" type="radio" value="0"
+                    [% IF search.filters.report_osname_andnot != '1' %]
+                        checked="checked"
+                    [% END %]>And<input name="andnot_osnm" type="radio" value="1"
+                    [% IF search.filters.report_osname_andnot == '1' %]
+                        checked="checked"
+                    [% END %]>Not
+                <input name="selected_osnm"  type="hidden" value="[% search.filters.report_osname %]"/>
+                <input name="andnotsel_osnm" type="hidden" value="[% IF search.filters.report_osname_andnot %]1[% ELSE %]0[% END %]"/>
+                <select name="report_osnm" onChange="update_report(1,this.options[this.selectedIndex].value)">
+                    <option value="">-- Select OS name --</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input name="andnot_host" type="radio" value="0"
+                    [% IF search.filters.report_hostname_andnot != '1' %]
+                        checked="checked"
+                    [% END %]>And<input name="andnot_host" type="radio" value="1"
+                    [% IF search.filters.report_hostname_andnot == '1' %]
+                        checked="checked"
+                    [% END %]>Not
+                <input name="selected_host"  type="hidden" value="[% search.filters.report_hostname %]"/>
+                <input name="andnotsel_host" type="hidden" value="[% IF search.filters.report_hostname_andnot %]1[% ELSE %]0[% END %]"/>
+                <select name="report_host" onChange="update_report(3,this.options[this.selectedIndex].value)">
+                    <option value="">-- Select Host --</option>
+                </select>
+            </td>
+            <td>&nbsp;</td>
+            <td>
+                <input name="andnot_osvs" type="radio" value="0"
+                    [% IF search.filters.report_osversion_andnot != '1' %]
+                        checked="checked"
+                    [% END %]>And<input name="andnot_osvs" type="radio" value="1"
+                    [% IF search.filters.report_osversion_andnot == '1' %]
+                        checked="checked"
+                    [% END %]>Not
+                <input name="selected_osvs"  type="hidden" value="[% search.filters.report_osversion %]"/>
+                <input name="andnotsel_osvs" type="hidden" value="[% IF search.filters.report_osversion_andnot %]1[% ELSE %]0[% END %]"/>
+                <select name="report_osvs" onChange="update_report(2,this.options[this.selectedIndex].value)">
+                    <option value="">-- Select OS version --</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>
+                <input name="andnot_comp" type="radio" value="0"
+                    [% IF search.filters.config_cc_andnot != '1' %]
+                        checked="checked"
+                    [% END %]>And<input name="andnot_comp" type="radio" value="1"
+                    [% IF search.filters.config_cc_andnot == '1' %]
+                        checked="checked"
+                    [% END %]>Not
+                <input name="selected_comp"  type="hidden" value="[% search.filters.config_cc %]"/>
+                <input name="andnotsel_comp" type="hidden" value="[% IF search.filters.config_cc_andnot %]1[% ELSE %]0[% END %]"/>
+                <select name="config_comp" onChange="update_config(0,this.options[this.selectedIndex].value)">
+                    <option value="">-- Select Compiler --</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Perl version:
+                <select name="selected_perl">
+                    <option value="latest" [% IF search.pv_selected == 'latest' %]selected="selected"[% END %]>Latest version only</option>
+                    <option value="all" [% IF search.pv_selected == 'all' %]selected="selected"[% END %]>All versions</option>
+                    [% FOREACH selection = search.perl_versions -%]
+                        <option value="[% selection.value %]" [% IF search.pv_selected == selection.value %]selected="selected"[% END %]>v[% selection.value %]</option>
+                    [% END -%]
+                </select>
+            </td>
+            <td>&nbsp;</td>
+            <td>
+                <input name="andnot_cver" type="radio" value="0"
+                    [% IF search.filters.config_ccversion_andnot != '1' %]
+                        checked="checked"
+                    [% END %]>And<input name="andnot_cver" type="radio" value="1"
+                    [% IF search.filters.config_ccversion_andnot == '1' %]
+                        checked="checked"
+                    [% END %]>Not
+                <input name="selected_cver"  type="hidden" value="[% search.filters.config_ccversion %]"/>
+                <input name="andnotsel_cver" type="hidden" value="[% IF search.filters.config_ccversion_andnot %]1[% ELSE %]0[% END %]"/>
+                <select name="config_cver" onChange="update_config(1,this.options[this.selectedIndex].value)">
+                    <option value="">-- Select Compiler version --</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td align="center"><input type="submit" value="Search reports"/></td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+
+    <div style="padding-top: 1em;">
+        [% IF search.total_count %]
+            Found [% search.total_count %] results,
+            page ([% search.page_selected %]/[% search.page_count %])&nbsp;
+
+            [% IF search.page_selected != 1 %]
+                <input type="submit" name="page" value="1">
+                [% IF search.page_selected != 2 %]
+                    <input type="submit" name="page" value="[% search.page_selected - 1 %]">
+                [% END -%]
+            [% ELSE %]
+                <input type="submit" name="page" value="1" disabled>
+            [% END %]
+            [% IF search.page_selected != search.page_count %]
+                [% IF search.page_selected + 1 != search.page_count %]
+                    <input type="submit" name="page" value="[% search.page_selected + 1 %]">
+                [% END -%]
+                <input type="submit" name="page" value="[% search.page_count %]">
+            [% ELSE %]
+                <input type="submit" name="page" value="[% search.page_count %]" disabled>
+            [% END %]
+        [% ELSE %]
+            List latest results
+        [% END %]
+    </div>
 </form>
-  <hr>
-</div><div id=widecontent>
-[% IF search.whatnext == "list" -%]
-[% INCLUDE 'list.tt' %]
-[% ELSE -%]
-[% INCLUDE 'latest.tt' %]
-[% END -%]
+<hr>
+<h2>Test-Smoke results</h2>
+<table width="100%" style="border: 2px black ridge;">
+    <caption>List of reports, page [% search.page_selected %] of [% search.page_count %]</caption>
+    <tr>
+        <th>Arch</th><th>Host</th><th>OS</th><th>Git-id</th><th>Smoke date</th><th>Status</th>
+    </tr>
+    [% FOREACH row = search.reports -%]
+        [% IF    row.summary.match('PASS')      -%][% colorclass = 'passtest'  -%]
+        [% ELSIF row.summary.match("FAIL\(X\)") -%][% colorclass = 'failtodo'  -%]
+        [% ELSIF row.summary.match("[cCmM]")    -%][% colorclass = 'failbuild' -%]
+        [% ELSE %][% colorclass = "failtest" -%]
+        [% END -%]
+        <tr style="background-color: [% IF loop.count() % 2 %]white[% ELSE %]#dedede[% END %];">
+            <td>[% row.architecture %]</td>
+            <td>[% row.hostname %]</td>
+            <td>[% row.osname %] - [% row.osversion %]</td>
+            <td>[% row.git_describe %]</td>
+            <td>[% row.smoke_date %]</td>
+            <td class="[% colorclass %]">
+                <a href="/report/[% row.id %]" class="[% colorclass %]">[% row.summary %]</a>
+            </td>
+        </tr>
+    [% END -%]
+</table>
+
+<script type="text/javascript">
+    // Create selection options based on architecture, os, os version and hostname
+    var arch_osnm_osvs_host = new Array()
+    [% FOREACH selection = search.sel_arch_os_ver -%]
+        arch_osnm_osvs_host[[% loop.index %]] = ["[% selection.arch %]","[% selection.os %]","[% selection.osversion %]","[% selection.hostname %]"]
+    [% END -%]
+
+    function select_report(field) {
+        var values=new Array()
+        // Select all resulting options based on given selections
+        for (i=0; i<arch_osnm_osvs_host.length; i++) {
+            if (  (  document.smoke.selected_arch.value == ""
+                  || ( document.smoke.andnot_arch.value == "0" && arch_osnm_osvs_host[i][0] == document.smoke.selected_arch.value)
+                  || ( document.smoke.andnot_arch.value != "0" && arch_osnm_osvs_host[i][0] != document.smoke.selected_arch.value)
+                  )
+               && (  document.smoke.selected_osnm.value == ""
+                  || ( document.smoke.andnot_osnm.value == "0" && arch_osnm_osvs_host[i][1] == document.smoke.selected_osnm.value)
+                  || ( document.smoke.andnot_osnm.value != "0" && arch_osnm_osvs_host[i][1] != document.smoke.selected_osnm.value)
+                  )
+               && (  document.smoke.selected_osvs.value == ""
+                  || ( document.smoke.andnot_osvs.value == "0" && arch_osnm_osvs_host[i][2] == document.smoke.selected_osvs.value)
+                  || ( document.smoke.andnot_osvs.value != "0" && arch_osnm_osvs_host[i][2] != document.smoke.selected_osvs.value)
+                  )
+               && (  document.smoke.selected_host.value == ""
+                  || ( document.smoke.andnot_host.value == "0" && arch_osnm_osvs_host[i][3] == document.smoke.selected_host.value)
+                  || ( document.smoke.andnot_host.value != "0" && arch_osnm_osvs_host[i][3] != document.smoke.selected_host.value)
+                  )
+               ) {
+                // Only add value if not already in list of options
+                if (values.indexOf(arch_osnm_osvs_host[i][field]) < 0) {
+                    values.push(arch_osnm_osvs_host[i][field])
+                }
+            }
+        }
+
+        // If requested field already has a selection, just return the selection
+        if (field == 0 && document.smoke.selected_arch.value != "") { return [document.smoke.selected_arch.value] }
+        if (field == 1 && document.smoke.selected_osnm.value != "") { return [document.smoke.selected_osnm.value] }
+        if (field == 2 && document.smoke.selected_osvs.value != "") { return [document.smoke.selected_osvs.value] }
+        if (field == 3 && document.smoke.selected_host.value != "") { return [document.smoke.selected_host.value] }
+
+        // Otherwise return the resulting options sorted by name
+        return values.sort()
+    }
+
+    function update_report(field,selectedvalue) {
+        if (field == 0) {
+            document.smoke.selected_arch.value     = selectedvalue
+            document.smoke.andnot_arch[0].disabled = selectedvalue ? true : false
+            document.smoke.andnot_arch[1].disabled = selectedvalue ? true : false
+            document.smoke.andnotsel_arch.value    = selectedvalue ? document.smoke.andnot_arch.value : 0
+            document.smoke.andnot_arch.value       = document.smoke.andnotsel_arch.value
+        }
+        if (field == 1) {
+            document.smoke.selected_osnm.value     = selectedvalue
+            document.smoke.andnot_osnm[0].disabled = selectedvalue ? true : false
+            document.smoke.andnot_osnm[1].disabled = selectedvalue ? true : false
+            document.smoke.andnotsel_osnm.value    = selectedvalue ? document.smoke.andnot_osnm.value : 0
+            document.smoke.andnot_osnm.value       = document.smoke.andnotsel_osnm.value
+        }
+        if (field == 2) {
+            document.smoke.selected_osvs.value     = selectedvalue
+            document.smoke.andnot_osvs[0].disabled = selectedvalue ? true : false
+            document.smoke.andnot_osvs[1].disabled = selectedvalue ? true : false
+            document.smoke.andnotsel_osvs.value    = selectedvalue ? document.smoke.andnot_osvs.value : 0
+            document.smoke.andnot_osvs.value       = document.smoke.andnotsel_osvs.value
+        }
+        if (field == 3) {
+            document.smoke.selected_host.value     = selectedvalue
+            document.smoke.andnot_host[0].disabled = selectedvalue ? true : false
+            document.smoke.andnot_host[1].disabled = selectedvalue ? true : false
+            document.smoke.andnotsel_host.value    = selectedvalue ? document.smoke.andnot_host.value : 0
+            document.smoke.andnot_host.value       = document.smoke.andnotsel_host.value
+        }
+        var values_arch = select_report(0)
+        var values_osnm = select_report(1)
+        var values_osvs = select_report(2)
+        var values_host = select_report(3)
+
+        var archlist = document.smoke.report_arch
+        var osnmlist = document.smoke.report_osnm
+        var osvslist = document.smoke.report_osvs
+        var hostlist = document.smoke.report_host
+        archlist.options.length = 0
+        osnmlist.options.length = 0
+        osvslist.options.length = 0
+        hostlist.options.length = 0
+
+        if (! document.smoke.selected_arch.value) { archlist.options[archlist.options.length] = new Option("-- Select Architecture --","") }
+        if (! document.smoke.selected_osnm.value) { osnmlist.options[osnmlist.options.length] = new Option("-- Select OS name --","") }
+        if (! document.smoke.selected_osvs.value) { osvslist.options[osvslist.options.length] = new Option("-- Select OS version --","") }
+        if (! document.smoke.selected_host.value) { hostlist.options[hostlist.options.length] = new Option("-- Select Host --","") }
+        for (i=0; i<values_arch.length; i++)      { archlist.options[archlist.options.length] = new Option(values_arch[i], values_arch[i]) }
+        for (i=0; i<values_osnm.length; i++)      { osnmlist.options[osnmlist.options.length] = new Option(values_osnm[i], values_osnm[i]) }
+        for (i=0; i<values_osvs.length; i++)      { osvslist.options[osvslist.options.length] = new Option(values_osvs[i], values_osvs[i]) }
+        for (i=0; i<values_host.length; i++)      { hostlist.options[hostlist.options.length] = new Option(values_host[i], values_host[i]) }
+        if (document.smoke.selected_arch.value)   { archlist.options[archlist.options.length] = new Option("-- Clear Architecture --","") }
+        if (document.smoke.selected_osnm.value)   { osnmlist.options[osnmlist.options.length] = new Option("-- Clear OS name --","") }
+        if (document.smoke.selected_osvs.value)   { osvslist.options[osvslist.options.length] = new Option("-- Clear OS version --","") }
+        if (document.smoke.selected_host.value)   { hostlist.options[hostlist.options.length] = new Option("-- Clear Host --","") }
+    }
+
+    update_report(0,"[% search.filters.report_architecture %]")
+    update_report(1,"[% search.filters.report_osname %]")
+    update_report(2,"[% search.filters.report_osversion %]")
+    update_report(3,"[% search.filters.report_hostname %]")
+
+    // Create selection options based on compiler and compiler version
+    var comp_cver = new Array()
+    [% FOREACH selection = search.sel_comp_ver -%]
+        comp_cver[[% loop.index %]] = ["[% selection.comp %]","[% selection.compversion %]"]
+    [% END -%]
+
+    function select_config(field) {
+        var values=new Array()
+        // Select all resulting options based on given selections
+        for (i=0; i<comp_cver.length; i++) {
+            if (  (  document.smoke.selected_comp.value == ""
+                  || ( document.smoke.andnot_comp.value == "0" && comp_cver[i][0] == document.smoke.selected_comp.value)
+                  || ( document.smoke.andnot_comp.value != "0" && comp_cver[i][0] != document.smoke.selected_comp.value)
+                  )
+               && (  document.smoke.selected_cver.value == ""
+                  || ( document.smoke.andnot_cver.value == "0" && comp_cver[i][1] == document.smoke.selected_cver.value)
+                  || ( document.smoke.andnot_cver.value != "0" && comp_cver[i][1] != document.smoke.selected_cver.value)
+                  )
+               ) {
+                // Only add value if not already in list of options
+                if (values.indexOf(comp_cver[i][field]) < 0) {
+                    values.push(comp_cver[i][field])
+                }
+            }
+        }
+
+        // If requested field already has a selection, just return the selection
+        if (field == 0 && document.smoke.selected_comp.value != "") { return [document.smoke.selected_comp.value] }
+        if (field == 1 && document.smoke.selected_cver.value != "") { return [document.smoke.selected_cver.value] }
+
+        // Otherwise return the resulting options sorted by name
+        return values.sort()
+    }
+
+    function update_config(field,selectedvalue) {
+        if (field == 0) {
+            document.smoke.selected_comp.value     = selectedvalue
+            document.smoke.andnot_comp[0].disabled = selectedvalue ? true : false
+            document.smoke.andnot_comp[1].disabled = selectedvalue ? true : false
+            document.smoke.andnotsel_comp.value    = selectedvalue ? document.smoke.andnot_comp.value : 0
+            document.smoke.andnot_comp.value       = document.smoke.andnotsel_comp.value
+        }
+        if (field == 1) {
+            document.smoke.selected_cver.value     = selectedvalue
+            document.smoke.andnot_cver[0].disabled = selectedvalue ? true : false
+            document.smoke.andnot_cver[1].disabled = selectedvalue ? true : false
+            document.smoke.andnotsel_cver.value    = selectedvalue ? document.smoke.andnot_cver.value : 0
+            document.smoke.andnot_cver.value       = document.smoke.andnotsel_cver.value
+        }
+        var values_comp = select_config(0)
+        var values_cver = select_config(1)
+
+        var complist = document.smoke.config_comp
+        var cverlist = document.smoke.config_cver
+        complist.options.length = 0
+        cverlist.options.length = 0
+
+        if (! document.smoke.selected_comp.value) { complist.options[complist.options.length] = new Option("-- Select Compiler --","") }
+        if (! document.smoke.selected_cver.value) { cverlist.options[cverlist.options.length] = new Option("-- Select Compiler version --","") }
+        for (i=0; i<values_comp.length; i++)      { complist.options[complist.options.length] = new Option(values_comp[i], values_comp[i]) }
+        for (i=0; i<values_cver.length; i++)      { cverlist.options[cverlist.options.length] = new Option(values_cver[i], values_cver[i]) }
+        if (document.smoke.selected_comp.value)   { complist.options[complist.options.length] = new Option("-- Clear Compiler --","") }
+        if (document.smoke.selected_cver.value)   { cverlist.options[cverlist.options.length] = new Option("-- Clear Compiler version --","") }
+    }
+
+    update_config(0,"[% search.filters.config_cc %]")
+    update_config(1,"[% search.filters.config_ccversion %]")
+
+    function clear_filters() {
+        update_report(0,"")
+        update_report(1,"")
+        update_report(2,"")
+        update_report(3,"")
+        update_config(0,"")
+        update_config(1,"")
+        document.smoke.selected_perl.value = "latest"
+    }
+</script>
