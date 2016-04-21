@@ -2,6 +2,7 @@ Changes
 config.yml
 cpanfile
 cpanfile.snapshot
+dev-bin/coresmokedb-server.pl
 dev-bin/gwclient
 dev-bin/mktest-utf8.jsn
 dev-bin/test-utf8.pl
@@ -20,7 +21,6 @@ lib/Test/Smoke/Gateway/Schema/Result/SmokeConfig.pm
 lib/Test/Smoke/Gateway/Schema/Result/TsgatewayConfig.pm
 Makefile.PL
 MANIFEST			This list of files
-MANIFEST.bak
 MANIFEST.SKIP
 public/css/smokedb.css
 public/css/tslayout.css
