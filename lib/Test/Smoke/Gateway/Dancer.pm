@@ -1,5 +1,7 @@
 package Test::Smoke::Gateway::Dancer;
 use v5.10;
+no if $] >= 5.018, warnings => 'experimental::smartmatch';
+
 use Dancer ':syntax';
 
 use Dancer::Plugin::DBIC;
@@ -7,7 +9,9 @@ use Encode 'encode';
 use Test::Smoke::Gateway;
 use Try::Tiny;
 
-my $gw = Test::Smoke::Gateway->new(schema => schema());
+no if $] >= 5.018, warnings => 'experimental::smartmatch';
+
+my $gw = Test::Smoke::Gateway->new(schema => schema('default'));
 
 post '/report' => sub {
     try {
@@ -90,6 +94,15 @@ get '/search' => sub {
     template 'search' => {
         search   => $gw->search({params}),
         title    => 'Test::Smoke Database Search',
+        version  => $Test::Smoke::Gateway::VERSION,
+        thisyear => 1900 + (localtime)[5],
+    };
+};
+
+get '/test' => sub {
+    header 'content-type' => 'text/html';
+    template 'test' => {
+        title    => 'Test::Smoke Database TEST Page',
         version  => $Test::Smoke::Gateway::VERSION,
         thisyear => 1900 + (localtime)[5],
     };

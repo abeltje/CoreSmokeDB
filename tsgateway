@@ -12,4 +12,5 @@ use Dancer;
 use Test::Smoke::Gateway::Dancer;
 
 set views => path(abs_path(dirname(__FILE__)), 'templates');
+
 dance();

@@ -30,14 +30,19 @@ body {
 }
 
 .header-logo {
-    background        : url("/images/smoking_union.png");
-    background-color  : #DF6F00;
-    background-repeat : no-repeat;
-    border            : 0;
+    border-left       : 30px solid #000;
     color             : #FFC218;
     height            : 150px;
     margin            : 0;
     padding           : 0 0 0 150px;
+    background        : #000;
+    background-image  : url("/images/smoking_union.gif"); /* fallback */
+    background-repeat : no-repeat;
+    background-image  : url("/images/smoking_union.gif"), -webkit-gradient(linear, left, right, from(#000), to(#df6f00)); /* Saf4+, Chrome */
+    background-image  : url("/images/smoking_union.gif"), -webkit-linear-gradient( left,             #000,     #df6f00);  /* Chrome 10+, Saf5.1+ */
+    background-image  : url("/images/smoking_union.gif"),    -moz-linear-gradient(       right,      #000,     #df6f00);  /* FF3.6+ */
+    background-image  : url("/images/smoking_union.gif"),      -o-linear-gradient(       right,      #000,     #df6f00);  /* Opera 11.10+ */
+    background-image  : url("/images/smoking_union.gif"),         linear-gradient(    to right,      #000,     #df6f00);  /* W3C */
 }
 
 .header-logo h1 {
@@ -51,6 +56,12 @@ body {
     color            : #EEEEEE;
     margin           : 0;
     padding          : 0.25em 0 0.25em 150px;
+    background       : #000;
+    background-image : -webkit-gradient(linear,left, right, from(#df6f00), to(#000)); /* Saf4+, Chrome */
+    background-image : -webkit-linear-gradient(left,             #df6f00,     #000);  /* Chrome 10+, Saf5.1+ */
+    background-image :    -moz-linear-gradient(      right,      #df6f00,     #000);  /* FF3.6+ */
+    background-image :      -o-linear-gradient(      right,      #df6f00,     #000);  /* Opera 11.10+ */
+    background-image :         linear-gradient(   to right,      #df6f00,     #000);  /* W3C */
 }
 
 .header-menu ul {

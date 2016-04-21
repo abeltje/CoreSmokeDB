@@ -1,4 +1,6 @@
 *.swp
 logs/
+local/
 nohup.out
 tags
+MANIFEST.bak

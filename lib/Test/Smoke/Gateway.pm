@@ -76,8 +76,8 @@ sub api_get_reports_from_id {
     my $reports = $self->schema->resultset('Report')->search(
         { id => { '>=' => $id } },
         {
-            order => { -asc => 'id' },
-            rows  => $limit,
+            order_by => { -asc => 'id' },
+            rows     => $limit,
         }
     );
     return [map $_->id, $reports->all()];
@@ -244,50 +244,74 @@ sub search {
     my ($data) = @_;
 
     my $perlversion_list = $self->get_perlversion_list;
-    my $perl_latest = $perlversion_list->[0]{value};
-    my $pv_selected = $data->{perl_version} || $perl_latest;
-    my $aov_selected = $data->{arch_os_ver} // '';
-    my $compiler_version = $data->{compiler_version} // '';
-    my %filter;
-    (
-        $filter{report_architecture},
-        $filter{report_osname},
-        $filter{report_osversion},
-    ) = split /##/, $aov_selected, 3;
-    (
-        $filter{config_cc},
-        $filter{config_ccversion}
-    ) = split /##/, $compiler_version, 2;
+    my $perl_latest      = $perlversion_list->[0]{value};
+    my $pv_selected      = $data->{selected_perl};
+    $pv_selected         = $perl_latest if not $pv_selected or $pv_selected eq "latest";
+    $pv_selected         = "%" if $pv_selected eq "all";
+    my %filter           = (
+        report_architecture        => $data->{selected_arch},
+        report_architecture_andnot => $data->{andnotsel_arch},
+        report_osname              => $data->{selected_osnm},
+        report_osname_andnot       => $data->{andnotsel_osnm},
+        report_osversion           => $data->{selected_osvs},
+        report_osversion_andnot    => $data->{andnotsel_osvs},
+        report_hostname            => $data->{selected_host},
+        report_hostname_andnot     => $data->{andnotsel_host},
+        config_cc                  => $data->{selected_comp},
+        config_cc_andnot           => $data->{andnotsel_comp},
+        config_ccversion           => $data->{selected_cver},
+        config_ccversion_andnot    => $data->{andnotsel_cver},
+    );
+
     while (my ($k, $v) = each %filter) {
         delete $filter{$k} if ! $v;
     }
 
-    my ($whatnext) = split " ", lc($data->{whatnext} || 'list');
-    my $page = $data->{page} || 1;
-    $pv_selected = '%'
-        if exists $data->{perl_version} && ! $data->{perl_version};
-
-    my $reports;
-    if ($whatnext eq 'list') {
+    # If Perl version is 'latest' (or initial empty) and no other filter is used,
+    # only show the latest smoke result per Arch/OS/OSVersion/...
+    my ($reports, $count);
+    my $page     = $data->{page} || 1;
+    if ((not $data->{selected_perl} or $data->{selected_perl} eq "latest")
+        and not %filter) {
+        $reports = $self->get_reports_by_perl_version($pv_selected,  \%filter);
+    } else {
         $reports = $self->get_reports_by_filter($pv_selected, $page, \%filter);
+        $count   = $self->get_reports_by_filter_count($pv_selected,  \%filter);
     }
-    else {
-        $reports = $self->get_reports_by_perl_version($pv_selected, \%filter);
+
+    # Get all the possible values to select from
+    my $sel_arch_os_ver = $self->get_architecture_os;
+    my $sel_comp_ver    = $self->get_compilers;
+    my @items_arch_os_ver;
+    my @items_comp_ver;
+    foreach my $selitem (@$sel_arch_os_ver) {
+        my ($item_arch, $item_os, $item_osver, $item_host) = split /##/, $selitem->{value}, 4;
+        push @items_arch_os_ver, {
+            arch      => $item_arch,
+            os        => $item_os,
+            osversion => $item_osver,
+            hostname  => $item_host,
+        };
     }
-    my $count = $self->get_reports_by_filter_count($pv_selected, \%filter);
+    foreach my $selitem (@$sel_comp_ver) {
+        my ($item_comp, $item_compver) = split /##/, $selitem->{value}, 2;
+        push @items_comp_ver, {
+            comp        => $item_comp,
+            compversion => $item_compver,
+        };
+    }
 
     return {
         perl_latest       => $perl_latest,
         perl_versions     => $perlversion_list,
-        pv_selected       => $pv_selected,
+        pv_selected       => $data->{selected_perl},
         page_selected     => $page,
-        whatnext          => $whatnext,
-        arch_os_ver       => $self->get_architecture_os,
-        aov_selected      => $aov_selected,
-        compiler_versions => $self->get_compilers,
-        compiler_version  => $compiler_version,
         reports           => $reports,
-        page_count        => $count,
+        total_count       => $count,
+        page_count        => $count ? int(($count + $self->reports_per_page - 1)/$self->reports_per_page) : 1,
+        sel_arch_os_ver   => \@items_arch_os_ver,
+        sel_comp_ver      => \@items_comp_ver,
+        filters           => \%filter,
     };
 }
 
@@ -296,13 +320,6 @@ sub get_reports_by_perl_version {
     my ($pattern, $raw_filter) = @_;
     ($pattern ||= '%') =~ s/\*/%/g;
 
-    my (%report_filter, %config_filter);
-    for my $key (keys %$raw_filter) {
-        $key =~ /^report_(.+)/ and $report_filter{$1} = $raw_filter->{$key};
-    }
-    for my $key (keys %$raw_filter) {
-        $key =~ /^config_(.+)/ and $config_filter{"configs.$1"} = $raw_filter->{$key};
-    }
     my $sr = $self->schema->resultset('Report');
     my $reports = $sr->search(
         {
@@ -319,7 +336,7 @@ sub get_reports_by_perl_version {
                     { alias => 'rr' }
                 )->get_column('smoke_date')->max_rs->as_query
             },
-            %report_filter,
+            $self->get_filter_query_report(\%$raw_filter),
         },
         {
             order_by => [qw/architecture hostname osname osversion/],
@@ -331,51 +348,33 @@ sub get_reports_by_perl_version {
 sub get_reports_by_filter_count {
     my $self = shift;
     my ($pattern, $raw_filter) = @_;
-
     ($pattern ||= '%') =~ s/\*/%/g;
-    my (%report_filter, %config_filter);
-    for my $key (keys %$raw_filter) {
-        $key =~ /^report_(.+)/ and $report_filter{$1} = $raw_filter->{$key};
-    }
-    for my $key (keys %$raw_filter) {
-        $key =~ /^config_(.+)/ and $config_filter{"configs.$1"} = $raw_filter->{$key};
-    }
 
-    my $count = $self->schema->resultset('Report')->search(
+    return $self->schema->resultset('Report')->search(
         {
-            perl_id => { -like => $pattern },
-            %report_filter,
-            %config_filter,
+            perl_id  => { -like => $pattern },
+            $self->get_filter_query_report(\%$raw_filter),
+            $self->get_filter_query_config(\%$raw_filter),
         },
         {
-            join => 'configs',
+            join     => 'configs',
             columns  => [qw/id/],
             distinct => 1,
         }
     )->count();
-    return int(($count + $self->reports_per_page - 1)/$self->reports_per_page);
 }
 
 sub get_reports_by_filter {
     my $self = shift;
     my ($pattern, $page, $raw_filter) = @_;
-
     ($pattern ||= '%') =~ s/\*/%/g;
-    $page ||= 1;
-
-    my (%report_filter, %config_filter);
-    for my $key (keys %$raw_filter) {
-        $key =~ /^report_(.+)/ and $report_filter{$1} = $raw_filter->{$key};
-    }
-    for my $key (keys %$raw_filter) {
-        $key =~ /^config_(.+)/ and $config_filter{"configs.$1"} = $raw_filter->{$key};
-    }
+    $page     ||= 1;
 
     my $reports = $self->schema->resultset('Report')->search(
         {
-            perl_id => { -like => $pattern },
-            %report_filter,
-            %config_filter
+            perl_id  => { -like => $pattern },
+            $self->get_filter_query_report(\%$raw_filter),
+            $self->get_filter_query_config(\%$raw_filter),
         },
         {
             join     => 'configs',
@@ -390,14 +389,46 @@ sub get_reports_by_filter {
     return [$reports->all()];
 }
 
+sub get_filter_query_report {
+    my $self = shift;
+    my ($raw_filter) = @_;
+    my %report_filter;
+
+    for my $key (keys %$raw_filter) {
+        next if $key =~ /_andnot$/;
+        if ($raw_filter->{$key .'_andnot'}) {
+            $key =~ /^report_(.+)/ and $report_filter{$1} = { '!=' => $raw_filter->{$key} };
+        } else {
+            $key =~ /^report_(.+)/ and $report_filter{$1} = $raw_filter->{$key};
+        }
+    }
+    return %report_filter;
+}
+
+sub get_filter_query_config {
+    my $self = shift;
+    my ($raw_filter) = @_;
+    my %config_filter;
+
+    for my $key (keys %$raw_filter) {
+        next if $key =~ /_andnot$/;
+        if ($raw_filter->{$key .'_andnot'}) {
+            $key =~ /^config_(.+)/ and $config_filter{"configs.$1"} = { '!=' => $raw_filter->{$key} };
+        } else {
+            $key =~ /^config_(.+)/ and $config_filter{"configs.$1"} = $raw_filter->{$key};
+        }
+    }
+    return %config_filter;
+}
+
 sub get_architecture_os {
     my $self = shift;
     my $architecture = $self->schema->resultset('Report')->search(
         undef,
         {
-            columns  => [qw/architecture osname osversion/],
-            group_by => [qw/architecture osname osversion/],
-            order_by => [qw/architecture osname osversion/],
+            columns  => [qw/architecture osname osversion hostname/],
+            group_by => [qw/architecture osname osversion hostname/],
+            order_by => [qw/architecture osname osversion hostname/],
         },
     );
     return [
@@ -425,25 +456,37 @@ sub get_perlversion_list {
     my ($pattern) = @_;
     ($pattern ||= '%') =~ s/\*/%/g;
 
-    my $pversions = $self->schema->resultset('Report')->search(
-        {
-            perl_id => { -like => $pattern }
-        },
-        {
-            columns  => [qw/perl_id/],
-            group_by => [qw/perl_id/],
-            order_by => {-desc => 'perlversion_float(perl_id)'},
-        }
-    );
+    my $pversions = [
+        sort {
+            _pversion($b->perl_id) <=> _pversion($a->perl_id)
+        } $self->schema->resultset('Report')->search(
+            {
+                perl_id => { -like => $pattern }
+            },
+            {
+                columns  => [qw/perl_id/],
+                group_by => [qw/perl_id/],
+#                order_by => {-desc => 'perlversion_float(perl_id)'},
+            }
+        )
+    ];
     return [
         map {
             my $record = {
                 value => $_->perl_id,
                 label => $_->perl_id,
             };
-        } $pversions->all()
+        } @$pversions
     ];
 }
+
+# make a float representation of a perl-version.
+sub _pversion {
+    my ($perl_id) = @_;
+    use version;
+    return version->parse($perl_id)->numify;
+}
+
 
 no Moose;
 __PACKAGE__->meta->make_immutable;

@@ -1,0 +1,124 @@
+{
+   "locale" : "nl_NL.UTF-8",
+   "un_file" : "/Users/abetim/ztreet/ts-test/etc/blead.usernote",
+   "rptfile" : "mktest.rpt",
+   "outfile" : "mktest.out",
+   "harness_only" : "1",
+   "applied_patches" : [
+      "SMOKEba7f043cd8beaaa711b275c2a15eb10e1f9ab7f8"
+   ],
+   "v" : "2",
+   "cfg" : "/Users/abetim/ztreet/ts-test/etc/perlcurrent.cfg",
+   "showcfg" : 0,
+   "lfile" : "/Users/abetim/ztreet/ts-test/etc/blead.log",
+   "sysinfo" : {
+      "smoker_version" : "0.046",
+      "git_describe" : "v5.21.10-91-gba7f043",
+      "hostname" : "ati7-2.local",
+      "reporter_version" : "0.053",
+      "reporter" : null,
+      "architecture" : "Intel Core i5",
+      "test_jobs" : null,
+      "osversion" : "14.3.0 (Mac OS X)",
+      "cpu_count" : "1[2 cores]",
+      "osname" : "darwin",
+      "lc_all" : null,
+      "config_count" : 2,
+      "git_id" : "ba7f043cd8beaaa711b275c2a15eb10e1f9ab7f8",
+      "smoke_perl" : "5.16.3",
+      "smoke_date" : "2015-04-19 12:04:54 +0200",
+      "user_note" : "Check all smoke reports at http://perl5.test-smoke.org/\n",
+      "lang" : "nl_NL.UTF-8",
+      "cpu_description" : "MacBook Pro (2,5 GHz)",
+      "smoke_branch" : "blead",
+      "duration" : 1155,
+      "username" : "abetim",
+      "smoke_revision" : "1.61_03",
+      "smoke_version" : "1.61_03",
+      "perl_id" : "5.21.11"
+   },
+   "summary" : "FAIL(F)",
+   "defaultenv" : "1",
+   "compiler_msgs" : [
+      "ListUtil.xs:688:17: warning: unused variable 'a' [-Wunused-variable]",
+      "ListUtil.xs:689:17: warning: unused variable 'b' [-Wunused-variable]",
+      "ListUtil.xs:730:17: warning: unused variable 'a' [-Wunused-variable]",
+      "ListUtil.xs:731:17: warning: unused variable 'b' [-Wunused-variable]",
+      "POSIX.xs:3144:15: warning: 'tmpnam' is deprecated: This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of tmpnam(3), it is highly recommended that you use mkstemp(3) instead. [-Wdeprecated-declarations]",
+      "/usr/include/stdio.h:276:7: note: 'tmpnam' has been explicitly marked deprecated here",
+      "./sdbm.h:54:20: warning: 'extern' variable has an initializer [-Wextern-initializer]",
+      "HiRes.xs:1250:18: warning: comparison of integers of different signs: 'clock_t' (aka 'unsigned long') and 'int' [-Wsign-compare]",
+      "Piece.xs:688:18: warning: comparison of integers of different signs: 'int' and 'unsigned long' [-Wsign-compare]",
+      "Piece.xs:782:18: warning: comparison of integers of different signs: 'int' and 'unsigned long' [-Wsign-compare]",
+      "Piece.xs:1059:29: warning: comparison of integers of different signs: 'int' and 'unsigned long' [-Wsign-compare]",
+      "Piece.xs:350:13: warning: unused variable 'copyright' [-Wunused-variable]",
+      "Piece.xs:352:13: warning: unused variable 'sccsid' [-Wunused-variable]"
+   ],
+   "manifest_msgs" : [],
+   "un_position" : "bottom",
+   "out_file" : null,
+   "harness3opts" : "j5",
+   "jsnfile" : "mktest.jsn",
+   "log_file" : null,
+   "is56x" : 0,
+   "skip_tests" : "/Users/abetim/ztreet/ts-test/etc/blead.skiptests",
+   "ddir" : "/Users/abetim/ztreet/ts-test/perl-current",
+   "skipped_tests" : [],
+   "configs" : [
+      {
+         "ccversion" : "4.2.1 Compatible Apple LLVM 6.1.0 (clang-602.0.49)",
+         "cc" : "cc",
+         "duration" : 515,
+         "started" : "2015-04-19 12:04:55 +0200",
+         "debugging" : "N",
+         "arguments" : "",
+         "results" : [
+            {
+               "failures" : [
+                  {
+                     "test" : "../t/porting/pending-author.t",
+                     "status" : "FAILED",
+                     "extra" : [
+                        "1"
+                     ]
+                  }
+               ],
+               "stat_cpu_time" : "740.48",
+               "summary" : "F",
+               "stat_tests" : "709882",
+               "statistics" : "Files=2379, Tests=709882, 252 wallclock secs (92.26 usr 14.85 sys + 567.97 cusr 65.40 csys = 740.48 CPU",
+               "locale" : null,
+               "io_env" : "stdio"
+            }
+         ]
+      },
+      {
+         "ccversion" : "4.2.1 Compatible Apple LLVM 6.1.0 (clang-602.0.49)",
+         "cc" : "cc",
+         "duration" : 639,
+         "started" : "2015-04-19 12:13:30 +0200",
+         "debugging" : "D",
+         "arguments" : "",
+         "results" : [
+            {
+               "failures" : [
+                  {
+                     "test" : "../t/porting/pending-author.t",
+                     "status" : "FAILED",
+                     "extra" : [
+                        "1"
+                     ]
+                  }
+               ],
+               "stat_cpu_time" : "913.40",
+               "summary" : "F",
+               "stat_tests" : "709743",
+               "statistics" : "Files=2379, Tests=709743, 296 wallclock secs (116.57 usr 15.57 sys + 711.05 cusr 70.21 csys = 913.40 CPU",
+               "locale" : null,
+               "io_env" : "stdio"
+            }
+         ]
+      }
+   ],
+   "nonfatal_msgs" : []
+}

@@ -22,12 +22,13 @@
       <span style="font-size: smaller;"
            >CoreSmokeDB v[% version %];
            courtesy of Perl QA Hackathon:
-             2010 <span style="color: yellow">Vienna</span>
-           + 2011 <span style="color: yellow">Amsterdam</span>
-           + 2012 <span style="color: yellow">Paris</span>
-           + 2013 <span style="color: yellow">Lancaster</span>
-           + 2014 <span style="color: yellow">Lyon</span>
-           + 2015 <span style="color: yellow">Berlin</span>
+             2010&nbsp;<span style="color: yellow">Vienna</span>
+           + 2011&nbsp;<span style="color: yellow">Amsterdam</span>
+           + 2012&nbsp;<span style="color: yellow">Paris</span>
+           + 2013&nbsp;<span style="color: yellow">Lancaster</span>
+           + 2014&nbsp;<span style="color: yellow">Lyon</span>
+           + 2015&nbsp;<span style="color: yellow">Berlin</span>
+           + 2016&nbsp;<span style="color: yellow">Rugby</span>
       </span>
     </div>
   </body>

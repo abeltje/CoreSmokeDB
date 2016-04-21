@@ -1,0 +1,8 @@
+\.git
+\.git(attributes|ignore)
+Makefile$
+blib
+pm_to_blib
+local/
+\.swp$
+MYMETA
