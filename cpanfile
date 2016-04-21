@@ -1,3 +1,6 @@
+requires "Daemon::Control"      => "0.00";
+requires "Starman"              => "0.40";
+
 requires "Moose"                => "2.00";
 requires "Date::Parse"          => "2.30";
 requires "Digest::MD5"          => "2.51";
