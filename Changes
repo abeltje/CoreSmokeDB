@@ -1,9 +1,89 @@
-Changes on 2015-05-08 for repository at:
-  Fetch URL: ssh://git@github.com/abeltje/CoreSmokeDB
-  Push  URL: ssh://git@github.com/abeltje/CoreSmokeDB
+Changes on 2016-04-21 for repository at:
+  Fetch URL: git@github.com:abeltje/CoreSmokeDB
+  Push  URL: git@github.com:abeltje/CoreSmokeDB
 
 Enjoy!
 
+________________________________________________________________________________
+[8b312e0] by abeltje on Thu, 21 Apr 2016 16:50:54 +0100
+
+     Fix MANIFEST MANIFEST.SKIP
+
+
+M	MANIFEST
+M	MANIFEST.SKIP
+________________________________________________________________________________
+[5f251d2] by abeltje on Thu, 21 Apr 2016 16:09:58 +0100
+
+     Add init-like script to easily start/stop the daemon.
+
+        This helps development.
+
+
+M	cpanfile
+M	cpanfile.snapshot
+A	dev-bin/coresmokedb-server.pl
+________________________________________________________________________________
+[b388fe7] by abeltje on Thu, 21 Apr 2016 12:48:05 +0100
+
+     Add DBD::Pg and DBD::SQLite to cpanfile
+
+
+M	cpanfile
+M	cpanfile.snapshot
+________________________________________________________________________________
+[a8b0e53] by abeltje on Thu, 21 Apr 2016 11:45:01 +0100
+
+     Rework GUI for better choice of filters by rilonl
+
+        Richard (rilonl) redesigned the filter inputs on the website. He
+        also fixed the gradient and the logo. Thanks Richard van Lochem for
+        that work!
+
+
+A	.gitattributes
+M	.gitignore
+M	MANIFEST
+A	MANIFEST.SKIP
+A	cpanfile
+A	cpanfile.snapshot
+M	environments/development.yml
+M	lib/Test/Smoke/Gateway.pm
+M	lib/Test/Smoke/Gateway/Dancer.pm
+M	lib/Test/Smoke/Gateway/Schema.pm
+M	lib/Test/Smoke/Gateway/Schema/Result/Report.pm
+M	public/css/smokedb.css
+A	public/images/bluesmoke.gif
+A	public/images/bluesmoke.xcf
+A	public/images/onion.png
+A	public/images/smoking_union.gif
+M	public/images/smoking_union.png
+M	t/000-basic.t
+A	t/data/mktest-mac.jsn
+A	t/data/mktest-ubuntu.jsn
+M	templates/layouts/smokedb.tt
+M	templates/search.tt
+M	tsgateway
+________________________________________________________________________________
+[4484222] by abeltje on Fri, 21 Aug 2015 11:28:35 +0200
+
+     Add new call /api/reports_from_id/:id
+
+        It supports an optional ?limit=<n> that defaults to 100. This call
+        was requested by TonyC on #smoke (irc.perl.org)
+
+
+M	environments/development.yml
+M	lib/Test/Smoke/Gateway.pm
+M	lib/Test/Smoke/Gateway/Dancer.pm
+________________________________________________________________________________
+[06fd6ed] by abeltje on Fri, 8 May 2015 13:50:07 +0200
+
+     Autocommit for distribution Test::Smoke::Gateway 0.08 (minor)
+
+
+M	Changes
+M	lib/Test/Smoke/Gateway.pm
 ________________________________________________________________________________
 [c3c4330] by abeltje on Fri, 8 May 2015 13:42:59 +0200
 
