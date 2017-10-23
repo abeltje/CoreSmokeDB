@@ -1,12 +1,14 @@
 ---
 
-port: 5000
+port: 3030
 content_type: application/json
+
+strict_config: 1
 
 layout: 'smokedb'
 
-logger: 'file'
-log: 'debug'
+logger: 'console'
+log: 'core'
 startup_info: 1
 show_errors: 1
 
@@ -16,7 +18,8 @@ plugins:
     DBIC:
         default:
             schema_class: Test::Smoke::Gateway::Schema
-            dsn: 'dbi:SQLite:dbname=~abeltje/CoreSmokeDB.sqlite'
+            dsn: 'dbi:SQLite:dbname=/Users/abetim/ztreet/CoreSmokeDB.sqlite'
+            user: abeltje
             options:
                 RaiseError: 1
                 PrintError: 1
