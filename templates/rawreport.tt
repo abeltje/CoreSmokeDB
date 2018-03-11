@@ -59,7 +59,7 @@ MANIFEST messages:
 
 Compiler messages:
 [% FOREACH cmsg = report.compiler_msgs.split("\n") -%]
-  [% cmsg %]
+  [% decode_utf8(cmsg) %]
 [% END -%]
 
 About this smoke:

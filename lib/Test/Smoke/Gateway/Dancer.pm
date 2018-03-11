@@ -5,7 +5,7 @@ no if $] >= 5.018, warnings => 'experimental::smartmatch';
 use Dancer ':syntax';
 
 use Dancer::Plugin::DBIC;
-use Encode 'encode';
+use Encode qw/ encode decode encode_utf8 decode_utf8 /;
 use Test::Smoke::Gateway;
 use Try::Tiny;
 
@@ -46,12 +46,13 @@ post '/report' => sub {
 get '/report/:id' => sub {
     my $report = $gw->get_report(params->{'id'});
 
-    header 'content-type' => 'text/html';
+    header 'content-type' => 'text/html; charset=utf-8';
     template 'report' => {
-        report   => $report,
-        title    => $report->title,
-        version  => $Test::Smoke::Gateway::VERSION,
-        thisyear => 1900 + (localtime)[5],
+        report      => $report,
+        title       => $report->title,
+        version     => $Test::Smoke::Gateway::VERSION,
+        thisyear    => 1900 + (localtime)[5],
+        decode_utf8 => sub { return decode_utf8( $_[0] ) },
     };
 };
 
