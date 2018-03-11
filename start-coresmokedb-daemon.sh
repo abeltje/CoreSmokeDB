@@ -1,7 +1,7 @@
 #! /bin/bash
 
 MYNAME=$(uname -n)
-INPROD=$(perl -e 'print shift =~ /booking/ ? 1 : 0' $MYNAME)
+INPROD=$(perl -e 'print shift =~ /perl.space/ ? 1 : 0' $MYNAME)
 if [ $INPROD == "1" ]; then
     csdb_home=/home/abeltje/CoreSmokeDB
     csdb_env=smokedb
