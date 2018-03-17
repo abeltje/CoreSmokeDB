@@ -9,7 +9,7 @@ pipeline {
                 sh 'carton install'
                 sh 'cpanm --notest -L local Test::NoWarnings Plack Daemon::Control Starman'
                 sh 'prove -Ilocal/lib/perl5 --formatter=TAP::Formatter::JUnit --timer -wl t/ > testout.xml'
-                archiveArtifacts artifacts: 'local/**, lib/**, environments/**, config.yml, templates/**, public/**'
+                archiveArtifacts artifacts: 'local/**, lib/**, environments/**, config.yml, tsgateway, templates/**, public/**'
             }
             post {
                 changed {
@@ -35,7 +35,8 @@ pipeline {
                         url: 'ssh://git@source.test-smoke.org:9999/~/ztreet-configs'
                     ]]
                 ])
-                sh 'cp -v configs/coresmokedb/*.yml deploy/environments/'
+                sh 'cp -v configs/CoreSmokeDB/test.yml deploy/environments/'
+                sh 'cp -v configs/CoreSmokeDB/smokedb.yml deploy/environments/'
                 sh 'chmod +x deploy/local/bin/*'
                 archiveArtifacts artifacts: 'deploy/**'
             }
@@ -47,9 +48,8 @@ pipeline {
                     def usrinput = input message: "Deploy or Abort ?", ok: "Deploy!"
                 }
                 sh 'chmod +x deploy/local/bin/*'
-                sh 'chmod +x deploy/bin/*'
                 sh 'touch deploy/tsgateway'
-                sh 'rsync -e 'ssh -i /var/lib/jenkins/keys/pnl/id_rsa -l abeltje' -avP deploy/ fidobackend.fritz.box:CoreSmokeDB/'
+                sh 'rsync -e "ssh -i /var/lib/jenkins/keys/pnl/id_rsa -l abeltje" -avP deploy/ fidobackend.fritz.box:CoreSmokeDB/'
             }
         }
     }
