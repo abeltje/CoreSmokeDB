@@ -379,7 +379,7 @@ sub get_reports_by_filter {
         {
             join     => 'configs',
             columns  => [qw/id architecture osname osversion smoke_date
-                            hostname git_describe summary/],
+                            hostname git_describe smoke_branch summary/],
             distinct => 1,
             order_by => { -desc => 'smoke_date' },
             page     => $page,

@@ -152,7 +152,7 @@
 <table width="100%" style="border: 2px black ridge;">
     <caption>List of reports, page [% search.page_selected %] of [% search.page_count %]</caption>
     <tr>
-        <th>Arch</th><th>Host</th><th>OS</th><th>Git-id</th><th>Smoke date</th><th>Status</th>
+        <th>Arch</th><th>Host</th><th>OS</th><th>Git-id</th><th>Branch</th><th>Smoke date</th><th>Status</th>
     </tr>
     [% FOREACH row = search.reports -%]
         [% IF    row.summary.match('PASS')      -%][% colorclass = 'passtest'  -%]
@@ -165,6 +165,7 @@
             <td>[% row.hostname %]</td>
             <td>[% row.osname %] - [% row.osversion %]</td>
             <td>[% row.git_describe %]</td>
+            <td>[% row.smoke_branch %]</td>
             <td>[% row.smoke_date %]</td>
             <td class="[% colorclass %]">
                 <a href="/report/[% row.id %]" class="[% colorclass %]">[% row.summary %]</a>
