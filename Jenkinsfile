@@ -48,8 +48,8 @@ pipeline {
             when {
                 // branch 'preview'
                 expression {
-                    echo "BRANCH_NAME is ${env.BRANCH_NAME}"
-                    return env.BRANCH_NAME == "preview"
+                    echo "BRANCH_NAME is ${scm.branches[0].name}"
+                    return scm.branches[0].name == "preview"
                 }
             }
             steps {
