@@ -42,7 +42,13 @@ pipeline {
             }
         }
         stage('DeployPreview') {
-            when { branch 'preview' }
+            when {
+                // branch 'preview'
+                expression {
+                    echo "BRANCH_NAME is ${env.BRANCH_NAME}"
+                    return env.BRANCH_NAME == "preview"
+                }
+            }
             steps {
 //                script {
 //                    def usrinput = input message: "Deploy or Abort ?", ok: "Deploy!"
