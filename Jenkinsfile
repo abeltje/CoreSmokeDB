@@ -44,9 +44,9 @@ pipeline {
         stage('DeployPreview') {
             when { branch 'preview' }
             steps {
-                script {
-                    def usrinput = input message: "Deploy or Abort ?", ok: "Deploy!"
-                }
+//                script {
+//                    def usrinput = input message: "Deploy or Abort ?", ok: "Deploy!"
+//                }
                 sh 'chmod +x deploy/local/bin/*'
                 sh 'touch deploy/tsgateway'
                 sh 'rsync -e "ssh -i /var/lib/jenkins/keys/pnl/id_rsa -l abeltje" -avP deploy/ fidobackend.fritz.box:CoreSmokeDB/'
