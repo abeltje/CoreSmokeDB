@@ -4,3 +4,4 @@ local/
 nohup.out
 tags
 MANIFEST.bak
+CoreSmokeDB.sqlite

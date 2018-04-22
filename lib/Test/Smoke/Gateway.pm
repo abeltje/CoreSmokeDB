@@ -15,7 +15,7 @@ has reports_per_page => (
     default => 25
 );
 
-our $VERSION = 0.09;
+our $VERSION = '0.09';
 
 =head1 NAME
 
@@ -480,13 +480,181 @@ sub get_perlversion_list {
     ];
 }
 
+=head2 $gw->get_failures_by_version
+
+    select distinct f.test       as test
+                  , rp.id        as report_id
+                  , rp.perl_id   as perl_id
+                  , rp.osname    as os_name
+                  , rp.osversion as os_version
+               from failure f
+               join failures_for_env fe on fe.failure_id = f.id
+               join result r on fe.result_id = r.id
+               join config c on r.config_id = c.id
+               join report rp on c.report_id = rp.id
+                    ;
+
+=cut
+
+sub get_failures_by_version {
+    my $self = shift;
+
+    my $pversions = $self->get_perlversion_list();
+    my $pversion_in = [ grep { defined } map { $_->{value} } @{$pversions}[0..4] ];
+
+    my $failures = $self->schema->resultset('Failure')->search(
+        {
+            'status'         => {like => 'FAILED%'},
+            'report.perl_id' => $pversion_in,
+        },
+        {
+            join => {failures_for_env => {result => {config => 'report'}}},
+            result_class => 'DBIx::Class::ResultClass::HashRefInflator',
+            columns => {
+                test       => 'test',
+                report_id  => 'report.id',
+                perl_id    => 'report.perl_id',
+                os_name    => 'report.osname',
+                os_version => 'report.osversion',
+            },
+            distinct => 1,
+        }
+    );
+
+    return $failures;
+}
+
+=head2 $gw->get_failures_for_pversion
+
+    select distinct f.test           as test
+                  , rp.id            as report_id
+                  , rp.perl_id       as perl_id
+                  , rp.git_subscribe as git_id
+                  , rp.osname        as os_name
+                  , rp.osversion     as os_version
+               from failure f
+               join failures_for_env fe on fe.failure_id = f.id
+               join result r on fe.result_id = r.id
+               join config c on r.config_id = c.id
+               join report rp on c.report_id = rp.id
+                    ;
+
+=cut
+
+sub get_failures_for_pversion {
+    my $self = shift;
+    my %args = @_;
+
+    my $pversions = $self->get_perlversion_list();
+    my $pversion_in = [ grep { defined } map { $_->{value} } @{$pversions}[0..4] ];
+
+    my $failures = $self->schema->resultset('Failure')->search(
+        {
+            'status' => {like => 'FAILED%'},
+            'test'   => $args{test},
+            ($args{pversion}
+                ? ('report.perl_id' => $args{pversion})
+                : ('report.perl_id' => $pversion_in)
+            ),
+        },
+        {
+            join => {failures_for_env => {result => {config => 'report'}}},
+            result_class => 'DBIx::Class::ResultClass::HashRefInflator',
+            columns => {
+                test       => 'test',
+                report_id  => 'report.id',
+                perl_id    => 'report.perl_id',
+                git_id     => 'report.git_describe',
+                os_name    => 'report.osname',
+                os_version => 'report.osversion',
+            },
+            distinct => 1,
+        }
+    );
+
+    return $failures;
+}
+
+sub failures_matrix {
+    my $self = shift;
+    my $fails = $self->get_failures_by_version();
+
+    # Create the matrix...
+    my (%failing_test_count, %pversions);
+    for my $fail ($fails->all) {
+        $failing_test_count{ $fail->{test} }++;
+        push @{
+            $pversions{$fail->{perl_id}}{$fail->{test}}
+        }, "$fail->{os_name} - $fail->{os_version}";
+    }
+
+    my %matrix = map {
+        ( sprintf("%04d%s", $failing_test_count{$_}, $_) => [ $_ ] )
+    } sort {
+        $failing_test_count{$b} <=> $failing_test_count{$a}
+    } keys %failing_test_count;
+    $matrix{'?'} = [ '&nbsp;' ];
+
+    my @reverse_sorted_pversion = sort {
+        _pversion($b) cmp _pversion($a)
+    } keys %pversions;
+    for my $pversion (@reverse_sorted_pversion) {
+        for my $index (keys %matrix) {
+            if ($index eq '?') {
+                push @{ $matrix{'?'} }, $pversion;
+            }
+            else {
+                my $test = $matrix{$index}[0];
+                my $count = exists $pversions{$pversion}{$test}
+                    ? 0 + @{$pversions{$pversion}{$test}}
+                    : '';
+                my %oses = map { ($_ => undef) } @{$pversions{$pversion}{$test}};
+                my $os = join(';', sort keys %oses);
+
+                push @{$matrix{$index}}, {cnt => $count, alt => $os};
+            }
+        }
+    }
+    my @matrix;
+    for my $index (sort {$b cmp $a} keys %matrix) { push @matrix, $matrix{$index} }
+
+    return \@matrix;
+}
+
+sub failures_submatrix {
+    my $self = shift;
+
+    my $fails = $self->get_failures_for_pversion(@_);
+    my @reports = map {
+        my $copy = $_;
+        $copy->{git_sha} = $copy->{git_id} =~ /-g(?<sha>[0-9a-f]+)$/
+            ? $+{sha} : '';
+        $copy
+    } sort {
+           _pversion($b->{perl_id})   cmp _pversion($a->{perl_id})
+        || _gversion($b->{git_id})    cmp _gversion($a->{git_id})
+        || $a->{report_id}            <=> $b->{report_id}
+    } $fails->all;
+
+    return \@reports;
+}
+
 # make a float representation of a perl-version.
 sub _pversion {
     my ($perl_id) = @_;
+    my $rc = $perl_id =~ s/(?<rc>-RC[0-9]+)// ? $+{rc} : '';
     use version;
-    return version->parse($perl_id)->numify;
+    return version->parse($perl_id)->numify . $rc;
 }
 
+sub _gversion {
+    my ($git_describe) = @_;
+    if ($git_describe =~ /v(?<perl_id>.+)-(?<commits>[0-9]+)-g[0-9a-f]+$/) {
+        my $pversion = _pversion($+{perl_id});
+        return sprintf("%.06f-%06d", $pversion, $+{commits});
+    }
+    return $git_describe;
+}
 
 no Moose;
 __PACKAGE__->meta->make_immutable;

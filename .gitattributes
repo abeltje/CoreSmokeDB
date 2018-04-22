@@ -1,3 +1,4 @@
 carton.lock		-diff
 cpanfile.snapshot	-diff
 Changes			-diff
+t/test.sqlite		-diff

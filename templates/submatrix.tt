@@ -1,0 +1,20 @@
+<h1>Submatrix [% test %]</h1>
+
+<table width="100%" style="border: 2px black ridge;">
+  <caption>List of failing smokes by test.</caption>
+  <tr>
+    <th>Version</th>
+    <th>Git-id</th>
+    <th>Report</th>
+    <th>OS</th>
+  </tr>
+  [% FOREACH report in reports %]
+  <tr style="background-color: [% IF loop.count() % 2 %]white[% ELSE %]#dedede[% END %];">
+    <td>[% report.perl_id | html %]</td>
+    <td><a href="https://perl5.git.perl.org/perl.git/commitdiff/[% report.git_sha | url %]"
+           target="_blank">[% report.git_id | html %]</td>
+    <td><a href="/report/[% report.report_id | url %]">[% report.report_id | html %]</a></td>
+    <td>[% report.os_name | html %] - [% report.os_version | html %]</td>
+  </tr>
+  [% END %]
+</table>

@@ -123,8 +123,42 @@ get '/api/report_data/:id' => sub {
     return to_json($gw->api_get_report_data(params->{id}));
 };
 
+get '/matrix' => sub {
+    my $matrix = $gw->failures_matrix();
+
+    header('content-type' => 'text/html');
+    template(
+        matrix => {
+            matrix   => $matrix,
+            version  => $Test::Smoke::Gateway::VERSION,
+            thisyear => 1900 + (localtime)[5],
+        }
+    );
+};
+
+get '/submatrix' => sub {
+    my ($test, $pversion) = (params->{test}, params->{pversion});
+
+    redirect '/matrix' if !$test;
+
+    my $reports = $gw->failures_submatrix(
+        test => $test,
+        ($pversion ? (pversion => $pversion) : ()),
+    );
+
+    header('content-type' => 'text/html');
+    template(
+        submatrix => {
+            reports  => $reports,
+            test     => $test,
+            version  => $Test::Smoke::Gateway::VERSION,
+            thisyear => 1900 + (localtime)[5],
+        }
+    );
+};
+
 get '/' => sub {
-    forward '/search';
+    redirect '/search';
 };
 
 1;

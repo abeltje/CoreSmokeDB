@@ -10,5 +10,5 @@ engines:
         start_tag: '[%'
         stop_tag:  '%]'
 
-auto_reload: 1
+auto_reload: 0
 

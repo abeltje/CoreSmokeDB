@@ -1,0 +1,30 @@
+<h1>Failure matrix</h1>
+
+<table width="100%" style="border: 2px black ridge;">
+  <caption>List of the number of failing smokes by test.</caption>
+  [% FOREACH row in matrix %]
+      [% upper_loop_count = loop.count() %]
+      <tr style="background-color: [% IF loop.count() % 2 == 0 %]white[% ELSE %]#dedede[% END %];">
+      [% FOREACH cell in row %]
+        [% IF loop.count() > 1 && upper_loop_count > 1%]
+          [% IF cell.cnt %]
+            [% pver_index = loop.count() - 1 %]
+            [% pversion = matrix.0.$pver_index %]
+          <td class="failtest">
+            <a href="/submatrix?test=[% testname | url %]&pversion=[% pversion | url %]"
+               title="[% cell.alt | html %]" class="failtest">[% cell.cnt %]</a>
+          </td>
+          [% ELSE %]
+            <td class="passtest">&nbsp;</td>
+          [% END %]
+        [% ELSE %]
+          [% testname = cell %]
+          [% IF upper_loop_count > 1 %]
+          <td><a href="/submatrix?test=[% testname | url %]"
+                 title="[% cell | html %]">[% cell | html %]</a></td>
+          [% ELSE %]<th>[% cell %]</th>[% END %]
+        [% END %]
+      [% END %]
+    </tr>
+  [% END %]
+</table>

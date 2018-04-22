@@ -12,7 +12,7 @@ log: 'core'
 startup_info: 1
 show_errors: 1
 
-auto_reload: 1
+auto_reload: 0
 
 plugins:
     DBIC:
