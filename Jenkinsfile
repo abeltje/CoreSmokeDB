@@ -39,6 +39,9 @@ pipeline {
                 sh 'cp -v configs/CoreSmokeDB/smokedb.yml deploy/environments/'
                 sh 'chmod +x deploy/local/bin/*'
                 archiveArtifacts artifacts: 'deploy/**'
+                script {
+                    echo "Merged configs for: ${env.BRANCH_NAME}" + scm.branches[0].name
+                }
             }
         }
         stage('DeployPreview') {
