@@ -49,7 +49,7 @@ get '/report/:id' => sub {
     header 'content-type' => 'text/html; charset=utf-8';
     template 'report' => {
         report      => $report,
-        title       => $report->title,
+        title       => ($report ? $report->title : 'Error, report not found'),
         version     => $Test::Smoke::Gateway::VERSION,
         thisyear    => 1900 + (localtime)[5],
         decode_utf8 => sub { return decode_utf8( $_[0] ) },
@@ -62,7 +62,7 @@ get '/logfile/:id' => sub {
     header 'content-type' => 'text/html';
     template 'logfile' => {
         report   => $report,
-        title    => $report->title,
+        title    => ($report ? $report->title : 'Error, report not found'),
         version  => $Test::Smoke::Gateway::VERSION,
         thisyear => 1900 + (localtime)[5],
     };
@@ -74,7 +74,7 @@ get '/outfile/:id' => sub {
     header 'content-type' => 'text/html';
     template 'outfile' => {
         report   => $report,
-        title    => $report->title,
+        title    => ($report ? $report->title : 'Error: report not found'),
         version  => $Test::Smoke::Gateway::VERSION,
         thisyear => 1900 + (localtime)[5],
     };
