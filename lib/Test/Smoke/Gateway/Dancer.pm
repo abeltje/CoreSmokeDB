@@ -139,7 +139,7 @@ get '/matrix' => sub {
 get '/submatrix' => sub {
     my ($test, $pversion) = (params->{test}, params->{pversion});
 
-    redirect '/matrix' if !$test;
+    forward '/matrix' if !$test;
 
     my $reports = $gw->failures_submatrix(
         test => $test,
@@ -158,7 +158,7 @@ get '/submatrix' => sub {
 };
 
 get '/' => sub {
-    redirect '/search';
+    forward '/search';
 };
 
 1;
