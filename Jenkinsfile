@@ -1,13 +1,12 @@
 #! Groovy
 
 pipeline {
-    agent any
+    agent 'takkie'
     stages {
         stage('Build_and_Test') {
             steps {
                 script { echo "Building and testing branch: " + scm.branches[0].name }
                 sh 'carton install'
-                sh 'cpanm --notest -L local Test::NoWarnings Plack Daemon::Control Starman'
                 sh 'prove -Ilocal/lib/perl5 --formatter=TAP::Formatter::JUnit --timer -wl t/ > testout.xml'
                 archiveArtifacts artifacts: 'local/**, lib/**, environments/**, config.yml, tsgateway, templates/**, public/**'
             }
@@ -58,7 +57,7 @@ pipeline {
 //                }
                 sh 'chmod +x deploy/local/bin/*'
                 sh 'touch deploy/tsgateway'
-                sh 'rsync -e "ssh -i /var/lib/jenkins/keys/pnl/id_rsa -l abeltje" -avP deploy/ fidobackend.fritz.box:CoreSmokeDB/'
+                sh 'rsync -e "ssh -i /var/lib/jenkins/.ssh/centos_rsa -l abeltje" -avP deploy/ takkie.fritz.box:CoreSmokeDB/'
             }
         }
         stage('DeployProduction') {
