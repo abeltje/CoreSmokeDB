@@ -1,7 +1,7 @@
 #! Groovy
 
 pipeline {
-    agent 'takkie'
+    agent { label 'takkie' }
     stages {
         stage('Build_and_Test') {
             steps {
