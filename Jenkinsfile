@@ -59,7 +59,7 @@ pipeline {
 //                }
                 sh 'chmod +x deploy/local/bin/*'
                 sh 'touch deploy/tsgateway'
-                sh 'rsync -e "ssh -i /var/lib/jenkins/.ssh/centos_rsa -l abeltje" -avP deploy/ takkie.fritz.box:CoreSmokeDB/'
+                sh 'rsync -e "ssh -i /home/jenkins/.ssh/centos_rsa -l abeltje" -avP deploy/ takkie.fritz.box:CoreSmokeDB/'
             }
         }
         stage('DeployProduction') {
