@@ -6,7 +6,8 @@ pipeline {
         stage('Build_and_Test') {
             steps {
                 script { echo "Building and testing branch: " + scm.branches[0].name }
-                sh 'carton install'
+		// CentOS doesn't have a carton-package
+                sh 'cpanm -l local --installdeps .'
                 sh 'prove -Ilocal/lib/perl5 --formatter=TAP::Formatter::JUnit --timer -wl t/ > testout.xml'
                 archiveArtifacts artifacts: 'local/**, lib/**, environments/**, config.yml, tsgateway, templates/**, public/**'
             }
