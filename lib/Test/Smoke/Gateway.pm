@@ -580,16 +580,19 @@ sub failures_matrix {
     my $fails = $self->get_failures_by_version();
 
     # Create the matrix...
-    my (%failing_test_count, %pversions);
+    my (%failing_test_count, %failing_os_count, %pversions);
     for my $fail ($fails->all) {
+        my $failing_os = "$fail->{os_name} - $fail->{os_version}";
+        $failing_os_count{ $fail->{test} }{ $fail->{os_name} }++;
         $failing_test_count{ $fail->{test} }++;
         push @{
             $pversions{$fail->{perl_id}}{$fail->{test}}
-        }, "$fail->{os_name} - $fail->{os_version}";
+        }, $failing_os;
     }
 
     my %matrix = map {
-        ( sprintf("%04d%s", $failing_test_count{$_}, $_) => [ $_ ] )
+        my $foc = 0 + keys(%{ $failing_os_count{$_} });
+        ( sprintf("%04d%04d%s", $foc, $failing_test_count{$_}, $_) => [ $_ ] )
     } sort {
         $failing_test_count{$b} <=> $failing_test_count{$a}
     } keys %failing_test_count;
@@ -609,7 +612,7 @@ sub failures_matrix {
                     ? 0 + @{$pversions{$pversion}{$test}}
                     : '';
                 my %oses = map { ($_ => undef) } @{$pversions{$pversion}{$test}};
-                my $os = join(';', sort keys %oses);
+                my $os = join("\n", sort keys %oses);
 
                 push @{$matrix{$index}}, {cnt => $count, alt => $os};
             }
