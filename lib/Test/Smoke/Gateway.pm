@@ -15,7 +15,7 @@ has reports_per_page => (
     default => 25
 );
 
-our $VERSION = '0.09_01';
+our $VERSION = '0.09_02';
 
 =head1 NAME
 
