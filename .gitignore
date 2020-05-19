@@ -1,12 +1,14 @@
-*.swp
+.*.swp
 logs/
 local/
 nohup.out
 tags
 MANIFEST.bak
 CoreSmokeDB.sqlite
+*.sqlite
 MYMETA.*
 Makefile
 blib/
 pm_to_blib
 testout.xml
+cpanfile.snapshot
