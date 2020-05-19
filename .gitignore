@@ -5,3 +5,8 @@ nohup.out
 tags
 MANIFEST.bak
 CoreSmokeDB.sqlite
+MYMETA.*
+Makefile
+blib/
+pm_to_blib
+testout.xml
