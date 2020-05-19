@@ -149,10 +149,11 @@ get '/submatrix' => sub {
     header('content-type' => 'text/html');
     template(
         submatrix => {
-            reports  => $reports,
-            test     => $test,
-            version  => $Test::Smoke::Gateway::VERSION,
-            thisyear => 1900 + (localtime)[5],
+            reports    => $reports,
+            test       => $test,
+            web_source => config->{web_source},
+            version    => $Test::Smoke::Gateway::VERSION,
+            thisyear   => 1900 + (localtime)[5],
         }
     );
 };

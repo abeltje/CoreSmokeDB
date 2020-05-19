@@ -642,6 +642,8 @@ sub failures_submatrix {
 # make a float representation of a perl-version.
 sub _pversion {
     my ($perl_id) = @_;
+    return $perl_id if $perl_id =~ /\.\?/;
+
     my $rc = $perl_id =~ s/(?<rc>-RC[0-9]+)// ? $+{rc} : '';
     use version;
     return version->parse($perl_id)->numify . $rc;
