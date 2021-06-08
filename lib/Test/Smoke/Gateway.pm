@@ -339,6 +339,11 @@ sub get_reports_by_perl_version {
             $self->get_filter_query_report(\%$raw_filter),
         },
         {
+            columns  => [qw/
+                id architecture hostname osname osversion
+                perl_id git_id git_describe smoke_branch
+                username smoke_date summary cpu_count cpu_description
+            /],
             order_by => [qw/architecture hostname osname osversion/],
         }
     );
