@@ -78,6 +78,7 @@ sub api_get_reports_from_id {
         {
             order_by => { -asc => 'id' },
             rows     => $limit,
+            columns  => [ "id" ],
         }
     );
     return [map $_->id, $reports->all()];
