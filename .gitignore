@@ -12,3 +12,4 @@ blib/
 pm_to_blib
 testout.xml
 cpanfile.snapshot
+environments/dev.yml
