@@ -31,7 +31,7 @@ pipeline {
                     ]],
                     submoduleCfg: [],
                     userRemoteConfigs: [[
-                        credentialsId: '11da4872-4de5-40b3-903e-3789faf557eb',
+                        credentialsId: '6ad81623-70f5-4d1c-8631-9015178ff4c9',
                         url: 'ssh://git@source.test-smoke.org:9999/~/ztreet-configs'
                     ]]
                 ])
