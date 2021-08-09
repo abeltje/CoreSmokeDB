@@ -1,15 +1,14 @@
 Changes
 config.yml
 cpanfile
-cpanfile.snapshot
 dev-bin/coresmokedb-server.pl
 dev-bin/dump_as_sqlite.pl
+dev-bin/fetch-from-server.pl
 dev-bin/gwclient
 dev-bin/mktest-utf8.jsn
 dev-bin/test-utf8.pl
 environments/development.yml
-environments/smokedb.yml
-environments/test.yml
+Jenkinsfile
 lib/Test/Smoke/Gateway.pm
 lib/Test/Smoke/Gateway/Dancer.pm
 lib/Test/Smoke/Gateway/Schema.pm
@@ -43,6 +42,7 @@ support/upgradedb_1_to_2.sql
 t/000-basic.t
 t/100-result-config.t
 t/110-result-result.t
+t/500-failure-matrix.t
 t/data/mktest-mac.jsn
 t/data/mktest-ubuntu.jsn
 templates/latest.tt
@@ -50,6 +50,7 @@ templates/layouts/smokedb.tt
 templates/layouts/test-smoke.tt
 templates/list.tt
 templates/logfile.tt
+templates/matrix.tt
 templates/menu.tt
 templates/outfile.tt
 templates/rawjson.tt
@@ -58,6 +59,7 @@ templates/rawoutfile.tt
 templates/rawreport.tt
 templates/report.tt
 templates/search.tt
+templates/submatrix.tt
 tsgateway
 xt/00-compile.t
 xt/10-manifest.t

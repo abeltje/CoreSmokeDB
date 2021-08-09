@@ -9,3 +9,5 @@ MYMETA
 logs/
 tags
 testout.xml
+.*\.sqlite$
+environments/dev.yml
