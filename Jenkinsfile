@@ -66,7 +66,13 @@ rsync -e 'ssh -i /var/lib/jenkins/keys/pnl/id_rsa -l abeltje' -av deploy/ perl5s
             }
         }
         stage('DeployProduction') {
-            when { branch 'master' }
+            when {
+                //branch 'master'
+                expression {
+                    echo "BRANCH_NAME is ${scm.branches[0].name}"
+                    return scm.branches[0].name == "master"
+                }
+            }
             steps {
                 script {
                     def usrinput = input message: "Deploy or Abort ?", ok: "Deploy!"
