@@ -37,6 +37,8 @@ pipeline {
                 ])
                 sh 'cp -v configs/CoreSmokeDB/test.yml deploy/environments/'
                 sh 'cp -v configs/CoreSmokeDB/smokedb.yml deploy/environments/'
+                sh 'cp -v configs/CoreSmokeDB/preview.yml deploy/environments/'
+                sh 'cp -v configs/CoreSmokeDB/production.yml deploy/environments/'
                 sh 'chmod +x deploy/local/bin/*'
                 archiveArtifacts artifacts: 'deploy/**'
                 script {
