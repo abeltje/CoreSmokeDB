@@ -1,5 +1,6 @@
 requires "Daemon::Control"      => "0.00";
 requires "Starman"              => "0.40";
+requires "YAML"                 => "1.26";
 
 requires "DBD::Pg"              => "2.19.3";
 requires "Dancer"               => "1.31";
