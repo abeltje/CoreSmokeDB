@@ -61,7 +61,8 @@ pipeline {
                 sh 'chmod +x deploy/local/bin/*'
                 sh 'touch deploy/tsgateway'
                 sh '''
-rsync -e 'ssh -i /var/lib/jenkins/keys/pnl/id_rsa -l abeltje' -av deploy/ perl5smokedb.fritz.box:CoreSmokeDB.preview/
+/usr/bin/deploy -av deploy/ perl5smokedb.fritz.box:/var/lib/www/CoreSmokeDB.preview/
+/usr/bin/restart-remote perl5smokedb.fritz.box perl5smokedb-preview
 '''
             }
         }
