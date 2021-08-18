@@ -61,6 +61,7 @@ pipeline {
                 sh 'chmod +x deploy/local/bin/*'
                 sh 'touch deploy/tsgateway'
                 sh '''
+perl -wE 'say "".getpwuid $<'
 /usr/bin/deploy -av deploy/ perl5smokedb.fritz.box:/var/lib/www/CoreSmokeDB.preview/
 /usr/bin/restart-remote perl5smokedb.fritz.box perl5smokedb-preview
 '''
