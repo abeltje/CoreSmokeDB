@@ -60,11 +60,13 @@ pipeline {
 //                }
                 sh 'chmod +x deploy/local/bin/*'
                 sh 'touch deploy/tsgateway'
-                sh '''
+                sshagent('pnl_pnl') {
+                        sh '''
 perl -wE 'say "".getpwuid $<'
 /usr/bin/deploy -av deploy/ perl5smokedb.fritz.box:/var/lib/www/CoreSmokeDB.preview/
 /usr/bin/restart-remote perl5smokedb.fritz.box perl5smokedb-preview
-'''
+                        '''
+                }
             }
         }
         stage('DeployProduction') {
@@ -88,3 +90,5 @@ rsync -e 'ssh -i /var/lib/jenkins/keys/pnl/id_rsa -l abeltje' -av deploy/ perl5s
         }
     }
 }
+
+// # vim: expandtab shiftwidth=4 softtabstop=4
