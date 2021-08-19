@@ -60,7 +60,7 @@ pipeline {
 //                }
                 sh 'chmod +x deploy/local/bin/*'
                 sh 'touch deploy/tsgateway'
-                sshagent('pnl_pnl') {
+                sshagent('ssh-deploy') {
                         sh '''
 perl -wE 'say "".getpwuid $<'
 /usr/bin/deploy -av deploy/ perl5smokedb.fritz.box:/var/lib/www/CoreSmokeDB.preview/
