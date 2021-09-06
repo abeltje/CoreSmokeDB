@@ -1,7 +1,7 @@
 #! Groovy
 
 pipeline {
-    agent any
+    agent { label 'perl5smoke-builder' }
     stages {
         stage('Build_and_Test') {
             steps {
@@ -62,7 +62,6 @@ pipeline {
                 sh 'touch deploy/tsgateway'
                 sshagent(['ssh-deploy']) {
                         sh '''
-perl -wE 'say "".getpwuid $<'
 /usr/bin/deploy -av deploy/ perl5smokedb.fritz.box:/var/lib/www/CoreSmokeDB.preview/
 /usr/bin/restart-remote perl5smokedb.fritz.box perl5smokedb-preview
                         '''
