@@ -7,7 +7,7 @@ pipeline {
             steps {
                 script { echo "Building and testing branch: " + scm.branches[0].name }
                 sh 'carton install'
-                sh 'cpanm --notest -L local Test::NoWarnings Plack Daemon::Control Starman'
+                sh 'cpanm --notest -L local TAP::Formatter::JUnit Test::NoWarnings Plack Daemon::Control Starman'
                 sh 'prove -Ilocal/lib/perl5 --formatter=TAP::Formatter::JUnit --timer -wl t/ > testout.xml'
                 archiveArtifacts artifacts: 'local/**, lib/**, environments/**, config.yml, tsgateway, templates/**, public/**'
             }
