@@ -1,7 +1,7 @@
 #! Groovy
 
 pipeline {
-    agent { label 'perl5smoke-builder' }
+    agent { label 'perl5smokedb' }
     stages {
         stage('Build_and_Test') {
             steps {
