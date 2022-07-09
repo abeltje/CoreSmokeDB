@@ -1,875 +1,536 @@
-Changes on 2016-04-21 for repository at:
-  Fetch URL: git@github.com:abeltje/CoreSmokeDB
-  Push  URL: git@github.com:abeltje/CoreSmokeDB
+Changes on 2022-07-09 for repository at:
+  Fetch URL: git@github.com:abeltje/CoreSmokeDB.git
+  Push  URL: git@github.com:abeltje/CoreSmokeDB.git
 
 Enjoy!
 
-________________________________________________________________________________
-[8b312e0] by abeltje on Thu, 21 Apr 2016 16:50:54 +0100
+0.10 2022-07-09T14:27:38+02:00 (25b1e9b => Abe Timmerman)
+ - (Abe Timmerman, Sat, 9 Jul 2022 14:27:38 +0200) Autocommit for
+   distribution Test::Smoke::Gateway 0.10 (same)
 
-     Fix MANIFEST MANIFEST.SKIP
+0.09 2016-04-21T16:55:33+01:00 (5d65c18 => abeltje)
+ - (abeltje, Thu, 21 Apr 2016 16:55:33 +0100) Autocommit for distribution
+   Test::Smoke::Gateway 0.09 (same)
 
+ - (abeltje, Sun, 14 May 2017 18:19:01 +0200) Update the footer #PTS2017
 
-M	MANIFEST
-M	MANIFEST.SKIP
-________________________________________________________________________________
-[5f251d2] by abeltje on Thu, 21 Apr 2016 16:09:58 +0100
+ - (abeltje, Mon, 23 Oct 2017 21:32:56 +0200) Add some tests.
 
-     Add init-like script to easily start/stop the daemon.
+ - (abeltje, Mon, 23 Oct 2017 21:48:13 +0200) New Dumper-script to copy a
+   number of reports to a sqlite-db
+ -     The script copies number of reports from the pg-database to a
+ -     sqlite-database.
+ -     All test/development environments should use the sqlite database.
 
-        This helps development.
+ - (abeltje, Mon, 23 Oct 2017 21:59:13 +0200) Add 'Template' to the
+   dependencies
 
+ - (abeltje, Tue, 24 Oct 2017 00:45:03 +0200) Merge stuff
 
-M	cpanfile
-M	cpanfile.snapshot
-A	dev-bin/coresmokedb-server.pl
-________________________________________________________________________________
-[b388fe7] by abeltje on Thu, 21 Apr 2016 12:48:05 +0100
+ - (abeltje, Tue, 24 Oct 2017 00:47:22 +0200) Fix dsn for test-environment
 
-     Add DBD::Pg and DBD::SQLite to cpanfile
+ - (abeltje, Sun, 11 Mar 2018 10:48:05 +0100)
+   https://github.com/abeltje/CoreSmokeDB/issues/5
+ -     Temporary fix for the problem. I need to check out if the data is
+ -     correctly in the database. If so, check the way we get it out again.
 
+ - (Abe Timmerman, Sun, 11 Mar 2018 10:14:45 +0000) Minor changes for
+   running in the new production environment.
 
-M	cpanfile
-M	cpanfile.snapshot
-________________________________________________________________________________
-[a8b0e53] by abeltje on Thu, 21 Apr 2016 11:45:01 +0100
+ - (Abe Timmerman, Sun, 11 Mar 2018 10:15:33 +0000) Merge remote-tracking
+   branch 'origin/master'
 
-     Rework GUI for better choice of filters by rilonl
+ - (abeltje, Sat, 17 Mar 2018 10:10:53 +0100) Fix meta-files, now the
+   complete test-suite runs again
 
-        Richard (rilonl) redesigned the filter inputs on the website. He
-        also fixed the gradient and the logo. Thanks Richard van Lochem for
-        that work!
+ - (abeltje, Sat, 17 Mar 2018 10:11:42 +0100) Add 'branch' column to the
+   list of reports
+ -	   https://github.com/abeltje/CoreSmokeDB/issues/6
 
+ - (abeltje, Sat, 17 Mar 2018 11:42:24 +0100) Move to Jenkins building and
+   deploying
 
-A	.gitattributes
-M	.gitignore
-M	MANIFEST
-A	MANIFEST.SKIP
-A	cpanfile
-A	cpanfile.snapshot
-M	environments/development.yml
-M	lib/Test/Smoke/Gateway.pm
-M	lib/Test/Smoke/Gateway/Dancer.pm
-M	lib/Test/Smoke/Gateway/Schema.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Report.pm
-M	public/css/smokedb.css
-A	public/images/bluesmoke.gif
-A	public/images/bluesmoke.xcf
-A	public/images/onion.png
-A	public/images/smoking_union.gif
-M	public/images/smoking_union.png
-M	t/000-basic.t
-A	t/data/mktest-mac.jsn
-A	t/data/mktest-ubuntu.jsn
-M	templates/layouts/smokedb.tt
-M	templates/search.tt
-M	tsgateway
-________________________________________________________________________________
-[4484222] by abeltje on Fri, 21 Aug 2015 11:28:35 +0200
+ - (abeltje, Sat, 17 Mar 2018 12:01:40 +0100) Fix Jenkinsfile
+ -	   shell quoting
 
-     Add new call /api/reports_from_id/:id
+ - (abeltje, Sat, 17 Mar 2018 12:01:40 +0100) Fix Jenkinsfile
+ -	   shell quoting
 
-        It supports an optional ?limit=<n> that defaults to 100. This call
-        was requested by TonyC on #smoke (irc.perl.org)
+ - (abeltje, Sun, 22 Apr 2018 13:39:14 +0200) Introduce '/matrix' and
+   '/submatrix'
+ -     This new feature shows failing tests grouped by perl-versions.
 
+ - (abeltje, Sun, 22 Apr 2018 13:55:40 +0200) Merge branch 'preview' of
+   github.com:abeltje/CoreSmokeDB into HEAD
 
-M	environments/development.yml
-M	lib/Test/Smoke/Gateway.pm
-M	lib/Test/Smoke/Gateway/Dancer.pm
-________________________________________________________________________________
-[06fd6ed] by abeltje on Fri, 8 May 2015 13:50:07 +0200
+ - (abeltje, Sun, 22 Apr 2018 14:10:06 +0200) More fiddle-ing with
+   Jenkinfile...
 
-     Autocommit for distribution Test::Smoke::Gateway 0.08 (minor)
+ - (abeltje, Sun, 22 Apr 2018 14:26:44 +0200) AAAAARGH Jenkinsfile
 
+ - (abeltje, Sun, 22 Apr 2018 14:35:15 +0200) AAAAARGH! Jenkinsfile
+   debuggin
 
-M	Changes
-M	lib/Test/Smoke/Gateway.pm
-________________________________________________________________________________
-[c3c4330] by abeltje on Fri, 8 May 2015 13:42:59 +0200
+ - (abeltje, Sun, 22 Apr 2018 14:40:36 +0200) AAAAARGH! Jenkinsfile
+   debuggin
 
-     Fix: get_reports_by_filter
+ - (abeltje, Tue, 24 Apr 2018 16:59:24 +0200) Don't try to call methods on
+   undefined.
+ -     In case a report-id doesn't appear to be in the database, show an
+ -     error-title, don't try to call the title method on an undefined
+   thing.
 
-        One report has_many()-configs, so if we join, we need to add
-        distinct.
+ - (abeltje, Tue, 24 Apr 2018 19:00:19 +0200) redirect should have a
+   fqd-url
+ -     revert "fix" that used redirect() where forward() was the right
+   thing to
+ -     do
 
+ - (Abe Timmerman, Tue, 19 May 2020 15:38:36 +0200) Pending changes for
+   building
 
-M	lib/Test/Smoke/Gateway.pm
-________________________________________________________________________________
-[9d859d2] by Abe Timmerman on Tue, 5 May 2015 16:14:37 +0200
+ - (Abe Timmerman, Tue, 19 May 2020 20:45:10 +0200) CoreSmokeDB-issue#9:
+   fix links to show commits
+ -     Deal with: https://github.com/abeltje/CoreSmokeDB/issues/9
 
-     BUGFIX: the "Latest only" button didn't work
+ - (Abe Timmerman, Tue, 19 May 2020 20:57:14 +0200) Merge pull request #10
+   from abeltje/fix/source-lives-on-github-now
+ -     fix/source_lives_on_GitHub_now
 
-        At least not correctley :)
+ - (Abe Timmerman, Tue, 8 Jun 2021 19:21:14 +0200) Optimise query for
+   fetching reports
+ -     We don't need all the fields from the report for the overviews, we
+   just
+ -     don't fetch the (sometimes) "heavy" message-fields.
 
+ - (Tony Cook, Wed, 9 Jun 2021 19:49:44 +1000) only fetch the id when
+   handling /api/reports_from_id/
+ -     It means we're not loading potentially large logs into memory too.
+ -     untested.
 
-M	lib/Test/Smoke/Gateway.pm
-M	start-coresmokedb-daemon.sh
-________________________________________________________________________________
-[4920e72] by Abe Timmerman on Tue, 5 May 2015 15:09:38 +0200
+ - (Abe Timmerman, Thu, 24 Jun 2021 23:54:46 +0200) Merge branch
+   'tonycoz-patch-1' into fix/slow_query
 
-     Autocommit for distribution Test::Smoke::Gateway 0.07 (minor)
+ - (Abe Timmerman, Thu, 1 Jul 2021 22:19:56 +0200) Add a dev-environment to
+   .gitignore
 
+ - (Abe Timmerman, Mon, 9 Aug 2021 18:57:23 +0200) Start experimenting with
+   the build-process on Jenkins
 
-M	Changes
-M	lib/Test/Smoke/Gateway.pm
-________________________________________________________________________________
-[d56ce55] by Abe Timmerman on Tue, 5 May 2015 15:03:42 +0200
+ - (Abe Timmerman, Mon, 9 Aug 2021 19:14:45 +0200) Different credentialsId
 
-     Make distribution-ish
+ - (Abe Timmerman, Mon, 9 Aug 2021 19:58:23 +0200) More quoting in the
+   Jenkinsfile
 
-        Create a working testsuite with xt/ tests, MANIFEST etc
+ - (Abe Timmerman, Mon, 9 Aug 2021 21:10:08 +0200) More environments to
+   provide for CoreSmokeDB
 
+ - (Abe Timmerman, Mon, 9 Aug 2021 21:29:25 +0200) Need more dependencies
+   in `cpanfile`
 
-A	Changes
-A	MANIFEST
-M	Makefile.PL
-M	lib/Test/Smoke/Gateway/Schema.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Report.pm
-M	t/000-basic.t
-A	xt/00-compile.t
-A	xt/10-manifest.t
-________________________________________________________________________________
-[3d9fc7b] by abeltje on Tue, 5 May 2015 16:43:58 +0200
+ - (Abe Timmerman, Mon, 9 Aug 2021 21:49:28 +0200) Make rsync be less
+   verbose..
 
-     Merge remote-tracking branch 'origin/master' into add_date_to_report
+ - (Abe Timmerman, Mon, 9 Aug 2021 22:24:50 +0200) `branch` doesn't seem to
+   work, try what is in preview
 
-        Conflicts:
-        .gitignore
+ - (Abe Timmerman, Thu, 19 Aug 2021 00:14:59 +0200) Try the new deployment
+   stuff for preview
 
-________________________________________________________________________________
-[515a7ed] by abeltje on Tue, 5 May 2015 16:37:33 +0200
+ - (Abe Timmerman, Thu, 19 Aug 2021 00:57:54 +0200) Add some debugging
+   info...
 
-     Features: timestamp in report, select by CCompiler
+ - (Abe Timmerman, Thu, 19 Aug 2021 02:01:19 +0200) New Jenkins-plugin
+   SSH-agent that should help
 
-        TonyC requested the smoke-timestamp in the report Tux wanted to
-        select reports by c-compiler; this only works for the list-reports
-        button.
+ - (Abe Timmerman, Thu, 19 Aug 2021 02:13:36 +0200) new ssh-credentials for
+   Jenkins
 
+ - (Abe Timmerman, Thu, 19 Aug 2021 02:21:18 +0200) Groovy... maybe one day
 
-M	.gitignore
-M	lib/Test/Smoke/Gateway.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Config.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Report.pm
-A	start-coresmokedb-daemon.sh
-M	templates/layouts/smokedb.tt
-M	templates/rawreport.tt
-M	templates/search.tt
-________________________________________________________________________________
-[d6c6c12] by Abe Timmerman on Sun, 19 Apr 2015 16:39:17 +0200
+ - (Abe Timmerman, Mon, 6 Sep 2021 20:35:22 +0200) Buildmachine ==
+   Runmachine
+ -     By building on the machine we also run on, we know deployment is
+   going
+ -     to work.
+
+ - (Abe Timmerman, Mon, 6 Sep 2021 20:48:02 +0200) Get that build-label
+   right
 
-    
-        "Release" of TSG 0.06
-
-
-M	lib/Test/Smoke/Gateway.pm
-________________________________________________________________________________
-[6ac242f] by abeltje on Sun, 19 Apr 2015 15:59:45 +0200
-
-     Fix utf8 problem with encoding.
-
-        This fixes RT#90251 from the Test::Smoke Queue.
-
-
-M	.gitignore
-A	dev-bin/mktest-utf8.jsn
-A	dev-bin/test-utf8.pl
-M	lib/Test/Smoke/Gateway.pm
-M	lib/Test/Smoke/Gateway/Dancer.pm
-________________________________________________________________________________
-[fcc7524] by abeltje on Sun, 19 Apr 2015 15:59:45 +0200
-
-     Fix utf8 problem with encoding.
-
-        This fixes RT#90251 from the Test::Smoke Queue.
-
-
-M	.gitignore
-A	dev-bin/mktest-utf8.jsn
-A	dev-bin/test-utf8.pl
-M	lib/Test/Smoke/Gateway.pm
-M	lib/Test/Smoke/Gateway/Dancer.pm
-________________________________________________________________________________
-[63f9215] by abeltje on Sun, 19 Apr 2015 13:19:47 +0200
-
-     Merge remote-tracking branch 'origin/master' into AddNonfatalmsg
-
-________________________________________________________________________________
-[400808c] by Abe Timmerman on Sun, 19 Apr 2015 13:02:20 +0200
-
-     Berlin2015: minor addition in the report
-
-        And thank the Berlin organizers for #perlqah2015
-
-
-M	templates/layouts/smokedb.tt
-M	templates/layouts/test-smoke.tt
-M	templates/rawreport.tt
-________________________________________________________________________________
-[8313cdc] by Abe Timmerman on Sat, 18 Apr 2015 06:37:04 +0200
-
-     Upgrade the database/API to Version 2
-
-        We 've added a new field to the report: nonfatal_msgs
-
-
-M	lib/Test/Smoke/Gateway.pm
-M	lib/Test/Smoke/Gateway/Schema.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Report.pm
-A	support/upgradedb_1_to_2.sql
-________________________________________________________________________________
-[f888633] by Abe Timmerman on Mon, 17 Mar 2014 12:24:35 +0100
-
-     Use Dancer::Plugin::DBIC to handle the database connection.
-
-
-M	environments/development.yml
-M	environments/smokedb.yml
-M	environments/test.yml
-M	lib/Test/Smoke/Gateway.pm
-M	lib/Test/Smoke/Gateway/Dancer.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Config.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/FailureForEnv.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Report.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Result.pm
-M	support/mk_schema.pl
-M	tsgateway
-________________________________________________________________________________
-[30892f0] by Abe Timmerman on Sun, 16 Mar 2014 14:01:47 +0100
-
-     Add tribute to the hackathons at Lancaster and Lyon.
-
-
-M	templates/layouts/smokedb.tt
-M	templates/layouts/test-smoke.tt
-________________________________________________________________________________
-[b12704a] by Abe Timmerman on Sun, 16 Mar 2014 12:52:52 +0100
-
-     Fix report posting with utf-8 characters in them.
-
-
-M	lib/Test/Smoke/Gateway/Dancer.pm
-________________________________________________________________________________
-[0f82ab3] by Abe Timmerman on Fri, 3 May 2013 16:22:16 +0200
-
-     Make the foreing keys in the database 'on delete cascade' for
-        development.
-
-        !!!Should not be run on production!!!
-
-
-M	support/create_db.sql
-A	support/delete_cascade.sql
-________________________________________________________________________________
-[8f46704] by Abe Timmerman on Thu, 2 May 2013 14:14:36 +0200
-
-     Merge branch 'with_smoke_branch' of
-        ssh://github.com/abeltje/CoreSmokeDB into with_smoke_branch
-
-        Conflicts:
-        lib/Test/Smoke/Gateway/Schema.pm
-        support/upgradedb_0_to_1.sql
-
-________________________________________________________________________________
-[2644767] by Abe Timmerman on Thu, 2 May 2013 14:04:39 +0200
-
-     Add new field 'smoke_branch' to the 'report' table and introduce
-        versioning.
-         We now have Software- and database versioning, they must be equal
-         The database version is kept in the new tsgateway_config table
-         support/ has an sql to "upgrade" the database
-         Use the new report.smoke_branch data in the report
-
-
-A	.gitignore
-M	lib/Test/Smoke/Gateway/Schema.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Report.pm
-A	lib/Test/Smoke/Gateway/Schema/Result/TsgatewayConfig.pm
-M	support/mk_schema.pl
-A	support/upgradedb_0_to_1.sql
-M	templates/rawreport.tt
-________________________________________________________________________________
-[fc65513] by Abe Timmerman on Wed, 1 May 2013 23:39:34 +0200
-
-     Add new field 'smoke_branch' to the 'report' table and introduce
-        versioning.
-         We now have Software- and database versioning, they must be equal
-         The database version is kept in the new tsgateway_config table
-         support/ has an sql to "upgrade" the database
-         Use the new report.smoke_branch data in the report
-
-
-A	.gitignore
-M	lib/Test/Smoke/Gateway/Schema.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Report.pm
-A	lib/Test/Smoke/Gateway/Schema/Result/TsgatewayConfig.pm
-A	support/upgradedb_0_to_1.sql
-M	templates/rawreport.tt
-________________________________________________________________________________
-[96d095f] by Abe Timmerman on Wed, 1 May 2013 15:52:53 +0200
-
-     Add function to the database that makes a float of the perlversion. Use
-        the new database function to order the perlversions for the
-        frontend.
-
-
-M	lib/Test/Smoke/Gateway.pm
-A	support/perlversion_float.sql
-________________________________________________________________________________
-[0c3e704] by abeltje on Tue, 7 Aug 2012 15:31:38 +0000
-
-    
-        * [CHANGE]
-         + move the 'use Try::Tiny;' line from script to module (where it
-        should have been).
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@133
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	lib/Test/Smoke/Gateway/Dancer.pm
-M	tsgateway
-________________________________________________________________________________
-[572f75d] by abeltje on Tue, 10 Jul 2012 20:46:15 +0000
-
-    
-        * [CHANGE]
-         + Fix the paging for report lists
-         + Add 'test' to the environments (smokedb style, but develop db
-        connection)
-         + Add an outfile link to the reports, if in the db
-         + Smaller font in the report-list table
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@131
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-A	environments/test.yml
-M	lib/Test/Smoke/Gateway.pm
-M	lib/Test/Smoke/Gateway/Dancer.pm
-M	public/css/smokedb.css
-M	public/css/tslayout.css
-M	templates/report.tt
-M	templates/search.tt
-________________________________________________________________________________
-[d4a3f6e] by abeltje on Sun, 8 Jul 2012 09:45:24 +0000
-
-    
-        * [CHANGE]
-         + Up the version to 0.04.
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@130
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	lib/Test/Smoke/Gateway.pm
-________________________________________________________________________________
-[708c9c1] by abeltje on Sun, 8 Jul 2012 09:27:09 +0000
-
-    
-        * [CHANGE]
-         + Change the development port to 3030
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@129
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	environments/development.yml
-________________________________________________________________________________
-[2489137] by abeltje on Sun, 8 Jul 2012 09:23:47 +0000
-
-    
-        * [CHANGE]
-         + Move the dancer-routes to a seperate module.
-         + Move the database-connection-data to the config
-         + Add 'user_note' to the report
-         + Add 'outfile' view
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@128
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	environments/development.yml
-M	environments/smokedb.yml
-A	lib/Test/Smoke/Gateway/Dancer.pm
-A	templates/outfile.tt
-A	templates/rawoutfile.tt
-M	templates/rawreport.tt
-M	tsgateway
-________________________________________________________________________________
-[f2b73e7] by abeltje on Sun, 29 Apr 2012 08:10:46 +0000
-
-    
-        * [CHANGE]
-         - fix paging
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@125
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	lib/Test/Smoke/Gateway.pm
-M	templates/search.tt
-________________________________________________________________________________
-[1c41259] by abeltje on Sun, 22 Apr 2012 18:42:38 +0000
-
-    
-        * [CHANGE]
-         - introduced multiple environments (layouts)
-           + test-smoke (development)
-           + smokedb    (smokedb/production)
-         - move gwclient from bin/ to dev-bin/
-         - rework the /api/ calls
-           + return data structure from the code
-           + jsonize just before sending the data
-         - catch 'duplicate key' errors from post_report
-         - return simple json from POST '/report'
-           + {"error" : "<error string>"}
-           + {"id" : "<report-id>"}
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@124
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-D	bin/gwclient
-M	config.yml
-A	dev-bin/gwclient
-A	environments/development.yml
-A	environments/smokedb.yml
-M	lib/Test/Smoke/Gateway.pm
-A	public/css/smokedb.css
-A	public/images/smoking_union.png
-A	templates/layouts/smokedb.tt
-M	templates/layouts/test-smoke.tt
-A	templates/menu.tt
-M	templates/search.tt
-M	tsgateway
-________________________________________________________________________________
-[a401ca6] by abeltje on Fri, 6 Apr 2012 12:57:52 +0000
-
-    
-        * [CHANGE]
-         - Fix filter for report-list
-         - change some columns for report-list
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@123
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	lib/Test/Smoke/Gateway.pm
-M	templates/latest.tt
-M	templates/list.tt
-________________________________________________________________________________
-[1bb0808] by abeltje on Fri, 6 Apr 2012 10:58:09 +0000
-
-    
-        * [CHANGE]
-         - Implement a toggle between report and logfile.
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@122
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-A	templates/logfile.tt
-A	templates/rawlogfile.tt
-A	templates/rawreport.tt
-M	templates/report.tt
-M	tsgateway
-________________________________________________________________________________
-[a1244a1] by abeltje on Fri, 6 Apr 2012 10:39:24 +0000
-
-    
-        * [CHANGE]
-         - api_get_reports_from_date() now also supports anything that
-        Date::Parse understands.
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@121
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	lib/Test/Smoke/Gateway.pm
-________________________________________________________________________________
-[e9395be] by abeltje on Fri, 6 Apr 2012 09:51:50 +0000
-
-    
-        * [CHANGE]
-         - add template for raw json
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@120
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	bin/gwclient
-A	templates/rawjson.tt
-________________________________________________________________________________
-[24ffa4b] by abeltje on Fri, 6 Apr 2012 09:48:59 +0000
-
-    
-        * [CHANGE]
-         + Add 2 new calls:
-           - /api/reports_from_date/$epoch
-           - /api/report_data/$id
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@119
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	lib/Test/Smoke/Gateway.pm
-M	tsgateway
-________________________________________________________________________________
-[362133e] by abeltje on Tue, 3 Apr 2012 19:45:04 +0000
-
-    
-        * [FIX]
-         - some minor fixes
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@118
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	lib/Test/Smoke/Gateway.pm
-________________________________________________________________________________
-[06f75e0] by abeltje on Mon, 2 Apr 2012 20:40:51 +0000
-
-    
-        * [CHANGE]
-         - Added interface for list reports by date
-         - Added interface for list reports by perlversion
-         - Made the stylesheet a bit more flexible
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@117
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	bin/gwclient
-M	lib/Test/Smoke/Gateway.pm
-M	lib/Test/Smoke/Gateway/Schema.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Config.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Failure.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/FailureForEnv.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Report.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Result.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/SmokeConfig.pm
-M	public/css/tslayout.css
-M	support/mk_schema.pl
-A	templates/latest.tt
-M	templates/layouts/test-smoke.tt
-A	templates/list.tt
-M	templates/search.tt
-M	tsgateway
-________________________________________________________________________________
-[0b5f7a6] by abeltje on Mon, 2 Apr 2012 07:27:55 +0000
-
-    
-        * [FIX]
-         - remove no longer needed field 'output' from table 'result'
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@116
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	support/create_db.sql
-________________________________________________________________________________
-[5729b23] by abeltje on Mon, 2 Apr 2012 07:15:50 +0000
-
-    
-        * [FIX]
-         - forgot to add the field 'user_note' to the report table
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@115
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	support/create_db.sql
-________________________________________________________________________________
-[430df8e] by abeltje on Mon, 2 Apr 2012 06:54:15 +0000
-
-    
-        * [CHANGE]
-         - Give the webapp the Test-Smoke.org face for now
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@114
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	config.yml
-A	public/css/tslayout.css
-A	public/favicon.ico
-A	public/images/ts-logo.gif
-A	templates/layouts/test-smoke.tt
-M	templates/report.tt
-A	templates/search.tt
-M	tsgateway
-________________________________________________________________________________
-[6f03104] by abeltje on Mon, 2 Apr 2012 06:51:52 +0000
-
-    
-        * [CHANGE]
-         - Extended the data model:
-           + each failing (or passing todo) test is registered individually
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@113
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	lib/Test/Smoke/Gateway.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Config.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Failure.pm
-A	lib/Test/Smoke/Gateway/Schema/Result/FailureForEnv.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Report.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Result.pm
-M	support/create_db.sql
-________________________________________________________________________________
-[7a82656] by abeltje on Fri, 30 Mar 2012 16:09:59 +0000
-
-    
-        *[CHANGE]
-         - Change the database-structure:
-           + move the cc information from config to result
-           + add a table for the individual tests
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@112
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	lib/Test/Smoke/Gateway/Schema/Result/Config.pm
-A	lib/Test/Smoke/Gateway/Schema/Result/Failure.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Report.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Result.pm
-M	support/create_db.sql
-M	support/create_db.sqlite
-________________________________________________________________________________
-[5c53634] by abeltje on Tue, 16 Aug 2011 10:39:23 +0000
-
-    
-        [CHANGE]
-         * FIX typo in new field name, regenerate schema.
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@107
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	lib/Test/Smoke/Gateway/Schema/Result/Report.pm
-M	support/create_db.sql
-________________________________________________________________________________
-[fdef87e] by abeltje on Tue, 16 Aug 2011 10:29:24 +0000
-
-    
-        [CHANGE]
-         * Add new fields to the report table and regenerate the schema.
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@106
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	lib/Test/Smoke/Gateway/Schema/Result/Report.pm
-M	support/create_db.sql
-________________________________________________________________________________
-[78e2b8f] by abeltje on Tue, 16 Aug 2011 10:00:42 +0000
-
-    
-        [CHANGE]
-         * Add new subkey 'report' to flatten-out in the report-table
-         * Add the version key to pass to the report template
-         * Fiddle with the report template
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@105
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	lib/Test/Smoke/Gateway.pm
-M	templates/report.tt
-M	tsgateway
-________________________________________________________________________________
-[e09fb6f] by abeltje on Mon, 15 Aug 2011 13:54:33 +0000
-
-    
-        [CHANGE]
-         * Fix typo
-         * forgot to check in the sql-file
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@104
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	lib/Test/Smoke/Gateway.pm
-M	support/create_db.sql
-________________________________________________________________________________
-[993abfa] by abeltje on Mon, 15 Aug 2011 13:47:13 +0000
-
-    
-        [CHANGE]
-        * make a database field not nullable so we can find()
-        * regenerate the Schema.
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@103
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	lib/Test/Smoke/Gateway.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Config.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Report.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Result.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/SmokeConfig.pm
-________________________________________________________________________________
-[07427ba] by abeltje on Wed, 4 May 2011 09:08:08 +0000
-
-    
-        * [CHANGE]
-         + Add a very simple client-script
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@102
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-A	bin/gwclient
-________________________________________________________________________________
-[4dd5557] by abeltje on Sat, 30 Apr 2011 22:02:21 +0000
-
-    
-        * [CHANGE]
-         * More detail in the returned report
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@101
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	templates/report.tt
-________________________________________________________________________________
-[7b3eacf] by abeltje on Sat, 30 Apr 2011 21:38:14 +0000
-
-    
-        * [CHANGE]
-         * Set the content-type header to text/plain
-         * More detail in the returned report
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@100
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	templates/report.tt
-M	tsgateway
-________________________________________________________________________________
-[d892122] by abeltje on Sat, 30 Apr 2011 21:02:22 +0000
-
-    
-        * [CHANGE]
-         * regenerate the schema files from the postgres database
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@99
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	lib/Test/Smoke/Gateway/Schema.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Config.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Report.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/Result.pm
-M	lib/Test/Smoke/Gateway/Schema/Result/SmokeConfig.pm
-M	support/create_db.sql
-________________________________________________________________________________
-[da6f090] by abeltje on Sat, 30 Apr 2011 12:27:30 +0000
-
-    
-        * [CHANGE]
-         - Change the dsn to the postgresql database on gromit
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@98
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	support/mk_schema.pl
-________________________________________________________________________________
-[60b1fe5] by abeltje on Sat, 30 Apr 2011 09:39:01 +0000
-
-    
-        * [CHANGE]
-         + Add the DBIx::Class schema files
-         + Add the code to handle the http-routes
-         + Add sql to create the database, script to generate DBIx::Class
-        stuff
-         + Add a base template for a report
-         + Add the actual gateway webapp program
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@97
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-M	Makefile.PL
-A	config.yml
-M	lib/Test/Smoke/Gateway.pm
-A	lib/Test/Smoke/Gateway/Schema.pm
-A	lib/Test/Smoke/Gateway/Schema/Result/Config.pm
-A	lib/Test/Smoke/Gateway/Schema/Result/Report.pm
-A	lib/Test/Smoke/Gateway/Schema/Result/Result.pm
-A	lib/Test/Smoke/Gateway/Schema/Result/SmokeConfig.pm
-M	support/create_db.sql
-A	support/create_db.sqlite
-A	support/mk_schema.pl
-A	templates/report.tt
-A	tsgateway
-________________________________________________________________________________
-[4382d27] by abeltje on Mon, 18 Apr 2011 10:19:36 +0000
-
-    
-        * [CHANGE]
-         + Add the first files to this repository
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@96
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-
-A	Makefile.PL
-A	lib/Test/Smoke/Gateway.pm
-A	support/create_db.sql
-A	t/000-basic.t
-________________________________________________________________________________
-[450318d] by abeltje on Mon, 18 Apr 2011 09:08:32 +0000
-
-    
-        * [CHANGE]
-         * rename the repo, I'm going to call the module
-        Test::Smoke::Gateway
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@95
-        03e79c58-f747-0410-a819-f71e7ca513d9
-
-________________________________________________________________________________
-[55633ee] by abeltje on Mon, 18 Apr 2011 09:04:42 +0000
-
-    
-        * [CHANGE]
-         + Create a new repository for: Test::Smoke::Gateway
-
-         git-svn-id:
-        https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-MBGate@94
-        03e79c58-f747-0410-a819-f71e7ca513d9
+ - (Abe Timmerman, Mon, 6 Sep 2021 21:29:06 +0200) Jenkins likes
+   testresults as XUnit
+
+ - (Abe Timmerman, Wed, 8 Sep 2021 19:41:19 +0200) replace rsync with
+   deploy
+
+ - (Abe Timmerman, Sat, 9 Jul 2022 11:55:34 +0200) Add a filter for the
+   Branches
+ -	  Bram | abeltje: Can a link to http://perl.develop-help.com/ be
+   added somewhere on			 â
+ -	       | https://perl5.test-smoke.org/ ?
+ -	       | (and/or a filter on 'branch' added in the search?)
+ -     abeltje | hi Bram, I'm open to suggestions in the form of a PR
+   (https://github.com/abeltje/CoreSmokeDB)
+ -	       | for the first-one; I'll have a look into the second-one
+
+ - (Abe Timmerman, Sat, 9 Jul 2022 12:54:26 +0200) Sort the list of
+   branches
+
+ - (Abe Timmerman, Sat, 9 Jul 2022 13:13:18 +0200) Deploy under the
+   ssh-agent set up for this
+ -     I had fixed it for preview, but not for production
+
+ - (Abe Timmerman, Sat, 9 Jul 2022 14:22:48 +0200) Small updates so it runs
+   easier
+
+ - (Abe Timmerman, Sat, 9 Jul 2022 14:23:46 +0200) New laptop, lazy
+   location...
+
+ - (Abe Timmerman, Sat, 9 Jul 2022 14:26:37 +0200) Update MANIFEST.SKIP
+
+0.08 2015-05-08T13:50:07+02:00 (06fd6ed => abeltje)
+ - (abeltje, Fri, 8 May 2015 13:50:07 +0200) Autocommit for distribution
+   Test::Smoke::Gateway 0.08 (minor)
+
+ - (abeltje, Fri, 21 Aug 2015 11:28:35 +0200) Add new call
+   /api/reports_from_id/:id
+ -     It supports an optional ?limit=<n> that defaults to 100. This call
+   was
+ -     requested by TonyC on #smoke (irc.perl.org)
+
+ - (abeltje, Thu, 21 Apr 2016 11:45:01 +0100) Rework GUI for better choice
+   of filters by rilonl
+ -     Richard (rilonl) redesigned the filter inputs on the website.
+ -     He also fixed the gradient and the logo.
+ -     Thanks Richard van Lochem for that work!
+
+ - (abeltje, Thu, 21 Apr 2016 12:48:05 +0100) Add DBD::Pg and DBD::SQLite
+   to cpanfile
+
+ - (abeltje, Thu, 21 Apr 2016 16:09:58 +0100) Add init-like script to
+   easily start/stop the daemon.
+ -     This helps development.
+
+ - (abeltje, Thu, 21 Apr 2016 16:50:54 +0100) Fix MANIFEST MANIFEST.SKIP
+
+0.07 2015-05-05T15:09:38+02:00 (4920e72 => Abe Timmerman)
+ - (Abe Timmerman, Tue, 5 May 2015 15:09:38 +0200) Autocommit for
+   distribution Test::Smoke::Gateway 0.07 (minor)
+
+ - (Abe Timmerman, Tue, 5 May 2015 16:14:37 +0200) BUGFIX: the "Latest
+   only" button didn't work
+ -     At least not correctley :)
+
+ - (abeltje, Fri, 8 May 2015 13:42:59 +0200) Fix: get_reports_by_filter
+ -     One report has_many()-configs, so if we join, we need to add
+   distinct.
+
+0.00_00 2011-04-18T09:04:42+00:00 (55633ee => abeltje)
+ - (abeltje, Mon, 18 Apr 2011 09:04:42 +0000) * [CHANGE]
+ -	 Create a new repository for: Test::Smoke::Gateway
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-MBGate@94
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Mon, 18 Apr 2011 09:08:32 +0000) * [CHANGE]
+ -	 rename the repo, I'm going to call the module Test::Smoke::Gateway
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@95
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Mon, 18 Apr 2011 10:19:36 +0000) * [CHANGE]
+ -	 Add the first files to this repository
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@96
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Sat, 30 Apr 2011 09:39:01 +0000) * [CHANGE]
+ -	 Add the DBIx::Class schema files
+ -	 Add the code to handle the http-routes
+ -	 Add sql to create the database, script to generate DBIx::Class
+   stuff
+ -	 Add a base template for a report
+ -	 Add the actual gateway webapp program
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@97
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Sat, 30 Apr 2011 12:27:30 +0000) * [CHANGE]
+ -	 - Change the dsn to the postgresql database on gromit
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@98
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Sat, 30 Apr 2011 21:02:22 +0000) * [CHANGE]
+ -	 regenerate the schema files from the postgres database
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@99
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Sat, 30 Apr 2011 21:38:14 +0000) * [CHANGE]
+ -	 Set the content-type header to text/plain
+ -	 More detail in the returned report
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@100
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Sat, 30 Apr 2011 22:02:21 +0000) * [CHANGE]
+ -	 More detail in the returned report
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@101
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Wed, 4 May 2011 09:08:08 +0000) * [CHANGE]
+ -	 Add a very simple client-script
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@102
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Mon, 15 Aug 2011 13:47:13 +0000) [CHANGE]
+ -     make a database field not nullable so we can find()
+ -     regenerate the Schema.
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@103
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Mon, 15 Aug 2011 13:54:33 +0000) [CHANGE]
+ -	 Fix typo
+ -	 forgot to check in the sql-file
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@104
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Tue, 16 Aug 2011 10:00:42 +0000) [CHANGE]
+ -	 Add new subkey 'report' to flatten-out in the report-table
+ -	 Add the version key to pass to the report template
+ -	 Fiddle with the report template
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@105
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Tue, 16 Aug 2011 10:29:24 +0000) [CHANGE]
+ -	 Add new fields to the report table and regenerate the schema.
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@106
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Tue, 16 Aug 2011 10:39:23 +0000) [CHANGE]
+ -	 FIX typo in new field name, regenerate schema.
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@107
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Fri, 30 Mar 2012 16:09:59 +0000) *[CHANGE]
+ -	 - Change the database-structure:
+ -	   move the cc information from config to result
+ -	   add a table for the individual tests
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@112
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Mon, 2 Apr 2012 06:51:52 +0000) * [CHANGE]
+ -	 - Extended the data model:
+ -	   each failing (or passing todo) test is registered individually
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@113
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Mon, 2 Apr 2012 06:54:15 +0000) * [CHANGE]
+ -	 - Give the webapp the Test-Smoke.org face for now
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@114
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Mon, 2 Apr 2012 07:15:50 +0000) * [FIX]
+ -	 - forgot to add the field 'user_note' to the report table
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@115
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Mon, 2 Apr 2012 07:27:55 +0000) * [FIX]
+ -	 - remove no longer needed field 'output' from table 'result'
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@116
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Mon, 2 Apr 2012 20:40:51 +0000) * [CHANGE]
+ -	 - Added interface for list reports by date
+ -	 - Added interface for list reports by perlversion
+ -	 - Made the stylesheet a bit more flexible
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@117
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Tue, 3 Apr 2012 19:45:04 +0000) * [FIX]
+ -	 - some minor fixes
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@118
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Fri, 6 Apr 2012 09:48:59 +0000) * [CHANGE]
+ -	 Add 2 new calls:
+ -	   - /api/reports_from_date/$epoch
+ -	   - /api/report_data/$id
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@119
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Fri, 6 Apr 2012 09:51:50 +0000) * [CHANGE]
+ -	 - add template for raw json
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@120
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Fri, 6 Apr 2012 10:39:24 +0000) * [CHANGE]
+ -	 - api_get_reports_from_date() now also supports anything that
+   Date::Parse understands.
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@121
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Fri, 6 Apr 2012 10:58:09 +0000) * [CHANGE]
+ -	 - Implement a toggle between report and logfile.
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@122
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Fri, 6 Apr 2012 12:57:52 +0000) * [CHANGE]
+ -	 - Fix filter for report-list
+ -	 - change some columns for report-list
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@123
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Sun, 22 Apr 2012 18:42:38 +0000) * [CHANGE]
+ -	 - introduced multiple environments (layouts)
+ -	   test-smoke (development)
+ -	   smokedb    (smokedb/production)
+ -	 - move gwclient from bin/ to dev-bin/
+ -	 - rework the /api/ calls
+ -	   return data structure from the code
+ -	   jsonize just before sending the data
+ -	 - catch 'duplicate key' errors from post_report
+ -	 - return simple json from POST '/report'
+ -	   {"error" : "<error string>"}
+ -	   {"id" : "<report-id>"}
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@124
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Sun, 29 Apr 2012 08:10:46 +0000) * [CHANGE]
+ -	 - fix paging
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@125
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Sun, 8 Jul 2012 09:23:47 +0000) * [CHANGE]
+ -	 Move the dancer-routes to a seperate module.
+ -	 Move the database-connection-data to the config
+ -	 Add 'user_note' to the report
+ -	 Add 'outfile' view
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@128
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Sun, 8 Jul 2012 09:27:09 +0000) * [CHANGE]
+ -	 Change the development port to 3030
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@129
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Sun, 8 Jul 2012 09:45:24 +0000) * [CHANGE]
+ -	 Up the version to 0.04.
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@130
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Tue, 10 Jul 2012 20:46:15 +0000) * [CHANGE]
+ -	 Fix the paging for report lists
+ -	 Add 'test' to the environments (smokedb style, but develop db
+   connection)
+ -	 Add an outfile link to the reports, if in the db
+ -	 Smaller font in the report-list table
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@131
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (abeltje, Tue, 7 Aug 2012 15:31:38 +0000) * [CHANGE]
+ -	 move the 'use Try::Tiny;' line from script to module (where it
+   should have been).
+ -     git-svn-id:
+   https://source.test-smoke.org/repos/cpan/trunk/Test-Smoke-Gateway@133
+   03e79c58-f747-0410-a819-f71e7ca513d9
+
+ - (Abe Timmerman, Wed, 1 May 2013 15:52:53 +0200) Add function to the
+   database that makes a float of the perlversion.
+ -     Use the new database function to order the perlversions for the
+   frontend.
+
+ - (Abe Timmerman, Wed, 1 May 2013 23:39:34 +0200) Add new field
+   'smoke_branch' to the 'report' table and introduce versioning.
+ -	 We now have Software- and database versioning, they must be equal
+ -	 The database version is kept in the new tsgateway_config table
+ -	 support/ has an sql to "upgrade" the database
+ -	 Use the new report.smoke_branch data in the report
+
+ - (Abe Timmerman, Thu, 2 May 2013 14:04:39 +0200) Add new field
+   'smoke_branch' to the 'report' table and introduce versioning.
+ -	 We now have Software- and database versioning, they must be equal
+ -	 The database version is kept in the new tsgateway_config table
+ -	 support/ has an sql to "upgrade" the database
+ -	 Use the new report.smoke_branch data in the report
+
+ - (Abe Timmerman, Thu, 2 May 2013 14:14:36 +0200) Merge branch
+   'with_smoke_branch' of ssh://github.com/abeltje/CoreSmokeDB into
+   with_smoke_branch
+ -     Conflicts:
+ -	   lib/Test/Smoke/Gateway/Schema.pm
+ -	   support/upgradedb_0_to_1.sql
+
+ - (Abe Timmerman, Fri, 3 May 2013 16:22:16 +0200) Make the foreing keys in
+   the database 'on delete cascade' for development.
+ -     !!!Should not be run on production!!!
+
+ - (Abe Timmerman, Sun, 16 Mar 2014 12:52:52 +0100) Fix report posting with
+   utf-8 characters in them.
+
+ - (Abe Timmerman, Sun, 16 Mar 2014 14:01:47 +0100) Add tribute to the
+   hackathons at Lancaster and Lyon.
+
+ - (Abe Timmerman, Mon, 17 Mar 2014 12:24:35 +0100) Use
+   Dancer::Plugin::DBIC to handle the database connection.
+
+ - (Abe Timmerman, Sat, 18 Apr 2015 06:37:04 +0200) Upgrade the
+   database/API to Version 2
+ -     We 've added a new field to the report: nonfatal_msgs
+
+ - (Abe Timmerman, Sun, 19 Apr 2015 13:02:20 +0200) Berlin2015: minor
+   addition in the report
+ -     And thank the Berlin organizers for #perlqah2015
+
+ - (abeltje, Sun, 19 Apr 2015 13:19:47 +0200) Merge remote-tracking branch
+   'origin/master' into AddNonfatalmsg
+
+ - (abeltje, Sun, 19 Apr 2015 15:59:45 +0200) Fix utf8 problem with
+   encoding.
+ -     This fixes RT#90251 from the Test::Smoke Queue.
+
+ - (abeltje, Sun, 19 Apr 2015 15:59:45 +0200) Fix utf8 problem with
+   encoding.
+ -     This fixes RT#90251 from the Test::Smoke Queue.
+
+ - (Abe Timmerman, Sun, 19 Apr 2015 16:39:17 +0200) "Release" of TSG 0.06
+
+ - (abeltje, Tue, 5 May 2015 16:37:33 +0200) Features: timestamp in report,
+   select by CCompiler
+ -     TonyC requested the smoke-timestamp in the report
+ -     Tux wanted to select reports by c-compiler; this only works for the
+ -     list-reports button.
+
+ - (abeltje, Tue, 5 May 2015 16:43:58 +0200) Merge remote-tracking branch
+   'origin/master' into add_date_to_report
+ -     Conflicts:
+ -	   .gitignore
+
+ - (Abe Timmerman, Tue, 5 May 2015 15:03:42 +0200) Make distribution-ish
+ -     Create a working testsuite with xt/ tests, MANIFEST etc
