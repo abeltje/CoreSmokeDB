@@ -1,7 +1,11 @@
-#! /usr/bin/perl -w
+#! /usr/bin/env perl -w
 use strict;
 use Data::Dumper; $Data::Dumper::Indent = 1; $Data::Dumper::Sortkeys = 1;
 $|++;
+
+use FindBin;
+use lib "$FindBin::Bin/../lib";
+use lib "$FindBin::Bin/../local/lib/perl5";
 
 use Hash::Util 'lock_hash';
 use Scalar::Util 'blessed';
