@@ -61,7 +61,7 @@ pipeline {
                 sh 'chmod +x deploy/local/bin/*'
                 sh 'touch deploy/tsgateway'
                 sshagent(['ssh-deploy']) {
-                        sh '''
+                    sh '''
 /usr/bin/deploy -av deploy/ perl5smokedb.fritz.box:/var/lib/www/CoreSmokeDB.preview/
 /usr/bin/restart-remote perl5smokedb.fritz.box perl5smokedb-preview
                         '''
@@ -82,10 +82,12 @@ pipeline {
                 }
                 sh 'chmod +x deploy/local/bin/*'
                 sh 'touch deploy/tsgateway'
-                sh '''
+                sshagent(['ssh-deploy']) {
+                    sh '''
 /usr/bin/deploy -av deploy/ perl5smokedb.fritz.box:/var/lib/www/CoreSmokeDB/
 /usr/bin/restart-remote perl5smokedb.fritz.box perl5smokedb
-'''
+                       '''
+                }
             }
         }
     }
