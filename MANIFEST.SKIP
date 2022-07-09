@@ -11,3 +11,4 @@ tags
 testout.xml
 .*\.sqlite$
 environments/dev.yml
+cpanfile.snapshot
