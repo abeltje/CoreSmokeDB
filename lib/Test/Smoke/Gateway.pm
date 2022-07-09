@@ -657,7 +657,7 @@ sub get_branches {
             distinct => 1,
         }
     );
-    return [ map { $_->smoke_branch } $branches->all ];
+    return [ sort map { $_->smoke_branch } $branches->all ];
 }
 
 # make a float representation of a perl-version.
