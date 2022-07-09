@@ -115,6 +115,23 @@
             </td>
         </tr>
         <tr>
+          <td colspan="2">
+            <select name="selected_branch">
+              [% IF search.filters.report_smoke_branch %]
+              <option value="">-- Clear Branch --</option>
+              [% ELSE %]
+              <option value="">-- Select Branch --</option>
+              [% END %]
+              [% FOREACH branch = search.branches %]
+              <option value="[% branch %]"
+                      [% IF branch == search.filters.report_smoke_branch %]selected="selected"
+                      [%- END %]>[% branch %]</option>
+              [% END %]
+            </select>
+          </td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
             <td>&nbsp;</td>
             <td align="center"><input type="submit" value="Search reports"/></td>
             <td>&nbsp;</td>
@@ -262,23 +279,50 @@
         var osnmlist = document.smoke.report_osnm
         var osvslist = document.smoke.report_osvs
         var hostlist = document.smoke.report_host
+
         archlist.options.length = 0
         osnmlist.options.length = 0
         osvslist.options.length = 0
         hostlist.options.length = 0
 
-        if (! document.smoke.selected_arch.value) { archlist.options[archlist.options.length] = new Option("-- Select Architecture --","") }
-        if (! document.smoke.selected_osnm.value) { osnmlist.options[osnmlist.options.length] = new Option("-- Select OS name --","") }
-        if (! document.smoke.selected_osvs.value) { osvslist.options[osvslist.options.length] = new Option("-- Select OS version --","") }
-        if (! document.smoke.selected_host.value) { hostlist.options[hostlist.options.length] = new Option("-- Select Host --","") }
-        for (i=0; i<values_arch.length; i++)      { archlist.options[archlist.options.length] = new Option(values_arch[i], values_arch[i]) }
-        for (i=0; i<values_osnm.length; i++)      { osnmlist.options[osnmlist.options.length] = new Option(values_osnm[i], values_osnm[i]) }
-        for (i=0; i<values_osvs.length; i++)      { osvslist.options[osvslist.options.length] = new Option(values_osvs[i], values_osvs[i]) }
-        for (i=0; i<values_host.length; i++)      { hostlist.options[hostlist.options.length] = new Option(values_host[i], values_host[i]) }
-        if (document.smoke.selected_arch.value)   { archlist.options[archlist.options.length] = new Option("-- Clear Architecture --","") }
-        if (document.smoke.selected_osnm.value)   { osnmlist.options[osnmlist.options.length] = new Option("-- Clear OS name --","") }
-        if (document.smoke.selected_osvs.value)   { osvslist.options[osvslist.options.length] = new Option("-- Clear OS version --","") }
-        if (document.smoke.selected_host.value)   { hostlist.options[hostlist.options.length] = new Option("-- Clear Host --","") }
+        if (! document.smoke.selected_arch.value) {
+          archlist.options[archlist.options.length] = new Option("-- Select Architecture --","");
+        }
+        if (! document.smoke.selected_osnm.value) {
+          osnmlist.options[osnmlist.options.length] = new Option("-- Select OS name --","");
+        }
+        if (! document.smoke.selected_osvs.value) {
+          osvslist.options[osvslist.options.length] = new Option("-- Select OS version --","");
+        }
+        if (! document.smoke.selected_host.value) {
+          hostlist.options[hostlist.options.length] = new Option("-- Select Host --","");
+        }
+
+        for (i=0; i<values_arch.length; i++)      {
+          archlist.options[archlist.options.length] = new Option(values_arch[i], values_arch[i])
+        }
+        for (i=0; i<values_osnm.length; i++)      {
+          osnmlist.options[osnmlist.options.length] = new Option(values_osnm[i], values_osnm[i])
+        }
+        for (i=0; i<values_osvs.length; i++)      {
+          osvslist.options[osvslist.options.length] = new Option(values_osvs[i], values_osvs[i])
+        }
+        for (i=0; i<values_host.length; i++)      {
+          hostlist.options[hostlist.options.length] = new Option(values_host[i], values_host[i])
+        }
+
+        if (document.smoke.selected_arch.value)   {
+          archlist.options[archlist.options.length] = new Option("-- Clear Architecture --","")
+        }
+        if (document.smoke.selected_osnm.value)   {
+          osnmlist.options[osnmlist.options.length] = new Option("-- Clear OS name --","")
+        }
+        if (document.smoke.selected_osvs.value)   {
+          osvslist.options[osvslist.options.length] = new Option("-- Clear OS version --","")
+        }
+        if (document.smoke.selected_host.value)   {
+          hostlist.options[hostlist.options.length] = new Option("-- Clear Host --","")
+        }
     }
 
     update_report(0,"[% search.filters.report_architecture %]")
@@ -362,5 +406,7 @@
         update_config(0,"")
         update_config(1,"")
         document.smoke.selected_perl.value = "latest"
+        document.smoke.selected_branch.selectedIndex = 0
+        document.smoke.selected_branch[0].text = "-- Select Branch --"
     }
 </script>

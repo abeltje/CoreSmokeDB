@@ -258,6 +258,8 @@ sub search {
         report_osversion_andnot    => $data->{andnotsel_osvs},
         report_hostname            => $data->{selected_host},
         report_hostname_andnot     => $data->{andnotsel_host},
+        report_smoke_branch        => $data->{selected_branch},
+        report_smoke_branch_andnot => $data->{andnotsel_branch},
         config_cc                  => $data->{selected_comp},
         config_cc_andnot           => $data->{andnotsel_comp},
         config_ccversion           => $data->{selected_cver},
@@ -313,6 +315,7 @@ sub search {
         sel_arch_os_ver   => \@items_arch_os_ver,
         sel_comp_ver      => \@items_comp_ver,
         filters           => \%filter,
+        branches          => $self->get_branches(),
     };
 }
 
@@ -643,6 +646,18 @@ sub failures_submatrix {
     } $fails->all;
 
     return \@reports;
+}
+
+sub get_branches {
+    my $self = shift;
+    my $branches = $self->schema->resultset('Report')->search_rs(
+        { },
+        {
+            select   => ['smoke_branch'],
+            distinct => 1,
+        }
+    );
+    return [ map { $_->smoke_branch } $branches->all ];
 }
 
 # make a float representation of a perl-version.
