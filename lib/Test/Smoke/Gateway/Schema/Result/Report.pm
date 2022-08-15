@@ -700,7 +700,25 @@ sub group_tests_by_status {
             $grouped_tests[-1]{test} //= $group->{$cfg}{test}[0]{test};
         }
     }
-    return \@grouped_tests; 
+    return \@grouped_tests;
+}
+
+sub plevel {
+    my $self = shift;
+
+    (my $git_describe  = $self->git_describe) =~ s{^v}{};
+    $git_describe =~ s{-g[0-9a-f]+$}{}i;
+
+    my @vparts = split(/[.-]/, $git_describe, 5);
+    my $plevel = sprintf("%u.%03u%03u", @vparts[0..2]);
+    if (@vparts < 4) {
+        push(@vparts, '0');
+    }
+    my $rc = $vparts[3] =~ m{RC}i ? $vparts[3] : 'zzz';
+    $plevel .= $rc;
+    $plevel .= sprintf("%03u", $vparts[-1] // '0');
+
+    return $plevel;
 }
 
 sub duration_in_hhmm {

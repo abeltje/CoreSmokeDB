@@ -15,7 +15,7 @@ __PACKAGE__->load_namespaces;
 # Created by DBIx::Class::Schema::Loader v0.07020 @ 2012-04-02 22:16:28
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:pch59BgrYy7frtW0MFWhew
 
-our $APIVERSION = 2;
+our $APIVERSION = 3;
 
 use Exception::Class (
     'Test::Smoke::Gateway::Exception' =>

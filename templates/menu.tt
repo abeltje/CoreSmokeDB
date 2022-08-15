@@ -1,4 +1,5 @@
 <ul>
+  <li><a title="Latest per host" href="/latest-only">Latest</a></li>
   <li><a title="Search" href="/search">Search</a></li>
   <li><a title="Matrix" href="/matrix">Matrix</a></li>
 </ul>

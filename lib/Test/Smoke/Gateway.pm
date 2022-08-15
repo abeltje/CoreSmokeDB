@@ -18,7 +18,7 @@ has reports_per_page => (
 
 my @_binary_data = qw/ log_file out_file manifest_msgs compiler_msgs nonfatal_msgs /;
 
-our $VERSION = '0.10';
+our $VERSION = '0.10_00';
 
 =head1 NAME
 
@@ -324,6 +324,55 @@ sub search {
         sel_comp_ver      => \@items_comp_ver,
         filters           => \%filter,
         branches          => $self->get_branches(),
+    };
+}
+
+sub latest_only {
+    my $self = shift;
+
+    my $reports = $self->schema->resultset('Report');
+    my $result = $reports->search(
+        {
+            'git_describe_as_plevel(git_describe)' => {
+                '=' => $reports->search(
+                    {
+                        hostname     => { '=' => \'me.hostname' },
+                    },
+                    { alias => 'rr' }
+                )->get_column('git_describe_as_plevel(git_describe)')->max_rs->as_query,
+            },
+            smoke_date => {
+                '=' => $reports->search(
+                    {
+                        hostname     => {'=' => \'me.hostname'},
+                        'git_describe_as_plevel(git_describe)' => {
+                            '=' => \'git_describe_as_plevel(me.git_describe)'
+                        },
+                    },
+                    { alias => 'rs' }
+                )->get_column('smoke_date')->max_rs->as_query,
+            },
+        },
+        {
+            columns => [qw/
+                id architecture hostname osname osversion
+                perl_id git_id git_describe smoke_branch
+                username smoke_date summary cpu_count cpu_description
+            /],
+            order_by => [
+                'architecture',
+                { '-desc' => 'git_describe_as_plevel(git_describe)' },
+                qw/osname osversion hostname/
+            ],
+        }
+    );
+    my $latest_plevel = $reports->search()->get_column(
+        'git_describe_as_plevel(git_describe)'
+    )->max();
+
+    return {
+        reports       => [ $result->all ],
+        latest_plevel => $latest_plevel,
     };
 }
 

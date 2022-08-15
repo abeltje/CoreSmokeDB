@@ -1,8 +1,8 @@
-<h2>Test-Smoke latest</h2>
+<h2>Test-Smoke latest per host</h2>
 <table width="100%" style="border: 2px black ridge;">
-<caption>Latest perlversion [% search.perl_latest %]</caption>
+<caption>Latest Plevel [% search.latest_plevel %]</caption>
 <tr>
-    <td>Arch</td><td>Host</td><td>OS</td><td>Git-id</td><td>date</td><td>Status</td>
+    <td>Arch</td><td>Host</td><td>OS</td><td>Plevel</td><td>date</td><td>Status</td>
 </tr>
 [% mycount = 1 %][% FOREACH row = search.reports -%]
 [% colorclass = "failtest" -%]
@@ -13,7 +13,7 @@
   <td>[% row.architecture %]</td>
   <td>[% row.hostname %]</td>
   <td>[% row.osname %] - [% row.osversion %]</td>
-  <td>[% row.git_describe %]</td>
+  <td>[% row.plevel %]</td>
   <td>[% row.smoke_date %]</td>
   <td class="[% colorclass %]">
     <a href="/report/[% row.id %]" class="[% colorclass %]">[% row.summary %]</a>

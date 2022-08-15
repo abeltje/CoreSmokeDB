@@ -100,6 +100,16 @@ get '/search' => sub {
     };
 };
 
+get '/latest-only' => sub {
+    header 'content-type' => 'text/html';
+    template 'latest' => {
+        search   => $gw->latest_only(),
+        title    => 'CoreSmoke Database Latest Plevel per host',
+        version  => $Test::Smoke::Gateway::VERSION,
+        thisyear => 1900 + (localtime)[5],
+    };
+};
+
 get '/test' => sub {
     header 'content-type' => 'text/html';
     template 'test' => {
