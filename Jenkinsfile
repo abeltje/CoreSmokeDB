@@ -2,6 +2,9 @@
 
 pipeline {
     agent { label 'perl5smokedb' }
+    environment {
+        PGHOST='fidodbmaster'
+    }
     stages {
         stage('Build_and_Test') {
             steps {
