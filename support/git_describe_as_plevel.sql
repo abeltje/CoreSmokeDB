@@ -32,9 +32,29 @@ AS $function$
     end;
 $function$ ;
 
+alter table report
+ add column plevel varchar
+  generated always as (git_describe_as_plevel(git_describe)) stored
+            ;
+
 drop index if exists report_plevel_idx;
 create index report_plevel_idx
-          on report (git_describe_as_plevel(git_describe))
+          on report (plevel)
+             ;
+
+drop index if exists report_plevel_hostname_idx;
+create index report_plevel_hostname_idx
+          on report (hostname, plevel)
+              ;
+
+drop index if exists report_smokedate_hostname_idx;
+create index report_smokedate_hostname_idx
+          on report (hostname, smoke_date)
+              ;
+
+drop index if exists report_smokedate_plevel_hostname_idx;
+create index report_smokedate_plevel_hostname_idx
+          on report (hostname, plevel, smoke_date)
              ;
 
 update tsgateway_config

@@ -233,6 +233,13 @@ __PACKAGE__->table("report");
   data_type: 'bytea'
   is_nullable: 1
 
+=head2 plevel
+
+  data_type: 'text'
+  default_value: git_describe_as_plevel(git_describe)
+  is_nullable: 1
+  original: {data_type => "varchar"}
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -418,6 +425,13 @@ __PACKAGE__->add_columns(
   },
   "nonfatal_msgs",
   { data_type => "bytea", is_nullable => 1 },
+  "plevel",
+  {
+    data_type     => "text",
+    default_value => \"git_describe_as_plevel(git_describe)",
+    is_nullable   => 1,
+    original      => { data_type => "varchar" },
+  },
 );
 
 =head1 PRIMARY KEY
@@ -434,7 +448,7 @@ __PACKAGE__->set_primary_key("id");
 
 =head1 UNIQUE CONSTRAINTS
 
-=head2 C<report_git_id_key>
+=head2 C<report_git_id_smoke_date_duration_hostname_architecture_key>
 
 =over 4
 
@@ -453,7 +467,7 @@ __PACKAGE__->set_primary_key("id");
 =cut
 
 __PACKAGE__->add_unique_constraint(
-  "report_git_id_key",
+  "report_git_id_smoke_date_duration_hostname_architecture_key",
   ["git_id", "smoke_date", "duration", "hostname", "architecture"],
 );
 
@@ -495,8 +509,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2014-08-23 19:21:15
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Thw8Cig5H/5VPYgkuGNroA
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-08-16 16:01:04
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:RtB6VGnH7SRshmYO7Ua7HQ
 
 sub arch_os_version_key {
     my $self = shift;
@@ -701,24 +715,6 @@ sub group_tests_by_status {
         }
     }
     return \@grouped_tests;
-}
-
-sub plevel {
-    my $self = shift;
-
-    (my $git_describe  = $self->git_describe) =~ s{^v}{};
-    $git_describe =~ s{-g[0-9a-f]+$}{}i;
-
-    my @vparts = split(/[.-]/, $git_describe, 5);
-    my $plevel = sprintf("%u.%03u%03u", @vparts[0..2]);
-    if (@vparts < 4) {
-        push(@vparts, '0');
-    }
-    my $rc = $vparts[3] =~ m{RC}i ? $vparts[3] : 'zzz';
-    $plevel .= $rc;
-    $plevel .= sprintf("%03u", $vparts[-1] // '0');
-
-    return $plevel;
 }
 
 sub duration_in_hhmm {

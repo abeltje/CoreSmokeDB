@@ -92,7 +92,7 @@ __PACKAGE__->set_primary_key("id");
 
 =head1 UNIQUE CONSTRAINTS
 
-=head2 C<failure_test_key>
+=head2 C<failure_test_status_extra_key>
 
 =over 4
 
@@ -106,7 +106,7 @@ __PACKAGE__->set_primary_key("id");
 
 =cut
 
-__PACKAGE__->add_unique_constraint("failure_test_key", ["test", "status", "extra"]);
+__PACKAGE__->add_unique_constraint("failure_test_status_extra_key", ["test", "status", "extra"]);
 
 =head1 RELATIONS
 
@@ -126,8 +126,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07020 @ 2012-04-02 22:16:28
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:O4O9u0DnA4jl0a9DXlhLEQ
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-08-16 16:01:04
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5iuGAU7eoN9TJsxe5czzFw
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

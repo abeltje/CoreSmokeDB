@@ -169,7 +169,7 @@ get '/submatrix' => sub {
 };
 
 get '/' => sub {
-    forward '/search';
+    forward '/latest-only';
 };
 
 1;

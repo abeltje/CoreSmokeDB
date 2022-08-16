@@ -333,42 +333,38 @@ sub latest_only {
     my $reports = $self->schema->resultset('Report');
     my $result = $reports->search(
         {
-            'git_describe_as_plevel(git_describe)' => {
+            plevel => {
                 '=' => $reports->search(
                     {
                         hostname     => { '=' => \'me.hostname' },
                     },
-                    { alias => 'rr' }
-                )->get_column('git_describe_as_plevel(git_describe)')->max_rs->as_query,
+                    { alias => 'rh' }
+                )->get_column('plevel')->max_rs->as_query,
             },
             smoke_date => {
                 '=' => $reports->search(
                     {
-                        hostname     => {'=' => \'me.hostname'},
-                        'git_describe_as_plevel(git_describe)' => {
-                            '=' => \'git_describe_as_plevel(me.git_describe)'
-                        },
+                        hostname => { '=' => \'me.hostname' },
+                        plevel   => { '=' => \'me.plevel' },
                     },
-                    { alias => 'rs' }
+                    { alias => 'rhp' }
                 )->get_column('smoke_date')->max_rs->as_query,
             },
         },
         {
             columns => [qw/
                 id architecture hostname osname osversion
-                perl_id git_id git_describe smoke_branch
+                perl_id git_id git_describe plevel smoke_branch
                 username smoke_date summary cpu_count cpu_description
             /],
             order_by => [
                 'architecture',
-                { '-desc' => 'git_describe_as_plevel(git_describe)' },
+                { '-desc' => 'plevel' },
                 qw/osname osversion hostname/
             ],
         }
     );
-    my $latest_plevel = $reports->search()->get_column(
-        'git_describe_as_plevel(git_describe)'
-    )->max();
+    my $latest_plevel = $reports->search()->get_column('plevel')->max();
 
     return {
         reports       => [ $result->all ],

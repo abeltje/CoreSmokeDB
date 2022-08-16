@@ -12,8 +12,6 @@ make_schema_at(
        overwrite_modifications => 0,
    },
    [
-       'dbi:Pg:host=fidodbmaster;database=tsgateway',
-       'tsgateway',
-       'TSg4t3w4y',
+       'dbi:Pg:host=perl5smokedb;database=coresmokedb',
    ],
 );

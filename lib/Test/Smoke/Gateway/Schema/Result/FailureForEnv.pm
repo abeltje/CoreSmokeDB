@@ -46,7 +46,7 @@ __PACKAGE__->add_columns(
 
 =head1 UNIQUE CONSTRAINTS
 
-=head2 C<failures_for_env_result_id_key>
+=head2 C<failures_for_env_result_id_failure_id_key>
 
 =over 4
 
@@ -58,7 +58,10 @@ __PACKAGE__->add_columns(
 
 =cut
 
-__PACKAGE__->add_unique_constraint("failures_for_env_result_id_key", ["result_id", "failure_id"]);
+__PACKAGE__->add_unique_constraint(
+  "failures_for_env_result_id_failure_id_key",
+  ["result_id", "failure_id"],
+);
 
 =head1 RELATIONS
 
@@ -93,8 +96,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07036 @ 2013-09-15 16:23:46
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5DM+brzUQOM/wx+sCDtMVw
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-08-16 16:01:04
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5LmKftsEPXeOy2aHfKJ6Ig
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration
