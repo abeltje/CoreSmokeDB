@@ -15,5 +15,7 @@ requires "Params::Validate"     => "1.06";
 requires "Template"             => "2.00";
 requires "Try::Tiny"            => "0.11";
 
-requires "Test::DBIC::SQLite" => '0.01';
+requires "Test::DBIC::Pg"     => '1.00';
+requires "Test::DBIC::SQLite" => '1.01';
 requires "DBD::SQLite"        => '1.371';
+requires "Test::Warnings"     => '0';

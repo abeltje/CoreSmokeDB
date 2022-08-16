@@ -512,6 +512,17 @@ __PACKAGE__->belongs_to(
 # Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-08-16 16:01:04
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:RtB6VGnH7SRshmYO7Ua7HQ
 
+##### Problem with DBIx::Class/DBIx::Class::Schema::Loader
+# it cannot ADD COLUMN plevel varchar GENERATED ALWAYS AS (...) STORED
+# so remove the default_value for the ORM and put it back with SQL in
+# Test::Smoke::Gateway::Schema::deploy()
+#
+my $_plevel_column = __PACKAGE__->column_info('plevel');
+__PACKAGE__->remove_column('plevel');
+delete($_plevel_column->{default_value});
+__PACKAGE__->add_column('plevel', $_plevel_column);
+
+
 sub arch_os_version_key {
     my $self = shift;
     return join( "##", $self->architecture, $self->osname, $self->osversion, $self->hostname);

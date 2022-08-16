@@ -1,14 +1,23 @@
 #! perl -w
 use strict;
+use lib 't/lib';
 
 use Test::More;
-use Test::NoWarnings ();
-use Test::DBIC::SQLite;
+use Test::Warnings;
+use Test::DBIC::Pg;
+use GitDescribeAsPlevel;
 
+my $tester = Test::DBIC::Pg->new(
+    schema_class    => 'Test::Smoke::Gateway::Schema',
+    connect_info    => {
+        options => { pg_enable_utf8 => 1 },
+    },
+    pre_deploy_hook => \&pre_deploy_hook,
+);
 {
     note("Check custom methods on Test::Smoke::Gateway::Schema::Result::Result");
 
-    my $db = connect_dbic_sqlite_ok('Test::Smoke::Gateway::Schema');
+    my $db = $tester->connect_dbic_ok();
 
     my $r = $db->resultset('Report')->create(
         {
@@ -53,8 +62,10 @@ use Test::DBIC::SQLite;
     );
     isa_ok($r2, 'Test::Smoke::Gateway::Schema::Result::Result');
     is($r2->test_env, 'locale:nl_NL.UTF-8', "result->test_env()");
+
+    $db->storage->disconnect();
 }
 
-Test::NoWarnings::had_no_warnings();
-$Test::NoWarnings::do_end_test = 0;
+$tester->drop_dbic_ok();
+
 done_testing();

@@ -67,6 +67,16 @@ Populate the tsgateway_config-table with data.
 sub deploy {
     my $self = shift;
     $self->next::method(@_);
+
+    $self->storage->dbh->do(<<EOQ);
+ALTER TABLE report
+DROP COLUMN plevel
+EOQ
+    $self->storage->dbh->do(<<EOQ);
+ALTER TABLE report
+ ADD COLUMN plevel varchar GENERATED ALWAYS AS (git_describe_as_plevel(git_describe)) STORED
+EOQ
+
     $self->resultset('TsgatewayConfig')->populate(
         [
             {name => 'dbversion', value => $APIVERSION},

@@ -174,7 +174,7 @@ sub post_report {
                             'Failure'
                         )->find_or_create(
                             $failure,
-                            {key => 'failure_test_key'}
+                            {key => 'failure_test_status_extra_key'}
                         );
                         $self->schema->resultset('FailureForEnv')->create(
                             {
