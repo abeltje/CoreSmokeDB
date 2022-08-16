@@ -45,6 +45,7 @@ t/110-result-result.t
 t/500-failure-matrix.t
 t/data/mktest-mac.jsn
 t/data/mktest-ubuntu.jsn
+t/lib/GitDescribeAsPlevel.pm
 templates/latest.tt
 templates/layouts/smokedb.tt
 templates/layouts/test-smoke.tt
