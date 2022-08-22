@@ -3,6 +3,7 @@ use Moose;
 
 use Date::Parse;
 use Digest::MD5;
+use Encode qw/encode decode/;
 use JSON;
 use Params::Validate ':all';
 use POSIX qw/strftime/;
@@ -144,8 +145,11 @@ sub post_report {
     /;
     $report_data->{$_} = join("\n", @{delete($data->{$_}) || []}) for @to_unarray;
 
-    my @other_data = qw/harness_only harness3opts summary log_file out_file/;
+    my @other_data = qw/harness_only harness3opts summary/;
     $report_data->{$_} = delete $data->{$_} for @other_data;
+
+    my @binary_data = qw/ log_file out_file /;
+    $report_data->{$_} = encode('utf8', delete $data->{$_}) for @binary_data;
 
     my $configs = delete $data->{'configs'};
     return $self->schema->txn_do(
@@ -198,6 +202,9 @@ sub get_report {
 
     my $report = $self->schema->resultset('Report')->find($id);
 
+    for my $binary_stored (qw/out_file log_file/) {
+        $report->$binary_stored(decode('utf8', $report->$binary_stored));
+    }
     return $report;
 }
 
