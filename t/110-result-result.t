@@ -1,18 +1,12 @@
 #! perl -w
 use strict;
-use lib 't/lib';
 
 use Test::More;
 use Test::Warnings;
-use Test::DBIC::Pg;
-use GitDescribeAsPlevel;
+use Test::DBIC::SQLite;
 
-my $tester = Test::DBIC::Pg->new(
-    schema_class    => 'Test::Smoke::Gateway::Schema',
-    connect_info    => {
-        options => { pg_enable_utf8 => 1 },
-    },
-    pre_deploy_hook => \&pre_deploy_hook,
+my $tester = Test::DBIC::SQLite->new(
+    schema_class => 'Test::Smoke::Gateway::Schema',
 );
 {
     note("Check custom methods on Test::Smoke::Gateway::Schema::Result::Result");

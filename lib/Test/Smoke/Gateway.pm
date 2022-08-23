@@ -156,6 +156,8 @@ sub post_report {
     return $self->schema->txn_do(
         sub {
             my $r = $self->schema->resultset('Report')->create($report_data);
+            $r->discard_changes; # re-fetch for the generated plevel
+
             for my $config (@$configs) {
                 my $results = delete $config->{'results'};
                 for my $field (qw/cc ccversion/) {
