@@ -1,12 +1,74 @@
-Changes on 2022-07-09 for repository at:
+Changes on 2022-08-23 for repository at:
   Fetch URL: git@github.com:abeltje/CoreSmokeDB.git
   Push  URL: git@github.com:abeltje/CoreSmokeDB.git
 
 Enjoy!
 
-0.10 2022-07-09T14:27:38+02:00 (25b1e9b => Abe Timmerman)
+0.10_01 2022-08-23T12:24:29+02:00 (b994e90 => Abe Timmerman)
+ - (Abe Timmerman, Tue, 23 Aug 2022 12:24:29 +0200) Autocommit for
+   distribution Test::Smoke::Gateway 0.10_01 (test)
+
+0.10 2022-07-09T14:27:38+02:00 (5ee8195 => Abe Timmerman)
  - (Abe Timmerman, Sat, 9 Jul 2022 14:27:38 +0200) Autocommit for
    distribution Test::Smoke::Gateway 0.10 (same)
+
+ - (Abe Timmerman, Mon, 22 Aug 2022 14:13:50 +0200) Treat out_file and
+   log_file as binary objects
+ -     if the log_file contains utf8 chars the report won't be stored in
+   the
+ -     bytea field, so we make bytes with encode() before storing and
+   convert
+ -     back with decode() to chars before outputting.
+
+ - (Abe Timmerman, Tue, 23 Aug 2022 08:51:12 +0200) We need to address all
+   the 'bytea' fields
+ -     There are 5 fields of type 'bytea' in the 'report' table that all
+   need
+ -     the same guarantee they are bytes and not chars.
+
+ - (Abe Timmerman, Mon, 15 Aug 2022 19:55:30 +0200) Try a new query for
+   "latest report"
+ -     - This adds the sql-function `git_describe_as_plevel()` to the
+   database
+ -	 and `plevel` to the Report-record.
+ -     - A new query that looks for "max(plevel)" per host and takes the
+   one
+ -	 with "max(smoke_date)"
+ -     - At the moment this is slow, so I need to work on it a bit more
+
+ - (Abe Timmerman, Tue, 16 Aug 2022 23:03:31 +0200) Add sql stuff for new
+   "latest" view
+ -     Add field `plevel` to table `report` as generated (regenerate the
+   orm)
+ -     Add indexes for	hostname+smoke_time, hostname+plevel and
+ -     hostname+plevel+smoke_time
+ -     These indexes speed up the query from 5 seconds to less than 0.2
+   seconds
+
+ - (Abe Timmerman, Wed, 17 Aug 2022 01:25:16 +0200) Make the test-suite
+   pass again
+ -     - the new report.plevel column proved a challenge for DBIx::Class
+ -	 we remove the default_value in the ORM-class and set the GENERATED
+ -	 with SQL in Test::Smoke::Gateway::Schema::deploy()
+ -     - the name of a unique index changed (don't actually know when)
+ -     - make the test-suite work again; use Test::DBIC::Pg as the deploy
+ -	 didn't succeed on SQLite. (The builder machine needs some TLC now)
+
+ - (Abe Timmerman, Wed, 17 Aug 2022 01:34:55 +0200) Add the new
+   test-library to the repo and MANIFEST
+
+ - (Abe Timmerman, Wed, 17 Aug 2022 01:39:39 +0200) Tell the
+   Jenkins-buildjob where the db-sever is
+
+ - (Abe Timmerman, Tue, 23 Aug 2022 08:57:49 +0200) Order latest reports
+   primarilly on 'smoke_date'(desc)
+
+ - (Abe Timmerman, Tue, 23 Aug 2022 12:19:16 +0200) Make
+   git_describe_as_plevel() part of the deploy
+ -     For both SQLite and Pg, defining the function
+   git_describe_as_plevel()
+ -     is now part of the $schema->deploy().
+ -     This also means we can change the test-suite back to SQLite.
 
 0.09 2016-04-21T16:55:33+01:00 (5d65c18 => abeltje)
  - (abeltje, Thu, 21 Apr 2016 16:55:33 +0100) Autocommit for distribution
