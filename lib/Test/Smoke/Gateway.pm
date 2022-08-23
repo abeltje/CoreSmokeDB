@@ -358,9 +358,9 @@ sub latest_only {
                 username smoke_date summary cpu_count cpu_description
             /],
             order_by => [
-                'architecture',
+                { '-desc' => 'smoke_date' },
                 { '-desc' => 'plevel' },
-                qw/osname osversion hostname/
+                qw/architecture osname osversion hostname/
             ],
         }
     );
