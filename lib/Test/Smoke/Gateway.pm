@@ -16,6 +16,8 @@ has reports_per_page => (
     default => 25
 );
 
+my @_binary_data = qw/ log_file out_file manifest_msgs compiler_msgs nonfatal_msgs /;
+
 our $VERSION = '0.10';
 
 =head1 NAME
@@ -148,8 +150,7 @@ sub post_report {
     my @other_data = qw/harness_only harness3opts summary/;
     $report_data->{$_} = delete $data->{$_} for @other_data;
 
-    my @binary_data = qw/ log_file out_file /;
-    $report_data->{$_} = encode('utf8', delete $data->{$_}) for @binary_data;
+    $report_data->{$_} = encode('utf8', delete $data->{$_}) for @_binary_data;
 
     my $configs = delete $data->{'configs'};
     return $self->schema->txn_do(
@@ -202,7 +203,7 @@ sub get_report {
 
     my $report = $self->schema->resultset('Report')->find($id);
 
-    for my $binary_stored (qw/out_file log_file/) {
+    for my $binary_stored (@_binary_data) {
         $report->$binary_stored(decode('utf8', $report->$binary_stored));
     }
     return $report;
