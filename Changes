@@ -1,10 +1,14 @@
-Changes on 2022-08-23 for repository at:
+Changes on 2022-08-25 for repository at:
   Fetch URL: git@github.com:abeltje/CoreSmokeDB.git
   Push  URL: git@github.com:abeltje/CoreSmokeDB.git
 
 Enjoy!
 
-0.10_01 2022-08-23T12:24:29+02:00 (b994e90 => Abe Timmerman)
+0.11 2022-08-25T09:52:46+02:00 (bca65ec => Abe Timmerman)
+ - (Abe Timmerman, Thu, 25 Aug 2022 09:52:46 +0200) Autocommit for
+   distribution Test::Smoke::Gateway 0.11 (minor)
+
+0.10_01 2022-08-23T12:24:29+02:00 (7efc0fd => Abe Timmerman)
  - (Abe Timmerman, Tue, 23 Aug 2022 12:24:29 +0200) Autocommit for
    distribution Test::Smoke::Gateway 0.10_01 (test)
 
