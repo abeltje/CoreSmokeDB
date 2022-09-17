@@ -155,6 +155,13 @@ get '/api/full_report_data/:id' => sub {
     return to_json($full_report_data);
 };
 
+get '/api/:file_type/:id' => sub {
+    my $report = $gw->api_get_report_data(params->{id});
+    my $file = params->{file_type} eq 'logfile'
+        ? $report->{log_file}
+        : $report->{out_file};
+    return to_json( {file => $file} );
+};
 
 get '/api/matrix' => sub {
     return to_json($gw->failures_matrix());
