@@ -163,6 +163,7 @@ get '/api/matrix' => sub {
 get '/api/submatrix' => sub {
     my ($test, $pversion) = (params->{test}, params->{pversion});
 
+    debug("API->submatrix for test '$test' (@{[$pversion ? $pversion : '']}) ", {params()});
     forward '/api/matrix' if !$test;
 
     my $reports = $gw->failures_submatrix(
