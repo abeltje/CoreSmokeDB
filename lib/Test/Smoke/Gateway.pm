@@ -18,7 +18,7 @@ has reports_per_page => (
 
 my @_binary_data = qw/ log_file out_file manifest_msgs compiler_msgs nonfatal_msgs /;
 
-our $VERSION = '0.11';
+our $VERSION = '0.11_00';
 
 =head1 NAME
 
@@ -120,6 +120,142 @@ sub api_get_report_data {
     }
 
     return \%data;
+}
+
+=head2 $gw->api_get_full_report_data
+
+Returns a fuller data structure (with most methods called on it.
+
+=cut
+
+sub api_get_full_report_data {
+    my $self = shift;
+    my ($id) = validate_pos(@_, {regex => qr/^[1-9][0-9]*$/, optional => 0});
+
+    my $report = $self->schema->resultset('Report')->find($id);
+
+    my %data = $report->get_inflated_columns;
+    $data{configs} = [ ];
+    for my $config ($report->configs) {
+        push @{$data{configs}}, {$config->get_inflated_columns};
+        $data{configs}[-1]{results} = [ ];
+        for my $result ($config->results) {
+            push(
+                @{$data{configs}[-1]{results}},
+                {$result->get_inflated_columns}
+            );
+            $data{configs}[-1]{results}[-1]{failures} = [ ];
+            for my $failure ($result->failures_for_env) {
+                push(
+                    @{$data{configs}[-1]{results}[-1]{failures}},
+                    {$failure->failure->get_inflated_columns}
+                );
+            }
+        }
+    }
+    $data{matrix} = join("\n", $report->matrix);
+    my @methods_to_call = qw/
+        c_compilers
+        test_failures test_todo_passed
+        duration_in_hhmm average_in_hhmm
+    /;
+    for my $method (@methods_to_call) {
+        $data{ $method } = $report->$method;
+    }
+    return \%data;
+}
+
+=head2 $gw->api_get_search_parameters()
+
+Return a data structure with all the lists to fill the dropdown boxes.
+
+=cut
+
+sub api_get_search_parameters {
+    my $self = shift;
+
+    # Get all the possible values to select from
+    my $sel_arch_os_ver = $self->get_architecture_os;
+    my $sel_comp_ver    = $self->get_compilers;
+    my @items_arch_os_ver;
+    my @items_comp_ver;
+    foreach my $selitem (@$sel_arch_os_ver) {
+        my ($item_arch, $item_os, $item_osver, $item_host) = split /##/, $selitem->{value}, 4;
+        push @items_arch_os_ver, {
+            arch      => $item_arch,
+            os        => $item_os,
+            osversion => $item_osver,
+            hostname  => $item_host,
+        };
+    }
+    foreach my $selitem (@$sel_comp_ver) {
+        my ($item_comp, $item_compver) = split /##/, $selitem->{value}, 2;
+        push @items_comp_ver, {
+            comp        => $item_comp,
+            compversion => $item_compver,
+        };
+    }
+    return {
+        sel_arch_os_ver   => \@items_arch_os_ver,
+        sel_comp_ver      => \@items_comp_ver,
+        branches          => $self->get_branches(),
+        perl_versions     => $self->get_perlversion_list,
+    };
+}
+
+=head api_get_search_results
+
+Return a list of reports.
+
+=cut
+
+sub api_get_search_results {
+    my $self = shift;
+    my ($data) = @_;
+    Dancer::debug("SearchResults-data ", $data);
+
+    my $page = $data->{page} || 1;
+    my $perlversion_list = $self->get_perlversion_list;
+    my $perl_latest      = $perlversion_list->[0]{value};
+    my $pv_selected = $data->{selected_perl} || "all";
+    $pv_selected    = "%" if $pv_selected eq "all";
+    $pv_selected    = $perl_latest if $pv_selected eq "latest";
+
+    my %filter      = (
+        report_architecture        => $data->{selected_arch},
+        report_architecture_andnot => $data->{andnotsel_arch},
+        report_osname              => $data->{selected_osnm},
+        report_osname_andnot       => $data->{andnotsel_osnm},
+        report_osversion           => $data->{selected_osvs},
+        report_osversion_andnot    => $data->{andnotsel_osvs},
+        report_hostname            => $data->{selected_host},
+        report_hostname_andnot     => $data->{andnotsel_host},
+        report_smoke_branch        => $data->{selected_branch},
+        report_smoke_branch_andnot => $data->{andnotsel_branch},
+        config_cc                  => $data->{selected_comp},
+        config_cc_andnot           => $data->{andnotsel_comp},
+        config_ccversion           => $data->{selected_cver},
+        config_ccversion_andnot    => $data->{andnotsel_cver},
+    );
+
+    while (my ($k, $v) = each %filter) {
+        delete $filter{$k} if ! $v;
+    }
+    Dancer::debug("SearchResults-filters $pv_selected", \%filter);
+
+    # If Perl version is 'latest' (or initial empty) and no other filter is used,
+    # only show the latest smoke result per Arch/OS/OSVersion/...
+    my ($reports, $count);
+    if ((not $data->{selected_perl} or $data->{selected_perl} eq "latest")
+        and not %filter) {
+        $reports = $self->get_reports_by_perl_version($pv_selected,  \%filter);
+    } else {
+        $reports = $self->get_reports_by_filter($pv_selected, $page, \%filter);
+        $count   = $self->get_reports_by_filter_count($pv_selected,  \%filter);
+    }
+
+    $reports = [ map { +{$_->get_inflated_columns} } @$reports ];
+    return $reports;
 }
 
 =head2 post_report($data)
@@ -279,6 +415,7 @@ sub search {
     while (my ($k, $v) = each %filter) {
         delete $filter{$k} if ! $v;
     }
+    Dancer::debug("Search-filters $pv_selected", \%filter);
 
     # If Perl version is 'latest' (or initial empty) and no other filter is used,
     # only show the latest smoke result per Arch/OS/OSVersion/...
@@ -398,9 +535,9 @@ sub get_reports_by_perl_version {
             $self->get_filter_query_report(\%$raw_filter),
         },
         {
-            columns  => [qw/
+            columns => [qw/
                 id architecture hostname osname osversion
-                perl_id git_id git_describe smoke_branch
+                perl_id git_id git_describe plevel smoke_branch
                 username smoke_date summary cpu_count cpu_description
             /],
             order_by => [qw/architecture hostname osname osversion/],
@@ -442,8 +579,11 @@ sub get_reports_by_filter {
         },
         {
             join     => 'configs',
-            columns  => [qw/id architecture osname osversion smoke_date
-                            hostname git_describe smoke_branch summary/],
+            columns => [qw/
+                id architecture hostname osname osversion
+                perl_id git_id git_describe plevel smoke_branch
+                username smoke_date summary cpu_count cpu_description
+            /],
             distinct => 1,
             order_by => { -desc => 'smoke_date' },
             page     => $page,

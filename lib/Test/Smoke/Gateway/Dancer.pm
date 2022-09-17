@@ -119,6 +119,22 @@ get '/test' => sub {
     };
 };
 
+get '/api/latest' => sub {
+    my $latest_only = $gw->latest_only();
+    my $latest = [
+        map {
+            { $_->get_inflated_columns() }
+        } @{ $latest_only->{reports} }
+    ];
+    my $response = {
+        reports       => $latest,
+        latest_plevel => $latest_only->{latest_plevel},
+        rpp           => $gw->reports_per_page,
+        page          => undef,
+    };
+    return to_json($response);
+};
+
 get '/api/reports_from_date/:epoch' => sub {
     return to_json($gw->api_get_reports_from_date(params->{epoch}));
 };
@@ -131,6 +147,51 @@ get '/api/reports_from_id/:id' => sub {
 
 get '/api/report_data/:id' => sub {
     return to_json($gw->api_get_report_data(params->{id}));
+};
+
+get '/api/full_report_data/:id' => sub {
+    my $full_report_data = $gw->api_get_full_report_data(params->{id});
+
+    return to_json($full_report_data);
+};
+
+
+get '/api/matrix' => sub {
+    return to_json($gw->failures_matrix());
+};
+
+get '/api/submatrix' => sub {
+    my ($test, $pversion) = (params->{test}, params->{pversion});
+
+    forward '/api/matrix' if !$test;
+
+    my $reports = $gw->failures_submatrix(
+        test => $test,
+        ($pversion ? (pversion => $pversion) : ()),
+    );
+    return to_json({
+        reports => $reports,
+        test    => $test,
+        ($pversion ? (pversion => $pversion) : ()),
+    });
+};
+
+get '/api/searchparameters' => sub {
+    return to_json($gw->api_get_search_parameters);
+};
+
+post '/api/searchresults' => sub {
+    my $response = {
+        reports       => $gw->api_get_search_results({params}),
+        latest_plevel => undef,
+        rpp           => $gw->reports_per_page,
+        page          => params->{page},
+    };
+    return to_json($response);
+};
+
+get '/api/version' => sub {
+    return to_json({ version => $gw->VERSION });
 };
 
 get '/matrix' => sub {
@@ -172,4 +233,27 @@ get '/' => sub {
     forward '/latest-only';
 };
 
+# Deal with CORS for /api stuff
+hook(before => sub {
+    debug("before-hook [path]: ", my $path = request->path_info);
+    return unless $path =~ qr{^ /api/.+ }x;
+    debug("before-hook [method] ", my $http_method = uc(request->method));
+    debug("before-hook [Origin] ", my $origin = request->header('Origin'));
+    return unless $origin;
+
+    my $method = request->header('Access-Control-Request-Method') // $http_method;
+    status($http_method eq 'OPTIONS' ? 204 : 200);
+    header(
+        'Access-Control-Allow-Headers',
+        request->header('Access-Control-Request-Headers')
+    ) if request->header('Access-Control-Request-Headers');
+
+    header('Access-Control-Allow-Methods' => $method);
+    header('Access-Control-Allow-Origin' => $origin);
+    content_type('text/plain');
+    debug("Allow request: $method => $origin");
+    return 1;
+});
+
+any qr{/api/.+} => sub { return };
 1;

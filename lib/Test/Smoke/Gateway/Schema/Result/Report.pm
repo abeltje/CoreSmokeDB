@@ -707,7 +707,7 @@ sub group_tests_by_status {
                     push(
                         @{$tests{$key}{$config->full_arguments}{test}}, {
                             test_env => $result->test_env,
-                            test     => $test,
+                            test     => { $test->get_inflated_columns },
                         }
                     );
                 }
