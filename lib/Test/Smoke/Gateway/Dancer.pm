@@ -128,9 +128,10 @@ get '/api/latest' => sub {
     ];
     my $response = {
         reports       => $latest,
+        report_count  => scalar(@$latest),
         latest_plevel => $latest_only->{latest_plevel},
-        rpp           => $gw->reports_per_page,
-        page          => undef,
+        rpp           => scalar(@$latest),
+        page          => 1,
     };
     return to_json($response);
 };
@@ -189,11 +190,13 @@ get '/api/searchparameters' => sub {
 };
 
 post '/api/searchresults' => sub {
+    my $reports = $gw->api_get_search_results({params});
     my $response = {
-        reports       => $gw->api_get_search_results({params}),
+        reports       => $reports->{reports},
+        report_count  => $reports->{report_count},
         latest_plevel => undef,
-        rpp           => $gw->reports_per_page,
-        page          => params->{page},
+        rpp           => $reports->{rpp},
+        page          => $reports->{page} // 1,
     };
     return to_json($response);
 };

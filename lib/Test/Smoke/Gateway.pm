@@ -203,7 +203,7 @@ sub api_get_search_parameters {
     };
 }
 
-=head api_get_search_results
+=head2 $gw->api_get_search_results
 
 Return a list of reports.
 
@@ -255,7 +255,12 @@ sub api_get_search_results {
     }
 
     $reports = [ map { +{$_->get_inflated_columns} } @$reports ];
-    return $reports;
+    return {
+        reports      => $reports,
+        report_count => $count // scalar(@$reports),
+        rpp          => $count ? $self->reports_per_page : scalar(@$reports),
+        page         => $count ? $data->{page} : 1,
+    };
 }
 
 =head2 post_report($data)
