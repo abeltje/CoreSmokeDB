@@ -28,6 +28,18 @@ Test::Smoke::Gateway - The basic gateway between smoker and The Core Smoke Datab
 
 =head1 DESCRIPTION
 
+=head2 $gw->db_version
+
+Fetch the schema-version from the database.
+
+=cut
+
+sub db_version {
+    my $self = shift;
+
+    return $self->schema->resultset('TsgatewayConfig')->find({ name => 'dbversion' })->value;
+}
+
 =head2 $gw->api_get_reports_from_date($epoch)
 
 Returns a list of report-id's that have a smoke_date after C<$epoch>.

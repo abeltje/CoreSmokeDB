@@ -202,7 +202,13 @@ post '/api/searchresults' => sub {
 };
 
 get '/api/version' => sub {
-    return to_json({ version => $gw->VERSION });
+    return to_json(
+        {
+            version        => $gw->VERSION,
+            schema_version => $Test::Smoke::Gateway::Schema::APIVERSION,
+            db_version     => $gw->db_version,
+        }
+    );
 };
 
 get '/matrix' => sub {
