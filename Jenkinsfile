@@ -4,6 +4,7 @@ pipeline {
     agent { label 'perl5smokedb' }
     environment {
         PGHOST='fidodbmaster'
+        PERL_CPANM_HOME=/tmp/.cpanm
     }
     stages {
         stage('Build_and_Test') {
