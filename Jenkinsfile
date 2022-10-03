@@ -9,9 +9,11 @@ pipeline {
         stage('Build_and_Test') {
             steps {
                 script { echo "Building and testing branch: " + scm.branches[0].name }
-                sh 'carton install'
-                sh 'cpanm --notest -L local TAP::Formatter::JUnit Test::NoWarnings Plack Daemon::Control Starman'
-                sh 'prove -Ilocal/lib/perl5 --formatter=TAP::Formatter::JUnit --timer -wl t/ > testout.xml'
+                sh '''
+cpanm -L local --installdeps .
+cpanm --notest -L local TAP::Formatter::JUnit Test::NoWarnings Plack Daemon::Control Starman
+prove -Ilocal/lib/perl5 --formatter=TAP::Formatter::JUnit --timer -wl t/ > testout.xml
+                '''
                 archiveArtifacts artifacts: 'local/**, lib/**, environments/**, config.yml, tsgateway, templates/**, public/**'
             }
             post {
@@ -38,11 +40,13 @@ pipeline {
                         url: 'ssh://git@source.test-smoke.org:9999/~/ztreet-configs'
                     ]]
                 ])
-                sh 'cp -v configs/CoreSmokeDB/test.yml deploy/environments/'
-                sh 'cp -v configs/CoreSmokeDB/smokedb.yml deploy/environments/'
-                sh 'cp -v configs/CoreSmokeDB/preview.yml deploy/environments/'
-                sh 'cp -v configs/CoreSmokeDB/production.yml deploy/environments/'
-                sh 'chmod +x deploy/local/bin/*'
+                sh '''
+cp -v configs/CoreSmokeDB/test.yml deploy/environments/
+cp -v configs/CoreSmokeDB/smokedb.yml deploy/environments/
+cp -v configs/CoreSmokeDB/preview.yml deploy/environments/
+cp -v configs/CoreSmokeDB/production.yml deploy/environments/
+chmod +x deploy/local/bin/*
+                '''
                 archiveArtifacts artifacts: 'deploy/**'
                 script {
                     echo "Merged configs for: ${env.BRANCH_NAME}" + scm.branches[0].name
