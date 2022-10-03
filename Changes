@@ -1,12 +1,89 @@
-Changes on 2022-08-25 for repository at:
+Changes on 2022-10-03 for repository at:
   Fetch URL: git@github.com:abeltje/CoreSmokeDB.git
   Push  URL: git@github.com:abeltje/CoreSmokeDB.git
 
 Enjoy!
 
-0.11 2022-08-25T09:52:46+02:00 (bca65ec => Abe Timmerman)
+0.12 2022-10-03T18:08:34+02:00 (be5ad10 => Abe Timmerman)
+ - (Abe Timmerman, Mon, 3 Oct 2022 18:08:34 +0200) Autocommit for
+   distribution Test::Smoke::Gateway 0.12 (minor)
+
+0.11 2022-08-25T09:52:46+02:00 (54a44fe => Abe Timmerman)
  - (Abe Timmerman, Thu, 25 Aug 2022 09:52:46 +0200) Autocommit for
    distribution Test::Smoke::Gateway 0.11 (minor)
+
+ - (Abe Timmerman, Sat, 17 Sep 2022 11:39:55 +0200) New API-functions for
+   the Vue.js app
+ -     We are rewriting the frontend for Perl5 CoreSmokeDB as a Vue.js SPA.
+ -     Added functions:
+ -     - api_get_full_report_data
+ -     - api_get_search_parameters
+ -     - api_get_search_results
+ -     Added endpoints:
+ -     - /api/latest
+ -     - /api/full_report_data/:id
+ -     - /api/matrix
+ -     - /api/submatrix
+ -     - /api/searchparameters
+ -     - /api/searchresults
+ -     - /api/version
+
+ - (Abe Timmerman, Sat, 17 Sep 2022 12:58:35 +0200) Add debugging
+   information
+ -     During testing for "production-mode" the submatrix doesn't seem to
+   load
+ -     correctly dunno why (dev works).
+
+ - (Abe Timmerman, Sat, 17 Sep 2022 16:12:09 +0200) Add route to fetch the
+   logfile/outfile of a report
+
+ - (Abe Timmerman, Sun, 18 Sep 2022 20:28:10 +0200) Fix paginating for
+   search results
+ -     The internals for the /api/searchresults didn't pass the
+   current/wanted
+ -     page indicator around.
+ -     Also make sure the resulting struct for /api/latest and
+ -     /api/searchresults are the same, the Vue.js App expects the same:
+ -     - reports
+ -     - report_count
+ -     - reports_per_page
+ -     - page
+ -     - latest_plevel
+
+ - (Abe Timmerman, Sat, 24 Sep 2022 16:39:26 +0200) Add some more versions
+   to /api/version
+ -     Schema-Version (Test::Smoke::Gateway::Schema::APIVERSION)
+ -     DB-Version (from the tsgateway_config table: dbversion row)
+ -     So this service returns the same version-attributes as the new
+ -     API-service.
+
+ - (Abe Timmerman, Mon, 3 Oct 2022 15:54:39 +0200) Replace the db-schema
+   for 'Perl5::CoreSmokeDB::Schema'
+ -     Now that we have the schema published on CPAN, we should use it.
+
+ - (Abe Timmerman, Mon, 3 Oct 2022 16:08:08 +0200) Bundle the 'sh' sections
+   into a single section.
+ -     For some reason the build stopped working.
+
+ - (Abe Timmerman, Mon, 3 Oct 2022 16:26:57 +0200) Move the build-directory
+   for CPANM
+ -     When building DBD::Pg it creates a unix-socket that has a name
+   longer
+ -     than 107 chars. This makes the test-suite fail, so we move the CPANM
+ -     directory to a "shorter" path in order for DBD::Pg to build.
+
+ - (Abe Timmerman, Mon, 3 Oct 2022 16:31:41 +0200) Environment variable
+   values must either be single quoted, double quoted, or function calls
+
+ - (Abe Timmerman, Mon, 3 Oct 2022 16:40:21 +0200) Effectively back to
+   'carton install'
+ -     Test::TCP fails its test-suite, not much activity there for 3 years.
+
+ - (Abe Timmerman, Mon, 3 Oct 2022 16:48:29 +0200) Changed the
+   default-branch name to 'main'
+
+ - (Abe Timmerman, Mon, 3 Oct 2022 18:07:38 +0200) We removed the Schema
+   files earlier, cleanup MANIFEST
 
 0.10_01 2022-08-23T12:24:29+02:00 (7efc0fd => Abe Timmerman)
  - (Abe Timmerman, Tue, 23 Aug 2022 12:24:29 +0200) Autocommit for
