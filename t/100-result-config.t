@@ -1,15 +1,16 @@
 #! perl -w
 use strict;
+use lib 'local/lib/perl5';
 
 use Test::More;
 use Test::Warnings;
 use Test::DBIC::SQLite;
 
 my $tester = Test::DBIC::SQLite->new(
-    schema_class => 'Test::Smoke::Gateway::Schema',
+    schema_class => 'Perl5::CoreSmokeDB::Schema',
 );
 {
-    note("Check custom methods on Test::Smoke::Gateway::Schema::Result::Config");
+    note("Check custom methods on Perl5::CoreSmokeDB::Schema::Result::Config");
     my $db = $tester->connect_dbic_ok();
 
     my $r = $db->resultset('Report')->create(
@@ -25,7 +26,7 @@ my $tester = Test::DBIC::SQLite->new(
             summary         => 'FAIL (X)',
         }
     );
-    isa_ok($r, 'Test::Smoke::Gateway::Schema::Result::Report');
+    isa_ok($r, 'Perl5::CoreSmokeDB::Schema::Result::Report');
 
     my $c = $r->create_related(
         configs => {
@@ -35,7 +36,7 @@ my $tester = Test::DBIC::SQLite->new(
             ccversion => '4.2.1 Compatible Clang 3.5.0 (trunk)',
         }
     );
-    isa_ok($c, 'Test::Smoke::Gateway::Schema::Result::Config');
+    isa_ok($c, 'Perl5::CoreSmokeDB::Schema::Result::Config');
 
     is($c->c_compiler_key, 'clang##4.2.1 Compatible Clang 3.5.0 (trunk)', 'config->c_compiler_key');
     is(

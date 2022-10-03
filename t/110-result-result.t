@@ -1,15 +1,16 @@
 #! perl -w
 use strict;
+use lib 'local/lib/perl5';
 
 use Test::More;
 use Test::Warnings;
 use Test::DBIC::SQLite;
 
 my $tester = Test::DBIC::SQLite->new(
-    schema_class => 'Test::Smoke::Gateway::Schema',
+    schema_class => 'Perl5::CoreSmokeDB::Schema',
 );
 {
-    note("Check custom methods on Test::Smoke::Gateway::Schema::Result::Result");
+    note("Check custom methods on Perl5::CoreSmokeDB::Schema::Result::Result");
 
     my $db = $tester->connect_dbic_ok();
 
@@ -26,7 +27,7 @@ my $tester = Test::DBIC::SQLite->new(
             summary         => 'FAIL (X)',
         }
     );
-    isa_ok($r, 'Test::Smoke::Gateway::Schema::Result::Report');
+    isa_ok($r, 'Perl5::CoreSmokeDB::Schema::Result::Report');
 
     my $c = $r->create_related(
         configs => {
@@ -36,7 +37,7 @@ my $tester = Test::DBIC::SQLite->new(
             ccversion => '4.2.1 Compatible Clang 3.5.0 (trunk)',
         }
     );
-    isa_ok($c, 'Test::Smoke::Gateway::Schema::Result::Config');
+    isa_ok($c, 'Perl5::CoreSmokeDB::Schema::Result::Config');
 
     my $r1 = $c->create_related(
         results => {
@@ -44,7 +45,7 @@ my $tester = Test::DBIC::SQLite->new(
             summary => 'X',
         }
     );
-    isa_ok($r1, 'Test::Smoke::Gateway::Schema::Result::Result');
+    isa_ok($r1, 'Perl5::CoreSmokeDB::Schema::Result::Result');
     is($r1->test_env, 'perlio', "result->test_env()");
 
     my $r2 = $c->create_related(
@@ -54,7 +55,7 @@ my $tester = Test::DBIC::SQLite->new(
             summary => 'O',
         }
     );
-    isa_ok($r2, 'Test::Smoke::Gateway::Schema::Result::Result');
+    isa_ok($r2, 'Perl5::CoreSmokeDB::Schema::Result::Result');
     is($r2->test_env, 'locale:nl_NL.UTF-8', "result->test_env()");
 
     $db->storage->disconnect();

@@ -123,7 +123,9 @@ get '/api/latest' => sub {
     my $latest_only = $gw->latest_only();
     my $latest = [
         map {
-            { $_->get_inflated_columns() }
+            my $flat = { $_->get_inflated_columns() };
+            $flat->{smoke_date} = $_->smoke_date->rfc3339;
+            $flat
         } @{ $latest_only->{reports} }
     ];
     my $response = {
@@ -190,22 +192,30 @@ get '/api/searchparameters' => sub {
 };
 
 post '/api/searchresults' => sub {
-    my $reports = $gw->api_get_search_results({params});
+    my $report_info = $gw->api_get_search_results({params});
+    my $reports = [
+        map {
+            my $flat = { $_->get_inflated_columns() };
+            $flat->{smoke_date} = $_->smoke_date->rfc3339;
+            $flat
+        } @{ $report_info->{reports} }
+    ];
     my $response = {
-        reports       => $reports->{reports},
-        report_count  => $reports->{report_count},
+        reports       => $reports,
+        report_count  => $report_info->{report_count},
         latest_plevel => undef,
-        rpp           => $reports->{rpp},
-        page          => $reports->{page} // 1,
+        rpp           => $report_info->{rpp},
+        page          => $report_info->{page} // 1,
     };
     return to_json($response);
 };
 
 get '/api/version' => sub {
+    my $schema_class = ref($gw->schema);
     return to_json(
         {
             version        => $gw->VERSION,
-            schema_version => $Test::Smoke::Gateway::Schema::APIVERSION,
+            schema_version => do { no strict 'refs'; ${$schema_class . '::SCHEMAVERSION'} },
             db_version     => $gw->db_version,
         }
     );

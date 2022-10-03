@@ -147,9 +147,13 @@ sub api_get_full_report_data {
     my $report = $self->schema->resultset('Report')->find($id);
 
     my %data = $report->get_inflated_columns;
+    $data{smoke_date} = $report->smoke_date->rfc3339;
     $data{configs} = [ ];
     for my $config ($report->configs) {
-        push @{$data{configs}}, {$config->get_inflated_columns};
+        push @{$data{configs}}, {
+            $config->get_inflated_columns,
+            started => $config->started->rfc3339
+        };
         $data{configs}[-1]{results} = [ ];
         for my $result ($config->results) {
             push(
@@ -266,7 +270,6 @@ sub api_get_search_results {
         $count   = $self->get_reports_by_filter_count($pv_selected,  \%filter);
     }
 
-    $reports = [ map { +{$_->get_inflated_columns} } @$reports ];
     return {
         reports      => $reports,
         report_count => $count // scalar(@$reports),

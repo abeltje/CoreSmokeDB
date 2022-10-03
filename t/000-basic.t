@@ -1,6 +1,7 @@
 #! perl -w
 use strict;
 use autodie;
+use lib 'local/lib/perl5';
 use JSON;
 
 use Test::More;
@@ -9,10 +10,10 @@ use Test::DBIC::SQLite;
 use Test::Smoke::Gateway;
 
 pass("Loaded Test::Smoke::Gateway");
-pass("Loaded Test::Smoke::Gateway::Schema");
+pass("Loaded Perl5::CoreSmokeDB::Schema");
 
 my $tester = Test::DBIC::SQLite->new(
-    schema_class => 'Test::Smoke::Gateway::Schema',
+    schema_class => 'Perl5::CoreSmokeDB::Schema',
 );
 my $schema = $tester->connect_dbic_ok();
 
@@ -53,7 +54,7 @@ for my $os (qw(mac ubuntu)) {
 #    note(explain($data));
 
     my $rid = $gw->post_report($data);
-    isa_ok($rid, "Test::Smoke::Gateway::Schema::Result::Report");
+    isa_ok($rid, "Perl5::CoreSmokeDB::Schema::Result::Report");
 
     my $report = $schema->resultset("Report")->find(
         { id => $rid->id },
