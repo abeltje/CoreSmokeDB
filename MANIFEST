@@ -11,14 +11,6 @@ environments/development.yml
 Jenkinsfile
 lib/Test/Smoke/Gateway.pm
 lib/Test/Smoke/Gateway/Dancer.pm
-lib/Test/Smoke/Gateway/Schema.pm
-lib/Test/Smoke/Gateway/Schema/Result/Config.pm
-lib/Test/Smoke/Gateway/Schema/Result/Failure.pm
-lib/Test/Smoke/Gateway/Schema/Result/FailureForEnv.pm
-lib/Test/Smoke/Gateway/Schema/Result/Report.pm
-lib/Test/Smoke/Gateway/Schema/Result/Result.pm
-lib/Test/Smoke/Gateway/Schema/Result/SmokeConfig.pm
-lib/Test/Smoke/Gateway/Schema/Result/TsgatewayConfig.pm
 Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
