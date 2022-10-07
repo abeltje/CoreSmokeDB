@@ -6,6 +6,8 @@ requires "DBD::Pg"                    => "2.19.3";
 requires "Dancer"                     => "1.31";
 requires "Dancer::Plugin::DBIC"       => "== 0.2101";
 requires "Date::Parse"                => "2.30";
+requires 'DateTime::Format::Pg'       => '0.16013';
+requires 'DateTime::Format::SQLite'   => '0.11';
 requires "Digest::MD5"                => "2.51";
 requires "Encode"                     => "2.60";
 requires "JSON"                       => "2.00";

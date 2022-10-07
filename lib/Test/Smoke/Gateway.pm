@@ -2,11 +2,12 @@ package Test::Smoke::Gateway;
 use Moose;
 
 use Date::Parse;
+use DateTime;
 use Digest::MD5;
 use Encode qw/encode decode/;
 use JSON;
-use Params::Validate ':all';
 use POSIX qw/strftime/;
+use Params::Validate ':all';
 
 has schema => (is => 'ro', required => 1);
 
@@ -110,28 +111,8 @@ sub api_get_report_data {
     my ($id) = validate_pos(@_, {regex => qr/^[1-9][0-9]*$/, optional => 0});
 
     my $report = $self->schema->resultset('Report')->find($id);
-
-    my %data = $report->get_inflated_columns;
-    $data{configs} = [ ];
-    for my $config ($report->configs) {
-        push @{$data{configs}}, {$config->get_inflated_columns};
-        $data{configs}[-1]{results} = [ ];
-        for my $result ($config->results) {
-            push(
-                @{$data{configs}[-1]{results}},
-                {$result->get_inflated_columns}
-            );
-            $data{configs}[-1]{results}[-1]{failures} = [ ];
-            for my $failure ($result->failures_for_env) {
-                push(
-                    @{$data{configs}[-1]{results}[-1]{failures}},
-                    {$failure->failure->get_inflated_columns}
-                );
-            }
-        }
-    }
-
-    return \%data;
+    my $data = $report->as_hashref('full');
+    return $data;
 }
 
 =head2 $gw->api_get_full_report_data
@@ -296,6 +277,10 @@ sub post_report {
         sconfig_id => $sconfig->id,
     };
     $report_data->{lc($_)} = delete $report_data->{$_} for keys %$report_data;
+    $report_data->{smoke_date} = DateTime->from_epoch(
+        epoch => str2time($report_data->{smoke_date}),
+        time_zone => 'UTC',
+    );
 
     my @to_unarray = qw/
         skipped_tests applied_patches
@@ -319,6 +304,10 @@ sub post_report {
                 for my $field (qw/cc ccversion/) {
                     $config->{$field} ||= '?';
                 }
+                $config->{started} = DateTime->from_epoch(
+                    epoch => str2time($config->{started}),
+                    time_zone => 'UTC',
+                );
 
                 my $conf = $r->create_related('configs', $config);
 
