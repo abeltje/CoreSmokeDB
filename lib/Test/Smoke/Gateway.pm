@@ -19,7 +19,7 @@ has reports_per_page => (
 
 my @_binary_data = qw/ log_file out_file manifest_msgs compiler_msgs nonfatal_msgs /;
 
-our $VERSION = '0.12';
+our $VERSION = '0.13';
 
 =head1 NAME
 
