@@ -2,4 +2,5 @@
   <li><a title="Latest per host" href="/latest-only">Latest</a></li>
   <li><a title="Search" href="/search">Search</a></li>
   <li><a title="Matrix" href="/matrix">Matrix</a></li>
+  <li><a title="Per commit view" href="http://perl.develop-help.com/" target=_blank>Per commit view</a></li>
 </ul>
